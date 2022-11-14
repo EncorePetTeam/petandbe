@@ -6,26 +6,25 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
+import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
-
-import static com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper.document;
-import static com.epages.restdocs.apispec.ResourceDocumentation.parameterWithName;
+import static org.mockito.Mockito.anyString;
 import static org.mockito.Mockito.when;
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
-import static org.springframework.restdocs.request.RequestDocumentation.requestParameters;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
-@AutoConfigureMockMvc
+@WebMvcTest(controllers = UserController.class)
 @AutoConfigureRestDocs
 class UserControllerTest {
 
@@ -45,23 +44,20 @@ class UserControllerTest {
 
         UserDetailsResponse userDetailsResponse = new UserDetailsResponse(token, email, nickname);
 
-        when(userService.findUserDetails(token)).thenReturn(userDetailsResponse);
+        when(userService.findUserDetails(anyString())).thenReturn(userDetailsResponse);
         //when
-        ResultActions resultActions = mockMvc.perform(get("/user/{token}", token)
-                .contentType(MediaType.APPLICATION_JSON)
+        ResultActions resultActions = mockMvc.perform(RestDocumentationRequestBuilders.get("/user/{token}", token)
                 .accept(MediaType.APPLICATION_JSON));
         //then
-        resultActions.andExpectAll(
-                        status().isOk()
-                )
+        resultActions.andExpect(status().isOk())
                 .andDo(document("user-details",
-                        requestParameters(
-                                parameterWithName("token").description("OAuth의 token id").getAttributes()
+                        pathParameters(
+                                parameterWithName("token").description("OAuth의 token id")
                         ),
                         responseFields(
-                                fieldWithPath("token").description("OAuth의 token id"),
-                                fieldWithPath("email").description("유저이메일"),
-                                fieldWithPath("nickname").description("유저닉네임")
+                                fieldWithPath("token").type(JsonFieldType.STRING).description("OAuth의 token id"),
+                                fieldWithPath("email").type(JsonFieldType.STRING).description("유저이메일"),
+                                fieldWithPath("nickname").type(JsonFieldType.STRING).description("유저닉네임")
                         )
                 )).andDo(print());
 

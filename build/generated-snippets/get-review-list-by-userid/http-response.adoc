@@ -1,0 +1,8 @@
+[source,http,options="nowrap"]
+----
+HTTP/1.1 200 OK
+Content-Type: application/json
+Content-Length: 101
+
+{"endPage":13,"startPage":1,"nextPageExist":true,"prevPageExist":true,"selectPage":3,"amountItem":10}
+----

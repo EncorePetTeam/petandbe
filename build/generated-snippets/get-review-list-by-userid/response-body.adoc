@@ -1,0 +1,4 @@
+[source,options="nowrap"]
+----
+{"endPage":13,"startPage":1,"nextPageExist":true,"prevPageExist":true,"selectPage":3,"amountItem":10}
+----

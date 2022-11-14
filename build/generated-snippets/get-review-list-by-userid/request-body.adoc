@@ -1,0 +1,6 @@
+[source,options="nowrap"]
+----
+{"userId": "token123", 
+"pageNum": 3, 
+"amount": 10}
+----

@@ -1,0 +1,28 @@
+|===
+|Path|Type|Description
+
+|`+endPage+`
+|`+Number+`
+|페이지네이션의 끝번호
+
+|`+startPage+`
+|`+Number+`
+|페이지네이션의 시작번호
+
+|`+nextPageExist+`
+|`+Boolean+`
+|다음버튼 활성화 여부
+
+|`+prevPageExist+`
+|`+Boolean+`
+|이전버튼 황설화 여부
+
+|`+selectPage+`
+|`+Number+`
+|현재 조회하는 페이지
+
+|`+amountItem+`
+|`+Number+`
+|데이터 개수
+
+|===

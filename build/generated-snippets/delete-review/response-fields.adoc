@@ -1,0 +1,12 @@
+|===
+|Path|Type|Description
+
+|`+reviewId+`
+|`+Number+`
+|삭제한 리뷰의 Id
+
+|`+state+`
+|`+String+`
+|삭제한 리뷰의 상태값
+
+|===

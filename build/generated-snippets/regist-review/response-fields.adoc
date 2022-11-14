@@ -2,7 +2,7 @@
 |Path|Type|Description
 
 |`+reviewId+`
-|`+String+`
+|`+Number+`
 |작성한 리뷰의 Id
 
 |`+userId+`
@@ -10,7 +10,7 @@
 |작성한 User의 token id
 
 |`+rate+`
-|`+String+`
+|`+Number+`
 |부여한 점수 rate
 
 |`+content+`

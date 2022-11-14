@@ -1,0 +1,11 @@
+[source,http,options="nowrap"]
+----
+POST /review/delete-review HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Accept: application/json
+Content-Length: 38
+Host: localhost:8080
+
+{"reviewId": 1, 
+"userId": "token123"}
+----

@@ -1,0 +1,20 @@
+|===
+|Path|Type|Description
+
+|`+reviewId+`
+|`+Number+`
+|수정한 리뷰의 Id
+
+|`+userId+`
+|`+String+`
+|User의 token id
+
+|`+rate+`
+|`+Number+`
+|수정한 점수 rate
+
+|`+content+`
+|`+String+`
+|수정한 리뷰의 내용
+
+|===

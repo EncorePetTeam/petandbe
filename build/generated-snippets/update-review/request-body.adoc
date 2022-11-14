@@ -1,0 +1,7 @@
+[source,options="nowrap"]
+----
+{"reviewId": 1, 
+"userId": "token123", 
+"rate": 5, 
+"content": "not bad"}
+----

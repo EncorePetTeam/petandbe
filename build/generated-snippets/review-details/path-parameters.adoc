@@ -1,0 +1,8 @@
+.+/review/{reservation-id}+
+|===
+|Parameter|Description
+
+|`+reservation-id+`
+|Reservation의 ID
+
+|===

@@ -1,0 +1,7 @@
+[source,options="nowrap"]
+----
+{"userId": "token123", 
+"rate": "5", 
+"content": "very good", 
+"reservationId": 1}
+----

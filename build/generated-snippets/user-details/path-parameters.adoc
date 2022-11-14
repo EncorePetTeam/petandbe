@@ -1,0 +1,8 @@
+.+/user/{token}+
+|===
+|Parameter|Description
+
+|`+token+`
+|OAuth의 token id
+
+|===

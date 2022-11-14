@@ -1,0 +1,6 @@
+[source,bash]
+----
+$ echo '{"token": "token123", "email": "gnsrl@naver.com", "nickname": "rnfjddl"}' | http POST 'http://localhost:8080/user/signup' \
+    'Content-Type:application/json;charset=UTF-8' \
+    'Accept:application/json'
+----

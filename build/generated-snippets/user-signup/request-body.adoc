@@ -1,0 +1,4 @@
+[source,options="nowrap"]
+----
+{"token": "token123", "email": "gnsrl@naver.com", "nickname": "rnfjddl"}
+----

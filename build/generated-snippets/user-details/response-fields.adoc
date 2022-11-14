@@ -1,0 +1,16 @@
+|===
+|Path|Type|Description
+
+|`+token+`
+|`+String+`
+|OAuth의 token id
+
+|`+email+`
+|`+String+`
+|유저이메일
+
+|`+nickname+`
+|`+String+`
+|유저닉네임
+
+|===

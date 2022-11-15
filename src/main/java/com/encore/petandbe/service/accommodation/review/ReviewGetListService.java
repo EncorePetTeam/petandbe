@@ -4,5 +4,8 @@ import com.encore.petandbe.controller.accommodation.review.requests.GetReviewLis
 import com.encore.petandbe.controller.accommodation.review.responses.GetReviewListByUserIdResponse;
 
 public class ReviewGetListService {
-    public GetReviewListByUserIdResponse getReviewListByUserId(GetReviewListByUserIdRequests getReviewListByUserIdRequests) { return null; }
+	public GetReviewListByUserIdResponse getReviewListByUserId(
+		GetReviewListByUserIdRequests getReviewListByUserIdRequests) {
+		return null;
+	}
 }

@@ -1,6 +1,6 @@
 [source,bash]
 ----
-$ curl 'http://localhost:8080/review-list/get-review-list-by-userid' -i -X POST \
+$ curl 'http://localhost:8080/review-list/get-by-userid' -i -X POST \
     -H 'Content-Type: application/json;charset=UTF-8' \
     -H 'Accept: application/json' \
     -d '{"userId":"token123","pageNum":3,"amount":10}'

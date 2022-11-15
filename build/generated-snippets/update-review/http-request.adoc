@@ -1,6 +1,6 @@
 [source,http,options="nowrap"]
 ----
-POST /review/update-review HTTP/1.1
+POST /review/update HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Accept: application/json
 Content-Length: 63

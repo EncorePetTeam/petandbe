@@ -1,6 +1,6 @@
 [source,bash]
 ----
-$ curl 'http://localhost:8080/review/regist-review' -i -X POST \
+$ curl 'http://localhost:8080/review/regist' -i -X POST \
     -H 'Content-Type: application/json;charset=UTF-8' \
     -H 'Accept: application/json' \
     -d '{"userId":"token123","rate":5,"content":"very good","reservationId":1}'

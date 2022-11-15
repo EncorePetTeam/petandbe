@@ -5,11 +5,11 @@ import lombok.Getter;
 @Getter
 public class DeleteReviewResponse {
 
-    private Long reviewId;
-    private String state;
+	private Long reviewId;
+	private String state;
 
-    public DeleteReviewResponse(Long reviewId, String state) {
-        this.reviewId = reviewId;
-        this.state = state;
-    }
+	public DeleteReviewResponse(Long reviewId, String state) {
+		this.reviewId = reviewId;
+		this.state = state;
+	}
 }

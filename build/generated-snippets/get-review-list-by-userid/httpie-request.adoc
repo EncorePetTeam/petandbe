@@ -1,8 +1,6 @@
 [source,bash]
 ----
-$ echo '{"userId": "token123", 
-"pageNum": 3, 
-"amount": 10}' | http POST 'http://localhost:8080/review-list/get-review-list-by-userid' \
+$ echo '{"userId":"token123","pageNum":3,"amount":10}' | http POST 'http://localhost:8080/review-list/get-review-list-by-userid' \
     'Content-Type:application/json;charset=UTF-8' \
     'Accept:application/json'
 ----

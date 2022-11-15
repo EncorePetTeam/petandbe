@@ -1,7 +1,4 @@
 [source,options="nowrap"]
 ----
-{"reviewId": 1, 
-"userId": "token123", 
-"rate": 5, 
-"content": "not bad"}
+{"reviewId":1,"userId":"token123","rate":3,"content":"not bad"}
 ----

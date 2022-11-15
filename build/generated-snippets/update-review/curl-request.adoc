@@ -3,8 +3,5 @@
 $ curl 'http://localhost:8080/review/update-review' -i -X POST \
     -H 'Content-Type: application/json;charset=UTF-8' \
     -H 'Accept: application/json' \
-    -d '{"reviewId": 1, 
-"userId": "token123", 
-"rate": 5, 
-"content": "not bad"}'
+    -d '{"reviewId":1,"userId":"token123","rate":3,"content":"not bad"}'
 ----

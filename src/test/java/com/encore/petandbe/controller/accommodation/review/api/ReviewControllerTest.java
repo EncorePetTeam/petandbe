@@ -6,6 +6,7 @@ import com.encore.petandbe.controller.accommodation.review.requests.UpdateReview
 import com.encore.petandbe.controller.accommodation.review.responses.DeleteReviewResponse;
 import com.encore.petandbe.controller.accommodation.review.responses.ReviewDetailsResponse;
 import com.encore.petandbe.service.accommodation.review.ReviewService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,9 @@ import org.springframework.restdocs.payload.JsonFieldType;
 // import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -41,8 +45,10 @@ public class ReviewControllerTest {
     @MockBean
     private ReviewService reviewService;
 
+    @Autowired
+    private ObjectMapper objectMapper;
+
     @Test
-    // @WithMockUser
     @DisplayName("Regist review - success")
     void registReviewSuccess() throws Exception {
         //given
@@ -51,15 +57,15 @@ public class ReviewControllerTest {
         Integer rate = 5;
         String content = "very good";
 
+        RegistReviewRequests registReviewRequests = new RegistReviewRequests("token123",5,"very good",1L);
         ReviewDetailsResponse reviewDetailsResponse = new ReviewDetailsResponse(reviewId,userId,rate,content);
 
         when(reviewService.registReview(any(RegistReviewRequests.class))).thenReturn(reviewDetailsResponse);
         //when
         ResultActions resultActions = mockMvc.perform(RestDocumentationRequestBuilders
                 .post("/review/regist-review")
-                .content("{\"userId\": \"token123\", \n\"rate\": 5, \n\"content\": \"very good\", \n\"reservationId\": 1}")
+                .content(objectMapper.writeValueAsString(registReviewRequests))
                 .contentType(MediaType.APPLICATION_JSON)
-                // .with(csrf())
                 .accept(MediaType.APPLICATION_JSON));
         //then
         resultActions.andExpect(status().isOk())
@@ -112,13 +118,14 @@ public class ReviewControllerTest {
         Integer rate = 3;
         String content = "not bad";
 
+        UpdateReviewRequests updateReviewRequests = new UpdateReviewRequests(reviewId,userId,rate,content);
         ReviewDetailsResponse reviewDetailsResponse = new ReviewDetailsResponse(reviewId,userId,rate,content);
 
         when(reviewService.updateReview(any(UpdateReviewRequests.class))).thenReturn(reviewDetailsResponse);
         //when
         ResultActions resultActions = mockMvc.perform(RestDocumentationRequestBuilders
                 .post("/review/update-review")
-                .content("{\"reviewId\": 1, \n\"userId\": \"token123\", \n\"rate\": 5, \n\"content\": \"not bad\"}")
+                .content(objectMapper.writeValueAsString(updateReviewRequests))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON));
         //then
@@ -139,13 +146,14 @@ public class ReviewControllerTest {
         Long reviewId = 1L;
         String state = "1";
 
+        DeleteReviewRequests deleteReviewRequests = new DeleteReviewRequests(reviewId,"token123");
         DeleteReviewResponse deleteReviewResponse = new DeleteReviewResponse(reviewId,state);
 
         when(reviewService.deleteReview(any(DeleteReviewRequests.class))).thenReturn(deleteReviewResponse);
         //when
         ResultActions resultActions = mockMvc.perform(RestDocumentationRequestBuilders
                 .post("/review/delete-review")
-                .content("{\"reviewId\": 1, \n\"userId\": \"token123\"}")
+                .content(objectMapper.writeValueAsString(deleteReviewRequests))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON));
         //then

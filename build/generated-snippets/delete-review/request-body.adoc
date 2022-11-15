@@ -1,5 +1,4 @@
 [source,options="nowrap"]
 ----
-{"reviewId": 1, 
-"userId": "token123"}
+{"reviewId":1,"userId":"token123"}
 ----

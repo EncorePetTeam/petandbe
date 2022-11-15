@@ -3,6 +3,7 @@ package com.encore.petandbe.controller.accommodation.review.api;
 import com.encore.petandbe.controller.accommodation.review.requests.GetReviewListByUserIdRequests;
 import com.encore.petandbe.controller.accommodation.review.responses.GetReviewListByUserIdResponse;
 import com.encore.petandbe.service.accommodation.review.ReviewGetListService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,9 @@ class ReviewGetListControllerTest {
     @MockBean
     private ReviewGetListService reviewGetListService;
 
+    @Autowired
+    private ObjectMapper objectMapper;
+
     @Test
     @DisplayName("Get Review List By UserId - success")
     void getReviewListByUserId() throws Exception {
@@ -45,6 +49,8 @@ class ReviewGetListControllerTest {
         int selectPage = 3;
         int amountItem = 10;
 
+        GetReviewListByUserIdRequests getReviewListByUserIdRequests
+                = new GetReviewListByUserIdRequests("token123",selectPage,amountItem);
         GetReviewListByUserIdResponse getReviewListByUserIdResponse
                 = new GetReviewListByUserIdResponse(endPage,startPage,nextPageExist,prevPageExist,selectPage,amountItem);
 
@@ -52,7 +58,7 @@ class ReviewGetListControllerTest {
         //when
         ResultActions resultActions = mockMvc.perform(RestDocumentationRequestBuilders
                 .post("/review-list/get-review-list-by-userid")
-                .content("{\"userId\": \"token123\", \n\"pageNum\": 3, \n\"amount\": 10}")
+                .content(objectMapper.writeValueAsString(getReviewListByUserIdRequests))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON));
         //then

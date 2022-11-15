@@ -56,12 +56,12 @@ class ReviewControllerTest {
 		when(reviewService.registReview(any(RegistReviewRequests.class))).thenReturn(reviewDetailsResponse);
 		//when
 		ResultActions resultActions = mockMvc.perform(RestDocumentationRequestBuilders
-			.post("/review/regist")
+			.post("/review")
 			.content(objectMapper.writeValueAsString(registReviewRequests))
 			.contentType(MediaType.APPLICATION_JSON)
 			.accept(MediaType.APPLICATION_JSON));
 		//then
-		resultActions.andExpect(status().isOk())
+		resultActions.andExpect(status().isCreated())
 			.andDo(document("regist-review",
 				responseFields(
 					fieldWithPath("reviewId").type(JsonFieldType.NUMBER).description("작성한 리뷰의 Id"),
@@ -117,7 +117,7 @@ class ReviewControllerTest {
 		when(reviewService.updateReview(any(UpdateReviewRequests.class))).thenReturn(reviewDetailsResponse);
 		//when
 		ResultActions resultActions = mockMvc.perform(RestDocumentationRequestBuilders
-			.post("/review/update")
+			.put("/review")
 			.content(objectMapper.writeValueAsString(updateReviewRequests))
 			.contentType(MediaType.APPLICATION_JSON)
 			.accept(MediaType.APPLICATION_JSON));
@@ -145,7 +145,7 @@ class ReviewControllerTest {
 		when(reviewService.deleteReview(any(DeleteReviewRequests.class))).thenReturn(deleteReviewResponse);
 		//when
 		ResultActions resultActions = mockMvc.perform(RestDocumentationRequestBuilders
-			.post("/review/delete")
+			.delete("/review")
 			.content(objectMapper.writeValueAsString(deleteReviewRequests))
 			.contentType(MediaType.APPLICATION_JSON)
 			.accept(MediaType.APPLICATION_JSON));

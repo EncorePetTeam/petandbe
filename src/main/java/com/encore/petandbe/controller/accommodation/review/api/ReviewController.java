@@ -1,9 +1,13 @@
 package com.encore.petandbe.controller.accommodation.review.api;
 
+import java.net.URI;
+
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,9 +29,10 @@ public class ReviewController {
 		this.reviewService = reviewService;
 	}
 
-	@PostMapping("/regist")
+	@PostMapping
 	public ResponseEntity<ReviewDetailsResponse> registReview(@RequestBody RegistReviewRequests registReviewRequests) {
-		return ResponseEntity.ok().body(reviewService.registReview(registReviewRequests));
+		return ResponseEntity.created(URI.create("/review/created"))
+			.body(reviewService.registReview(registReviewRequests));
 	}
 
 	@GetMapping("/{reservation-id}")
@@ -35,12 +40,12 @@ public class ReviewController {
 		return ResponseEntity.ok().body(reviewService.findReviewDetails(reservationId));
 	}
 
-	@PostMapping("/update")
+	@PutMapping
 	public ResponseEntity<ReviewDetailsResponse> updateReview(@RequestBody UpdateReviewRequests updateReviewRequests) {
 		return ResponseEntity.ok().body(reviewService.updateReview(updateReviewRequests));
 	}
 
-	@PostMapping("/delete")
+	@DeleteMapping
 	public ResponseEntity<DeleteReviewResponse> deleteReview(@RequestBody DeleteReviewRequests deleteReviewRequests) {
 		return ResponseEntity.ok().body(reviewService.deleteReview(deleteReviewRequests));
 	}

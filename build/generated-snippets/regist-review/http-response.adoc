@@ -1,6 +1,7 @@
 [source,http,options="nowrap"]
 ----
-HTTP/1.1 200 OK
+HTTP/1.1 201 Created
+Location: /review/created
 Content-Type: application/json
 Content-Length: 65
 

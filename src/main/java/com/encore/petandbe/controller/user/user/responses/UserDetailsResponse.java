@@ -5,14 +5,13 @@ import lombok.Getter;
 @Getter
 public class UserDetailsResponse {
 
-    String token;
-    String email;
-    String nickname;
+	String token;
+	String email;
+	String nickname;
 
-
-    public UserDetailsResponse(String token, String email, String nickname) {
-        this.token = token;
-        this.email = email;
-        this.nickname = nickname;
-    }
+	public UserDetailsResponse(String token, String email, String nickname) {
+		this.token = token;
+		this.email = email;
+		this.nickname = nickname;
+	}
 }

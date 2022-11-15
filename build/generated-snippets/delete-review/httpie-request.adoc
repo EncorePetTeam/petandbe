@@ -1,6 +1,6 @@
 [source,bash]
 ----
-$ echo '{"reviewId":1,"userId":"token123"}' | http POST 'http://localhost:8080/review/delete' \
+$ echo '{"reviewId":1,"userId":"token123"}' | http DELETE 'http://localhost:8080/review' \
     'Content-Type:application/json;charset=UTF-8' \
     'Accept:application/json'
 ----

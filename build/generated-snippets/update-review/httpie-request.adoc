@@ -1,6 +1,6 @@
 [source,bash]
 ----
-$ echo '{"reviewId":1,"userId":"token123","rate":3,"content":"not bad"}' | http POST 'http://localhost:8080/review/update' \
+$ echo '{"reviewId":1,"userId":"token123","rate":3,"content":"not bad"}' | http PUT 'http://localhost:8080/review' \
     'Content-Type:application/json;charset=UTF-8' \
     'Accept:application/json'
 ----

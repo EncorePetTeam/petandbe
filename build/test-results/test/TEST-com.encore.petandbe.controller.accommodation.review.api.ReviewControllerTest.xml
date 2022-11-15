@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.encore.petandbe.controller.accommodation.review.api.ReviewControllerTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2022-11-15T07:39:56" hostname="DESKTOP-8AHN7E5" time="0.357">
+  <properties/>
+  <testcase name="Delete review - success" classname="com.encore.petandbe.controller.accommodation.review.api.ReviewControllerTest" time="0.23"/>
+  <testcase name="Update review - success" classname="com.encore.petandbe.controller.accommodation.review.api.ReviewControllerTest" time="0.035"/>
+  <testcase name="Regist review - success" classname="com.encore.petandbe.controller.accommodation.review.api.ReviewControllerTest" time="0.026"/>
+  <testcase name="Get Review Details - success" classname="com.encore.petandbe.controller.accommodation.review.api.ReviewControllerTest" time="0.048"/>
+  <system-out><![CDATA[16:39:52.939 [Test worker] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating CacheAwareContextLoaderDelegate from class [org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate]
+16:39:52.948 [Test worker] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating BootstrapContext using constructor [public org.springframework.test.context.support.DefaultBootstrapContext(java.lang.Class,org.springframework.test.context.CacheAwareContextLoaderDelegate)]
+16:39:52.998 [Test worker] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating TestContextBootstrapper for test class [com.encore.petandbe.controller.accommodation.review.api.ReviewControllerTest] from class [org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTestContextBootstrapper]
+16:39:53.009 [Test worker] INFO org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTestContextBootstrapper - Neither @ContextConfiguration nor @ContextHierarchy found for test class [com.encore.petandbe.controller.accommodation.review.api.ReviewControllerTest], using SpringBootContextLoader
+16:39:53.014 [Test worker] DEBUG org.springframework.test.context.support.AbstractContextLoader - Did not detect default resource location for test class [com.encore.petandbe.controller.accommodation.review.api.ReviewControllerTest]: class path resource [com/encore/petandbe/controller/accommodation/review/api/ReviewControllerTest-context.xml] does not exist
+16:39:53.014 [Test worker] DEBUG org.springframework.test.context.support.AbstractContextLoader - Did not detect default resource location for test class [com.encore.petandbe.controller.accommodation.review.api.ReviewControllerTest]: class path resource [com/encore/petandbe/controller/accommodation/review/api/ReviewControllerTestContext.groovy] does not exist
+16:39:53.015 [Test worker] INFO org.springframework.test.context.support.AbstractContextLoader - Could not detect default resource locations for test class [com.encore.petandbe.controller.accommodation.review.api.ReviewControllerTest]: no resource found for suffixes {-context.xml, Context.groovy}.
+16:39:53.016 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [com.encore.petandbe.controller.accommodation.review.api.ReviewControllerTest]: ReviewControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+16:39:53.101 [Test worker] DEBUG org.springframework.test.context.support.ActiveProfilesUtils - Could not find an 'annotation declaring class' for annotation type [org.springframework.test.context.ActiveProfiles] and class [com.encore.petandbe.controller.accommodation.review.api.ReviewControllerTest]
+16:39:53.315 [Test worker] DEBUG org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider - Identified candidate component class: file [C:\Users\J\Desktop\project\petnolja\petandbe\build\classes\java\main\com\encore\petandbe\PetandbeApplication.class]
+16:39:53.317 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration com.encore.petandbe.PetandbeApplication for test class com.encore.petandbe.controller.accommodation.review.api.ReviewControllerTest
+16:39:53.328 [Test worker] DEBUG org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTestContextBootstrapper - @TestExecutionListeners is not present for class [com.encore.petandbe.controller.accommodation.review.api.ReviewControllerTest]: using defaults.
+16:39:53.330 [Test worker] INFO org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTestContextBootstrapper - Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener, org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.event.ApplicationEventsTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener, org.springframework.test.context.event.EventPublishingTestExecutionListener]
+16:39:53.412 [Test worker] INFO org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTestContextBootstrapper - Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@2f66e802, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@56b78e55, org.springframework.test.context.event.ApplicationEventsTestExecutionListener@76318a7d, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener@2a492f2a, org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener@3277e499, org.springframework.test.context.support.DirtiesContextTestExecutionListener@585811a4, org.springframework.test.context.transaction.TransactionalTestExecutionListener@22c01ab0, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@411341bd, org.springframework.test.context.event.EventPublishingTestExecutionListener@4c4d362a, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener@5400db36, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener@76b74e9c, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener@2d72f75e, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener@8ab78bc, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener@5aa0dbf4, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener@16afbd92]
+16:39:53.426 [Test worker] DEBUG org.springframework.test.context.support.AbstractDirtiesContextTestExecutionListener - Before test class: context [DefaultTestContext@54afd745 testClass = ReviewControllerTest, testInstance = [null], testMethod = [null], testException = [null], mergedContextConfiguration = [WebMergedContextConfiguration@677dbd89 testClass = ReviewControllerTest, locations = '{}', classes = '{class com.encore.petandbe.PetandbeApplication}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTestContextBootstrapper=true}', contextCustomizers = set[org.springframework.boot.test.autoconfigure.OverrideAutoConfigurationContextCustomizerFactory$DisableAutoConfigurationContextCustomizer@72445aba, org.springframework.boot.test.autoconfigure.actuate.metrics.MetricsExportContextCustomizerFactory$DisableMetricExportContextCustomizer@1252b961, org.springframework.boot.test.autoconfigure.filter.TypeExcludeFiltersContextCustomizer@fa3fe1b7, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@e85e0cfc, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@31e3250d, [ImportsContextCustomizer@fff25f1 key = [@org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureWebMvc(), @org.springframework.boot.test.autoconfigure.core.AutoConfigureCache(cacheProvider=NONE), @org.springframework.boot.test.autoconfigure.properties.PropertyMapping(value="spring.test.restdocs", skip=NO), @org.springframework.boot.test.autoconfigure.properties.PropertyMapping(value="spring.test.mockmvc", skip=NO), @org.springframework.boot.test.autoconfigure.filter.TypeExcludeFilters(value={org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTypeExcludeFilter.class}), @org.springframework.test.context.BootstrapWith(value=org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTestContextBootstrapper.class), @org.springframework.context.annotation.Import(value={org.springframework.boot.test.autoconfigure.restdocs.RestDocumentationContextProviderRegistrar.class}), @org.springframework.context.annotation.Import(value={org.springframework.boot.autoconfigure.ImportAutoConfigurationImportSelector.class}), @org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc(webDriverEnabled=true, print=DEFAULT, webClientEnabled=true, printOnlyOnFailure=true, addFilters=true), @org.springframework.boot.autoconfigure.ImportAutoConfiguration(value={}, exclude={}, classes={}), @org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs(uriScheme="http", outputDir="", uriPort=8080, value="", uriHost="localhost"), @org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest(useDefaultFilters=true, excludeFilters={}, controllers={com.encore.petandbe.controller.accommodation.review.api.ReviewController.class}, excludeAutoConfiguration={}, value={}, includeFilters={}, properties={}), @org.springframework.boot.test.autoconfigure.OverrideAutoConfiguration(enabled=false)]], org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@274872f8, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@7c351808, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@7e38359c, org.springframework.boot.test.context.SpringBootTestArgs@1, org.springframework.boot.test.context.SpringBootTestWebEnvironment@0], resourceBasePath = 'src/main/webapp', contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]], attributes = map[[empty]]], class annotated with @DirtiesContext [false] with mode [null].
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v2.7.0)
+
+2022-11-15 16:39:54.409  INFO 15620 --- [    Test worker] c.e.p.c.a.r.api.ReviewControllerTest     : Starting ReviewControllerTest using Java 11.0.15 on DESKTOP-8AHN7E5 with PID 15620 (started by J in C:\Users\J\Desktop\project\petnolja\petandbe)
+2022-11-15 16:39:54.413  INFO 15620 --- [    Test worker] c.e.p.c.a.r.api.ReviewControllerTest     : No active profile set, falling back to 1 default profile: "default"
+2022-11-15 16:39:56.907  INFO 15620 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2022-11-15 16:39:56.908  INFO 15620 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2022-11-15 16:39:56.909  INFO 15620 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2022-11-15 16:39:56.940  INFO 15620 --- [    Test worker] c.e.p.c.a.r.api.ReviewControllerTest     : Started ReviewControllerTest in 3.421 seconds (JVM running for 6.36)
+
+MockHttpServletRequest:
+      HTTP Method = DELETE
+      Request URI = /review
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", Accept:"application/json", Content-Length:"34"]
+             Body = {"reviewId":1,"userId":"token123"}
+    Session Attrs = {}
+
+Handler:
+             Type = com.encore.petandbe.controller.accommodation.review.api.ReviewController
+           Method = com.encore.petandbe.controller.accommodation.review.api.ReviewController#deleteReview(DeleteReviewRequests)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Content-Type:"application/json"]
+     Content type = application/json
+             Body = {"reviewId":1,"state":"1"}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = PUT
+      Request URI = /review
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", Accept:"application/json", Content-Length:"63"]
+             Body = {"reviewId":1,"userId":"token123","rate":3,"content":"not bad"}
+    Session Attrs = {}
+
+Handler:
+             Type = com.encore.petandbe.controller.accommodation.review.api.ReviewController
+           Method = com.encore.petandbe.controller.accommodation.review.api.ReviewController#updateReview(UpdateReviewRequests)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Content-Type:"application/json"]
+     Content type = application/json
+             Body = {"reviewId":1,"userId":"token123","rate":3,"content":"not bad"}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /review
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", Accept:"application/json", Content-Length:"70"]
+             Body = {"userId":"token123","rate":5,"content":"very good","reservationId":1}
+    Session Attrs = {}
+
+Handler:
+             Type = com.encore.petandbe.controller.accommodation.review.api.ReviewController
+           Method = com.encore.petandbe.controller.accommodation.review.api.ReviewController#registReview(RegistReviewRequests)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 201
+    Error message = null
+          Headers = [Location:"/review/created", Content-Type:"application/json"]
+     Content type = application/json
+             Body = {"reviewId":1,"userId":"token123","rate":5,"content":"very good"}
+    Forwarded URL = null
+   Redirected URL = /review/created
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = GET
+      Request URI = /review/1
+       Parameters = {}
+          Headers = [Accept:"application/json"]
+             Body = null
+    Session Attrs = {}
+
+Handler:
+             Type = com.encore.petandbe.controller.accommodation.review.api.ReviewController
+           Method = com.encore.petandbe.controller.accommodation.review.api.ReviewController#reviewDetails(String)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Content-Type:"application/json"]
+     Content type = application/json
+             Body = {"reviewId":1,"userId":"token123","rate":5,"content":"very good"}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -14,13 +14,15 @@ public class FilteringResearchRequests {
     private Enum<PetCategory> petCategory;
     private String weight;
     private String sortCategory;
+    private int page;
 
-    public FilteringResearchRequests(String address, LocalDateTime checkIn, LocalDateTime checkOut, Enum<PetCategory> petCategory, String weight, String sortCategory) {
+    public FilteringResearchRequests(String address, LocalDateTime checkIn, LocalDateTime checkOut, Enum<PetCategory> petCategory, String weight, String sortCategory, int page) {
         this.address = address;
         this.checkIn = checkIn;
         this.checkOut = checkOut;
         this.petCategory = petCategory;
         this.weight = weight;
         this.sortCategory = sortCategory;
+        this.page = page;
     }
 }

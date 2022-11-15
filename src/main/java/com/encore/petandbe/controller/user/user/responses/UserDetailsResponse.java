@@ -1,8 +1,10 @@
 package com.encore.petandbe.controller.user.user.responses;
 
 import lombok.Getter;
+import lombok.ToString;
 
 @Getter
+@ToString
 public class UserDetailsResponse {
 
     String token;

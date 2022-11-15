@@ -1,7 +1,6 @@
 package com.encore.petandbe.controller.accommodation.review.api;
 
-import java.net.URI;
-
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,8 +30,7 @@ public class ReviewController {
 
 	@PostMapping
 	public ResponseEntity<ReviewDetailsResponse> registReview(@RequestBody RegistReviewRequests registReviewRequests) {
-		return ResponseEntity.created(URI.create("/review/created"))
-			.body(reviewService.registReview(registReviewRequests));
+		return ResponseEntity.status(HttpStatus.CREATED).body(reviewService.registReview(registReviewRequests));
 	}
 
 	@GetMapping("/{reservation-id}")

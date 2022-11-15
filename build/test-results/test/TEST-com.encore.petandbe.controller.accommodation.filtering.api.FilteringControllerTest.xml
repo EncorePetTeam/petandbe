@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.encore.petandbe.controller.accommodation.filtering.api.FilteringControllerTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2022-11-15T05:49:47" hostname="DESKTOP-8AHN7E5" time="0.395">
+  <properties/>
+  <testcase name="Filtering Accommodation - success" classname="com.encore.petandbe.controller.accommodation.filtering.api.FilteringControllerTest" time="0.342"/>
+  <testcase name="No Filtering Accommodation - success" classname="com.encore.petandbe.controller.accommodation.filtering.api.FilteringControllerTest" time="0.046"/>
+  <system-out><![CDATA[14:49:44.284 [Test worker] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating CacheAwareContextLoaderDelegate from class [org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate]
+14:49:44.292 [Test worker] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating BootstrapContext using constructor [public org.springframework.test.context.support.DefaultBootstrapContext(java.lang.Class,org.springframework.test.context.CacheAwareContextLoaderDelegate)]
+14:49:44.324 [Test worker] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating TestContextBootstrapper for test class [com.encore.petandbe.controller.accommodation.filtering.api.FilteringControllerTest] from class [org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTestContextBootstrapper]
+14:49:44.335 [Test worker] INFO org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTestContextBootstrapper - Neither @ContextConfiguration nor @ContextHierarchy found for test class [com.encore.petandbe.controller.accommodation.filtering.api.FilteringControllerTest], using SpringBootContextLoader
+14:49:44.338 [Test worker] DEBUG org.springframework.test.context.support.AbstractContextLoader - Did not detect default resource location for test class [com.encore.petandbe.controller.accommodation.filtering.api.FilteringControllerTest]: class path resource [com/encore/petandbe/controller/accommodation/filtering/api/FilteringControllerTest-context.xml] does not exist
+14:49:44.339 [Test worker] DEBUG org.springframework.test.context.support.AbstractContextLoader - Did not detect default resource location for test class [com.encore.petandbe.controller.accommodation.filtering.api.FilteringControllerTest]: class path resource [com/encore/petandbe/controller/accommodation/filtering/api/FilteringControllerTestContext.groovy] does not exist
+14:49:44.339 [Test worker] INFO org.springframework.test.context.support.AbstractContextLoader - Could not detect default resource locations for test class [com.encore.petandbe.controller.accommodation.filtering.api.FilteringControllerTest]: no resource found for suffixes {-context.xml, Context.groovy}.
+14:49:44.340 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [com.encore.petandbe.controller.accommodation.filtering.api.FilteringControllerTest]: FilteringControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+14:49:44.394 [Test worker] DEBUG org.springframework.test.context.support.ActiveProfilesUtils - Could not find an 'annotation declaring class' for annotation type [org.springframework.test.context.ActiveProfiles] and class [com.encore.petandbe.controller.accommodation.filtering.api.FilteringControllerTest]
+14:49:44.447 [Test worker] DEBUG org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider - Identified candidate component class: file [C:\Users\J\Desktop\project\petnolja\petandbe\build\classes\java\main\com\encore\petandbe\PetandbeApplication.class]
+14:49:44.448 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration com.encore.petandbe.PetandbeApplication for test class com.encore.petandbe.controller.accommodation.filtering.api.FilteringControllerTest
+14:49:44.452 [Test worker] DEBUG org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTestContextBootstrapper - @TestExecutionListeners is not present for class [com.encore.petandbe.controller.accommodation.filtering.api.FilteringControllerTest]: using defaults.
+14:49:44.453 [Test worker] INFO org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTestContextBootstrapper - Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener, org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.event.ApplicationEventsTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener, org.springframework.test.context.event.EventPublishingTestExecutionListener]
+14:49:44.496 [Test worker] INFO org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTestContextBootstrapper - Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@5910de75, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@4108fa66, org.springframework.test.context.event.ApplicationEventsTestExecutionListener@1f130eaf, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener@7e0aadd0, org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener@21362712, org.springframework.test.context.support.DirtiesContextTestExecutionListener@27eb3298, org.springframework.test.context.transaction.TransactionalTestExecutionListener@200a26bc, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@bc57b40, org.springframework.test.context.event.EventPublishingTestExecutionListener@1b5bc39d, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener@655a5d9c, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener@1494b84d, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener@34abdee4, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener@71a9b4c7, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener@4628b1d3, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener@77cf3f8b]
+14:49:44.511 [Test worker] DEBUG org.springframework.test.context.support.AbstractDirtiesContextTestExecutionListener - Before test class: context [DefaultTestContext@2d72f75e testClass = FilteringControllerTest, testInstance = [null], testMethod = [null], testException = [null], mergedContextConfiguration = [WebMergedContextConfiguration@8ab78bc testClass = FilteringControllerTest, locations = '{}', classes = '{class com.encore.petandbe.PetandbeApplication}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTestContextBootstrapper=true}', contextCustomizers = set[org.springframework.boot.test.autoconfigure.OverrideAutoConfigurationContextCustomizerFactory$DisableAutoConfigurationContextCustomizer@a5b0b86, org.springframework.boot.test.autoconfigure.actuate.metrics.MetricsExportContextCustomizerFactory$DisableMetricExportContextCustomizer@b968a76, org.springframework.boot.test.autoconfigure.filter.TypeExcludeFiltersContextCustomizer@4d11636b, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@2666ae21, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@1c9f0a20, [ImportsContextCustomizer@5aa0dbf4 key = [@org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureWebMvc(), @org.springframework.test.context.BootstrapWith(value=org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTestContextBootstrapper.class), @org.springframework.boot.test.autoconfigure.core.AutoConfigureCache(cacheProvider=NONE), @org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest(useDefaultFilters=true, excludeFilters={}, controllers={com.encore.petandbe.controller.accommodation.filtering.api.FilteringController.class}, excludeAutoConfiguration={}, value={}, includeFilters={}, properties={}), @org.springframework.boot.test.autoconfigure.properties.PropertyMapping(value="spring.test.restdocs", skip=NO), @org.springframework.boot.autoconfigure.ImportAutoConfiguration(value={}, exclude={}, classes={}), @org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc(webDriverEnabled=true, print=DEFAULT, webClientEnabled=true, addFilters=true, printOnlyOnFailure=true), @org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs(uriScheme="http", outputDir="", uriPort=8080, value="", uriHost="localhost"), @org.springframework.context.annotation.Import(value={org.springframework.boot.test.autoconfigure.restdocs.RestDocumentationContextProviderRegistrar.class}), @org.springframework.boot.test.autoconfigure.filter.TypeExcludeFilters(value={org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTypeExcludeFilter.class}), @org.springframework.context.annotation.Import(value={org.springframework.boot.autoconfigure.ImportAutoConfigurationImportSelector.class}), @org.springframework.boot.test.autoconfigure.OverrideAutoConfiguration(enabled=false), @org.springframework.boot.test.autoconfigure.properties.PropertyMapping(value="spring.test.mockmvc", skip=NO)]], org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@32f0fba8, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@ab7a938, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@69c10c6f, org.springframework.boot.test.context.SpringBootTestArgs@1, org.springframework.boot.test.context.SpringBootTestWebEnvironment@0], resourceBasePath = 'src/main/webapp', contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]], attributes = map[[empty]]], class annotated with @DirtiesContext [false] with mode [null].
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v2.7.0)
+
+2022-11-15 14:49:45.118  INFO 1752 --- [    Test worker] c.e.p.c.a.f.api.FilteringControllerTest  : Starting FilteringControllerTest using Java 11.0.15 on DESKTOP-8AHN7E5 with PID 1752 (started by J in C:\Users\J\Desktop\project\petnolja\petandbe)
+2022-11-15 14:49:45.122  INFO 1752 --- [    Test worker] c.e.p.c.a.f.api.FilteringControllerTest  : The following 1 profile is active: "common"
+2022-11-15 14:49:47.204  INFO 1752 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2022-11-15 14:49:47.204  INFO 1752 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2022-11-15 14:49:47.205  INFO 1752 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2022-11-15 14:49:47.229  INFO 1752 --- [    Test worker] c.e.p.c.a.f.api.FilteringControllerTest  : Started FilteringControllerTest in 2.661 seconds (JVM running for 4.692)
+FilteringAccommodationRequests(address=서울특별시 중구, checkIn=2022-11-15 16:00:00, checkOut=2022-11-18 11:00:00, petCategory=Dog, weight=4.9, sortCategory=평점순, page=3)
+
+MockHttpServletRequest:
+      HTTP Method = GET
+      Request URI = /filtering/filtering-accommodation
+       Parameters = {address=[서울특별시 중구], checkIn=[2022-11-15 16:00:00], checkOut=[2022-11-18 11:00:00], petCategory=[Dog], weight=[4.9], sortCategory=[평점순], page=[3]}
+          Headers = [Accept:"application/json"]
+             Body = null
+    Session Attrs = {}
+
+Handler:
+             Type = com.encore.petandbe.controller.accommodation.filtering.api.FilteringController
+           Method = com.encore.petandbe.controller.accommodation.filtering.api.FilteringController#filteringAccommodation(FilteringAccommodationRequests)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Content-Type:"application/json"]
+     Content type = application/json
+             Body = {"filteringAccommodationList":[{"accommodationId":1,"accommodationName":"정정일 애견호텔 & 유치원0","address":"서울특별시 중구 동호로 2490","avgRate":4.8},{"accommodationId":2,"accommodationName":"정정일 애견호텔 & 유치원1","address":"서울특별시 중구 동호로 2491","avgRate":4.8},{"accommodationId":3,"accommodationName":"정정일 애견호텔 & 유치원2","address":"서울특별시 중구 동호로 2492","avgRate":4.8},{"accommodationId":4,"accommodationName":"정정일 애견호텔 & 유치원3","address":"서울특별시 중구 동호로 2493","avgRate":4.8},{"accommodationId":5,"accommodationName":"정정일 애견호텔 & 유치원4","address":"서울특별시 중구 동호로 2494","avgRate":4.8},{"accommodationId":6,"accommodationName":"정정일 애견호텔 & 유치원5","address":"서울특별시 중구 동호로 2495","avgRate":4.8},{"accommodationId":7,"accommodationName":"정정일 애견호텔 & 유치원6","address":"서울특별시 중구 동호로 2496","avgRate":4.8},{"accommodationId":8,"accommodationName":"정정일 애견호텔 & 유치원7","address":"서울특별시 중구 동호로 2497","avgRate":4.8},{"accommodationId":9,"accommodationName":"정정일 애견호텔 & 유치원8","address":"서울특별시 중구 동호로 2498","avgRate":4.8},{"accommodationId":10,"accommodationName":"정정일 애견호텔 & 유치원9","address":"서울특별시 중구 동호로 2499","avgRate":4.8}]}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+FilteringAccommodationRequests(address=null, checkIn=null, checkOut=null, petCategory=null, weight=null, sortCategory=null, page=0)
+
+MockHttpServletRequest:
+      HTTP Method = GET
+      Request URI = /filtering/filtering-accommodation
+       Parameters = {}
+          Headers = [Accept:"application/json"]
+             Body = null
+    Session Attrs = {}
+
+Handler:
+             Type = com.encore.petandbe.controller.accommodation.filtering.api.FilteringController
+           Method = com.encore.petandbe.controller.accommodation.filtering.api.FilteringController#filteringAccommodation(FilteringAccommodationRequests)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Content-Type:"application/json"]
+     Content type = application/json
+             Body = {"filteringAccommodationList":[{"accommodationId":1,"accommodationName":"정정일 애견호텔 & 유치원0","address":"서울특별시 중구 동호로 2490","avgRate":4.8},{"accommodationId":2,"accommodationName":"정정일 애견호텔 & 유치원1","address":"서울특별시 중구 동호로 2491","avgRate":4.8},{"accommodationId":3,"accommodationName":"정정일 애견호텔 & 유치원2","address":"서울특별시 중구 동호로 2492","avgRate":4.8},{"accommodationId":4,"accommodationName":"정정일 애견호텔 & 유치원3","address":"서울특별시 중구 동호로 2493","avgRate":4.8},{"accommodationId":5,"accommodationName":"정정일 애견호텔 & 유치원4","address":"서울특별시 중구 동호로 2494","avgRate":4.8},{"accommodationId":6,"accommodationName":"정정일 애견호텔 & 유치원5","address":"서울특별시 중구 동호로 2495","avgRate":4.8},{"accommodationId":7,"accommodationName":"정정일 애견호텔 & 유치원6","address":"서울특별시 중구 동호로 2496","avgRate":4.8},{"accommodationId":8,"accommodationName":"정정일 애견호텔 & 유치원7","address":"서울특별시 중구 동호로 2497","avgRate":4.8},{"accommodationId":9,"accommodationName":"정정일 애견호텔 & 유치원8","address":"서울특별시 중구 동호로 2498","avgRate":4.8},{"accommodationId":10,"accommodationName":"정정일 애견호텔 & 유치원9","address":"서울특별시 중구 동호로 2499","avgRate":4.8}]}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

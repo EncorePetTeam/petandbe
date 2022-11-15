@@ -1,0 +1,24 @@
+|===
+|Path|Type|Description
+
+|`+filteringAccommodationList+`
+|`+Array+`
+|필터 결과 List
+
+|`+filteringAccommodationList[].accommodationId+`
+|`+Number+`
+|숙소 Id
+
+|`+filteringAccommodationList[].accommodationName+`
+|`+String+`
+|숙소 이름
+
+|`+filteringAccommodationList[].address+`
+|`+String+`
+|숙소 주소
+
+|`+filteringAccommodationList[].avgRate+`
+|`+Number+`
+|숙소 평점
+
+|===

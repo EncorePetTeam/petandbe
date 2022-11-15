@@ -6,14 +6,14 @@ import lombok.Getter;
 public class FilteringAccommodationResponse {
 
     private Long accommodationId;
-    private String address;
     private String accommodationName;
-    private Integer avgRate;
+    private String address;
+    private double avgRate;
 
-    public FilteringAccommodationResponse(Long accommodationId, String address, String accommodationName, Integer avgRate) {
+    public FilteringAccommodationResponse(Long accommodationId, String accommodationName, String address, double avgRate) {
         this.accommodationId = accommodationId;
-        this.address = address;
         this.accommodationName = accommodationName;
+        this.address = address;
         this.avgRate = avgRate;
     }
 }

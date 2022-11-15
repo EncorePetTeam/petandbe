@@ -6,7 +6,7 @@ import lombok.Getter;
 import java.time.LocalDateTime;
 
 @Getter
-public class FilteringResearchRequests {
+public class FilteringAccommodationRequests {
 
     private String address;
     private LocalDateTime checkIn;
@@ -16,7 +16,7 @@ public class FilteringResearchRequests {
     private String sortCategory;
     private int page;
 
-    public FilteringResearchRequests(String address, LocalDateTime checkIn, LocalDateTime checkOut, Enum<PetCategory> petCategory, String weight, String sortCategory, int page) {
+    public FilteringAccommodationRequests(String address, LocalDateTime checkIn, LocalDateTime checkOut, Enum<PetCategory> petCategory, String weight, String sortCategory, int page) {
         this.address = address;
         this.checkIn = checkIn;
         this.checkOut = checkOut;

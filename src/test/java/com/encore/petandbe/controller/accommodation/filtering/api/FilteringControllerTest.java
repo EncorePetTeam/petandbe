@@ -10,7 +10,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -26,6 +25,7 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
+import com.encore.petandbe.controller.accommodation.filtering.requests.FilteringAccommodationRequests;
 import com.encore.petandbe.controller.accommodation.filtering.responses.FilteringAccommodationListResponse;
 import com.encore.petandbe.controller.accommodation.filtering.responses.FilteringAccommodationResponse;
 import com.encore.petandbe.service.accommodation.filtering.FilteringService;
@@ -74,7 +74,8 @@ class FilteringControllerTest {
 		FilteringAccommodationListResponse filteringAccommodationListResponse = new FilteringAccommodationListResponse(
 			filteringAccommodationResponses);
 
-		when(filteringService.filteringAccommodation(any(Map.class))).thenReturn(filteringAccommodationListResponse);
+		when(filteringService.filteringAccommodation(any(FilteringAccommodationRequests.class))).thenReturn(
+			filteringAccommodationListResponse);
 		//when
 		ResultActions resultActions = mockMvc.perform(RestDocumentationRequestBuilders
 			.get("/filtering/accommodation")
@@ -131,7 +132,8 @@ class FilteringControllerTest {
 		FilteringAccommodationListResponse filteringAccommodationListResponse = new FilteringAccommodationListResponse(
 			filteringAccommodationResponses);
 
-		when(filteringService.filteringAccommodation(any(Map.class))).thenReturn(filteringAccommodationListResponse);
+		when(filteringService.filteringAccommodation(any(FilteringAccommodationRequests.class))).thenReturn(
+			filteringAccommodationListResponse);
 		//when
 		ResultActions resultActions = mockMvc.perform(RestDocumentationRequestBuilders
 			.get("/filtering/accommodation")

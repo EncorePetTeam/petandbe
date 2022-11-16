@@ -1,11 +1,9 @@
 package com.encore.petandbe.controller.accommodation.filtering.api;
 
-import java.util.Map;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.encore.petandbe.controller.accommodation.filtering.requests.FilteringAccommodationRequests;
@@ -23,7 +21,9 @@ public class FilteringController {
 	}
 
 	@GetMapping("/accommodation")
-	public ResponseEntity<FilteringAccommodationListResponse> filteringAccommodation(@RequestParam Map<String,String> allParams) {
-		return ResponseEntity.ok().body(filteringService.filteringAccommodation(allParams));
+	public ResponseEntity<FilteringAccommodationListResponse> filteringAccommodation(
+		@ModelAttribute FilteringAccommodationRequests filteringAccommodationRequests) {
+		return ResponseEntity.ok()
+			.body(filteringService.filteringAccommodation(filteringAccommodationRequests));
 	}
 }

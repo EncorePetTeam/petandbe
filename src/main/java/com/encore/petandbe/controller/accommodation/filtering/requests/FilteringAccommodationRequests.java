@@ -11,10 +11,11 @@ public class FilteringAccommodationRequests {
 	private String petCategory;
 	private String weight;
 	private String sortCategory;
-	private int page;
+	private Integer page;
 
-	public FilteringAccommodationRequests(String address, String checkIn, String checkOut, String petCategory,
-		String weight, String sortCategory, int page) {
+	public FilteringAccommodationRequests(String address, String checkIn, String checkOut,
+		String petCategory,
+		String weight, String sortCategory, Integer page) {
 		this.address = address;
 		this.checkIn = checkIn;
 		this.checkOut = checkOut;

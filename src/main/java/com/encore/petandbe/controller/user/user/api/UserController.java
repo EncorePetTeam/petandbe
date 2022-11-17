@@ -37,9 +37,5 @@ public class UserController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(userSignUpService.userSignUp(userSignUpRequest));
 	}
 
-	@GetMapping("/signin")
-	public ResponseEntity<UserSignInResponse> userSignIn(@RequestBody UserSignInRequest userSignInRequest) {
-		return ResponseEntity.ok().body(userSignInService.userSignIn(userSignInRequest));
-	}
 
 }

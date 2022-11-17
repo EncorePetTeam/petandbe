@@ -111,37 +111,4 @@ class UserControllerTest {
 			)).andDo(print());
 	}
 
-	@Test
-	@DisplayName("User login test - Normal")
-	void userSignInSuccess() throws Exception {
-		//given
-		String token = "token123";
-		String email = "gnsrl@naver.com";
-		String nickname = "rnfjddl";
-
-		UserSignInResponse userSignInResponse = new UserSignInResponse(token, email, nickname);
-
-		when(userSignInService.userSignIn(any())).thenReturn(userSignInResponse);
-		//when
-		ResultActions resultActions = mockMvc.perform(RestDocumentationRequestBuilders
-			.get("/user/signin")
-			.content(
-				String.format("{\"token\": \"%s\", \"email\": \"%s\", \"nickname\": \"%s\"}", token, email, nickname))
-			.contentType(MediaType.APPLICATION_JSON)
-			.accept(MediaType.APPLICATION_JSON));
-		//then
-		resultActions.andExpect(status().isOk())
-			.andDo(document("user-signin",
-				requestFields(
-					fieldWithPath("token").description("OAuth의 token id"),
-					fieldWithPath("email").description("유저이메일"),
-					fieldWithPath("nickname").description("유저닉네임")
-				),
-				responseFields(
-					fieldWithPath("token").type(JsonFieldType.STRING).description("OAuth의 token id"),
-					fieldWithPath("email").type(JsonFieldType.STRING).description("유저이메일"),
-					fieldWithPath("nickname").type(JsonFieldType.STRING).description("유저닉네임")
-				)
-			)).andDo(print());
-	}
 }

@@ -1,5 +1,5 @@
 package com.encore.petandbe.model.accommodation.filtering.category;
 
-public enum PetCategoryEunm {
+public enum PetCategory {
 	DOG, CAT
 }

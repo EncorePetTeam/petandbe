@@ -34,12 +34,12 @@ public class Accommodation extends BaseEntity {
 	private Long id;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(nullable = false, name = "address_code", referencedColumnName = "address_code")
-	private Address addressCode;
+	@JoinColumn(nullable = false, name = "address_code")
+	private Address address;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(nullable = false, name = "user_id", referencedColumnName = "id")
-	private User userId;
+	@JoinColumn(nullable = false, name = "user_id")
+	private User user;
 
 	@Column(nullable = false, length = 100)
 	private String accommodationName;
@@ -71,12 +71,12 @@ public class Accommodation extends BaseEntity {
 	@Column(nullable = false, columnDefinition = "bit(1) default 0", length = 1)
 	private Boolean state;
 
-	public Accommodation(Long id, Address addressCode, User userId, String accommodationName, String workingHours,
+	public Accommodation(Long id, Address address, User user, String accommodationName, String workingHours,
 		String wkWorkingHours, String hotelLocation, String lotNumber, String addressDetail, String accomoodationType,
 		Double avgRate, String detailInfo, Boolean state) {
 		this.id = id;
-		this.addressCode = addressCode;
-		this.userId = userId;
+		this.address = address;
+		this.user = user;
 		this.accommodationName = accommodationName;
 		this.workingHours = workingHours;
 		this.wkWorkingHours = wkWorkingHours;
@@ -93,8 +93,6 @@ public class Accommodation extends BaseEntity {
 	public String toString() {
 		return "Accommodation{" +
 			"id=" + id +
-			", addressCode=" + addressCode +
-			", userId=" + userId +
 			", accommodationName='" + accommodationName + '\'' +
 			", workingHours='" + workingHours + '\'' +
 			", wkWorkingHours='" + wkWorkingHours + '\'' +
@@ -104,7 +102,7 @@ public class Accommodation extends BaseEntity {
 			", accomoodationType='" + accomoodationType + '\'' +
 			", avgRate=" + avgRate +
 			", detailInfo='" + detailInfo + '\'' +
-			", state='" + state + '\'' +
+			", state=" + state +
 			'}';
 	}
 
@@ -115,8 +113,8 @@ public class Accommodation extends BaseEntity {
 		if (o == null || getClass() != o.getClass())
 			return false;
 		Accommodation that = (Accommodation)o;
-		return Objects.equals(id, that.id) && Objects.equals(addressCode, that.addressCode)
-			&& Objects.equals(userId, that.userId) && Objects.equals(accommodationName,
+		return Objects.equals(id, that.id) && Objects.equals(address, that.address)
+			&& Objects.equals(user, that.user) && Objects.equals(accommodationName,
 			that.accommodationName) && Objects.equals(workingHours, that.workingHours)
 			&& Objects.equals(wkWorkingHours, that.wkWorkingHours) && Objects.equals(hotelLocation,
 			that.hotelLocation) && Objects.equals(lotNumber, that.lotNumber) && Objects.equals(
@@ -127,7 +125,8 @@ public class Accommodation extends BaseEntity {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, addressCode, userId, accommodationName, workingHours, wkWorkingHours, hotelLocation,
-			lotNumber, addressDetail, accomoodationType, avgRate, detailInfo, state);
+		return Objects.hash(id, accommodationName, workingHours, wkWorkingHours, hotelLocation, lotNumber,
+			addressDetail,
+			accomoodationType, avgRate, detailInfo, state);
 	}
 }

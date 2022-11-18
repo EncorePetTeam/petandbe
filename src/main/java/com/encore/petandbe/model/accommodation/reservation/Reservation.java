@@ -18,7 +18,7 @@ import org.hibernate.annotations.DynamicInsert;
 
 import com.encore.petandbe.model.BaseEntity;
 import com.encore.petandbe.model.accommodation.accommodation.Accommodation;
-import com.encore.petandbe.model.accommodation.filtering.category.PetCategoryEunm;
+import com.encore.petandbe.model.accommodation.filtering.category.PetCategory;
 import com.encore.petandbe.model.accommodation.review.Review;
 import com.encore.petandbe.model.user.user.User;
 
@@ -39,16 +39,16 @@ public class Reservation extends BaseEntity {
 	private Long id;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(nullable = false, name = "accommodation_id", referencedColumnName = "id")
-	private Accommodation accommodationId;
+	@JoinColumn(nullable = false, name = "accommodation_id")
+	private Accommodation accommodation;
 
 	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(nullable = true, name = "review_id", referencedColumnName = "id")
-	private Review reviewId;
+	@JoinColumn(nullable = true, name = "review_id")
+	private Review review;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(nullable = false, name = "user_id", referencedColumnName = "id")
-	private User userId;
+	@JoinColumn(nullable = false, name = "user_id")
+	private User user;
 
 	@Column(nullable = false, length = 20)
 	private String checkInDate;
@@ -58,7 +58,7 @@ public class Reservation extends BaseEntity {
 
 	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)
-	private PetCategoryEunm petCategoryEnum;
+	private PetCategory petCategory;
 
 	@Column(nullable = false, columnDefinition = "decimal")
 	private String weight;
@@ -66,15 +66,15 @@ public class Reservation extends BaseEntity {
 	@Column(nullable = false, columnDefinition = "bit(1) default 0", length = 1)
 	private Boolean state;
 
-	public Reservation(Long id, Accommodation accommodationId, Review reviewId, User userId, String checkInDate,
-		String checkOutDate, PetCategoryEunm petCategoryEnum, String weight, Boolean state) {
+	public Reservation(Long id, Accommodation accommodation, Review review, User user, String checkInDate,
+		String checkOutDate, PetCategory petCategory, String weight, Boolean state) {
 		this.id = id;
-		this.accommodationId = accommodationId;
-		this.reviewId = reviewId;
-		this.userId = userId;
+		this.accommodation = accommodation;
+		this.review = review;
+		this.user = user;
 		this.checkInDate = checkInDate;
 		this.checkOutDate = checkOutDate;
-		this.petCategoryEnum = petCategoryEnum;
+		this.petCategory = petCategory;
 		this.weight = weight;
 		this.state = state;
 	}
@@ -83,12 +83,9 @@ public class Reservation extends BaseEntity {
 	public String toString() {
 		return "Reservation{" +
 			"id=" + id +
-			", accommodationId=" + accommodationId +
-			", reviewId=" + reviewId +
-			", userId=" + userId +
 			", checkInDate='" + checkInDate + '\'' +
 			", checkOutDate='" + checkOutDate + '\'' +
-			", petCategoryEnum=" + petCategoryEnum +
+			", petCategory=" + petCategory +
 			", weight='" + weight + '\'' +
 			", state=" + state +
 			'}';
@@ -101,16 +98,15 @@ public class Reservation extends BaseEntity {
 		if (o == null || getClass() != o.getClass())
 			return false;
 		Reservation that = (Reservation)o;
-		return Objects.equals(id, that.id) && Objects.equals(accommodationId, that.accommodationId)
-			&& Objects.equals(reviewId, that.reviewId) && Objects.equals(userId, that.userId)
+		return Objects.equals(id, that.id) && Objects.equals(accommodation, that.accommodation)
+			&& Objects.equals(review, that.review) && Objects.equals(user, that.user)
 			&& Objects.equals(checkInDate, that.checkInDate) && Objects.equals(checkOutDate,
-			that.checkOutDate) && petCategoryEnum == that.petCategoryEnum && Objects.equals(weight, that.weight)
+			that.checkOutDate) && petCategory == that.petCategory && Objects.equals(weight, that.weight)
 			&& Objects.equals(state, that.state);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, accommodationId, reviewId, userId, checkInDate, checkOutDate, petCategoryEnum, weight,
-			state);
+		return Objects.hash(id, checkInDate, checkOutDate, petCategory, weight, state);
 	}
 }

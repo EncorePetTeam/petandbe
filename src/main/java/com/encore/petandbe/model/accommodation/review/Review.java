@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import com.encore.petandbe.model.BaseEntity;
 import com.encore.petandbe.model.user.user.User;
@@ -26,6 +28,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @DynamicInsert
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@SQLDelete(sql = "UPDATE review SET state = true WHERE id = ?")
+@Where(clause = "state = false")
 public class Review extends BaseEntity {
 
 	@Id
@@ -33,8 +37,8 @@ public class Review extends BaseEntity {
 	private Long id;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(nullable = false, name = "user_id", referencedColumnName = "id")
-	private User userId;
+	@JoinColumn(nullable = false, name = "user_id")
+	private User user;
 
 	@Column
 	private Integer rate;
@@ -45,9 +49,9 @@ public class Review extends BaseEntity {
 	@Column(nullable = false, columnDefinition = "bit(1) default 0", length = 1)
 	private Boolean state;
 
-	public Review(Long id, User userId, Integer rate, String content, Boolean state) {
+	public Review(Long id, User user, Integer rate, String content, Boolean state) {
 		this.id = id;
-		this.userId = userId;
+		this.user = user;
 		this.rate = rate;
 		this.content = content;
 		this.state = state;
@@ -57,7 +61,6 @@ public class Review extends BaseEntity {
 	public String toString() {
 		return "Review{" +
 			"id=" + id +
-			", userId=" + userId +
 			", rate=" + rate +
 			", content='" + content + '\'' +
 			", state=" + state +
@@ -71,13 +74,13 @@ public class Review extends BaseEntity {
 		if (o == null || getClass() != o.getClass())
 			return false;
 		Review review = (Review)o;
-		return Objects.equals(id, review.id) && Objects.equals(userId, review.userId)
+		return Objects.equals(id, review.id) && Objects.equals(user, review.user)
 			&& Objects.equals(rate, review.rate) && Objects.equals(content, review.content)
 			&& Objects.equals(state, review.state);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, userId, rate, content, state);
+		return Objects.hash(id, rate, content, state);
 	}
 }

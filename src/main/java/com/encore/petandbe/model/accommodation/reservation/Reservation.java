@@ -15,6 +15,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import com.encore.petandbe.model.BaseEntity;
 import com.encore.petandbe.model.accommodation.accommodation.Accommodation;
@@ -31,7 +34,10 @@ import lombok.NoArgsConstructor;
 @Getter
 @Builder
 @DynamicInsert
+@DynamicUpdate
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@SQLDelete(sql = "UPDATE reservation SET state = true WHERE id = ?")
+@Where(clause = "state = false")
 public class Reservation extends BaseEntity {
 
 	@Id

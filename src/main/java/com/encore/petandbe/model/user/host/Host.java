@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import com.encore.petandbe.model.BaseEntity;
 
@@ -22,6 +24,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @DynamicInsert
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@SQLDelete(sql = "UPDATE host SET state = true WHERE id = ?")
+@Where(clause = "state = false")
 public class Host extends BaseEntity {
 
 	@Id

@@ -6,9 +6,9 @@ import lombok.Getter;
 public class DeleteReviewRequests {
 
 	private Long reviewId;
-	private String userId;
+	private Long userId;
 
-	public DeleteReviewRequests(Long reviewId, String userId) {
+	public DeleteReviewRequests(Long reviewId, Long userId) {
 		this.reviewId = reviewId;
 		this.userId = userId;
 	}

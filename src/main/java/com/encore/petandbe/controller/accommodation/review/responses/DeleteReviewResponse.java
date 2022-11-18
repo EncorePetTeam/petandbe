@@ -6,9 +6,9 @@ import lombok.Getter;
 public class DeleteReviewResponse {
 
 	private Long reviewId;
-	private String state;
+	private Boolean state;
 
-	public DeleteReviewResponse(Long reviewId, String state) {
+	public DeleteReviewResponse(Long reviewId, Boolean state) {
 		this.reviewId = reviewId;
 		this.state = state;
 	}

@@ -1,8 +1,8 @@
 package com.encore.petandbe.controller.accommodation.filtering.api;
 
+import static com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
-import static com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
@@ -41,7 +41,7 @@ class FilteringControllerTest {
 	private FilteringService filteringService;
 
 	@Test
-	@DisplayName("Filtering Accommodation - success")
+	@DisplayName("Filtering accommodation controller - success")
 	void filteringAccommodationSuccess() throws Exception {
 		//given
 		Long accommodationId = 1L;
@@ -108,7 +108,7 @@ class FilteringControllerTest {
 	}
 
 	@Test
-	@DisplayName("No Filtering Accommodation - success")
+	@DisplayName("No Filtering accommodation controller - success")
 	void noFilteringAccommodationSuccess() throws Exception {
 		//given
 		Long accommodationId = 1L;

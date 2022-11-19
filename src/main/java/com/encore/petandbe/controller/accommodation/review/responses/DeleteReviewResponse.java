@@ -7,9 +7,11 @@ public class DeleteReviewResponse {
 
 	private Long reviewId;
 	private Boolean state;
+	private Long reservationId;
 
-	public DeleteReviewResponse(Long reviewId, Boolean state) {
+	public DeleteReviewResponse(Long reviewId, Boolean state, Long reservationId) {
 		this.reviewId = reviewId;
 		this.state = state;
+		this.reservationId = reservationId;
 	}
 }

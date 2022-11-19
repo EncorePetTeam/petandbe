@@ -12,7 +12,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
@@ -22,7 +21,6 @@ import org.hibernate.annotations.Where;
 import com.encore.petandbe.model.BaseEntity;
 import com.encore.petandbe.model.accommodation.accommodation.Accommodation;
 import com.encore.petandbe.model.accommodation.filtering.category.PetCategory;
-import com.encore.petandbe.model.accommodation.review.Review;
 import com.encore.petandbe.model.user.user.User;
 
 import lombok.AccessLevel;
@@ -48,10 +46,6 @@ public class Reservation extends BaseEntity {
 	@JoinColumn(nullable = false, name = "accommodation_id")
 	private Accommodation accommodation;
 
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(nullable = true, name = "review_id")
-	private Review review;
-
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(nullable = false, name = "user_id")
 	private User user;
@@ -72,11 +66,10 @@ public class Reservation extends BaseEntity {
 	@Column(nullable = false, columnDefinition = "bit(1) default 0", length = 1)
 	private Boolean state;
 
-	public Reservation(Long id, Accommodation accommodation, Review review, User user, String checkInDate,
+	public Reservation(Long id, Accommodation accommodation, User user, String checkInDate,
 		String checkOutDate, PetCategory petCategory, String weight, Boolean state) {
 		this.id = id;
 		this.accommodation = accommodation;
-		this.review = review;
 		this.user = user;
 		this.checkInDate = checkInDate;
 		this.checkOutDate = checkOutDate;
@@ -105,10 +98,9 @@ public class Reservation extends BaseEntity {
 			return false;
 		Reservation that = (Reservation)o;
 		return Objects.equals(id, that.id) && Objects.equals(accommodation, that.accommodation)
-			&& Objects.equals(review, that.review) && Objects.equals(user, that.user)
-			&& Objects.equals(checkInDate, that.checkInDate) && Objects.equals(checkOutDate,
-			that.checkOutDate) && petCategory == that.petCategory && Objects.equals(weight, that.weight)
-			&& Objects.equals(state, that.state);
+			&& Objects.equals(user, that.user) && Objects.equals(checkInDate, that.checkInDate)
+			&& Objects.equals(checkOutDate, that.checkOutDate) && petCategory == that.petCategory
+			&& Objects.equals(weight, that.weight) && Objects.equals(state, that.state);
 	}
 
 	@Override

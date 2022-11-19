@@ -25,7 +25,6 @@ public class ReviewService {
 	private ReviewRepository reviewRepository;
 	private UserRepository userRepository;
 	private ReservationRepository reservationRepository;
-	private ReviewMapper reviewMapper = new ReviewMapper();
 
 	public ReviewService(ReviewRepository reviewRepository, UserRepository userRepository,
 		ReservationRepository reservationRepository) {
@@ -42,15 +41,12 @@ public class ReviewService {
 		Reservation reservation = reservationRepository.findById(registReviewRequests.getReservationId())
 			.orElseThrow(() -> new NonExistResourceException("Reservation could not be found"));
 
-		Review afterSaveReview = reviewRepository.save(
-			reviewMapper.registReviewRequestsToEntity(registReviewRequests, user));
+		checkUserIsMatch(user, reservation.getUser());
 
-		Reservation updatedReservation = reservationRepository.save(Reservation.builder()
-			.id(reservation.getId())
-			.review(afterSaveReview)
-			.build());
+		Review savedReview = reviewRepository.save(
+			ReviewMapper.of().registReviewRequestsToEntity(registReviewRequests, user, reservation));
 
-		return reviewMapper.entityToResponse(afterSaveReview, updatedReservation.getId());
+		return ReviewMapper.of().registedEntityToResponse(savedReview);
 	}
 
 	@Transactional
@@ -58,11 +54,10 @@ public class ReviewService {
 		Reservation reservation = reservationRepository.findById(reservationId)
 			.orElseThrow(() -> new NonExistResourceException("Reservation could not be found"));
 
-		if (reservation.getReview() == null) {
-			throw new NonExistResourceException("Review does not exist");
-		}
+		Review review = reviewRepository.findByReservationId(reservation)
+			.orElseThrow(() -> new NonExistResourceException("Review could not be found"));
 
-		return reviewMapper.entityToResponse(reservation.getReview());
+		return ReviewMapper.of().entityToResponse(review);
 	}
 
 	@Transactional
@@ -73,13 +68,11 @@ public class ReviewService {
 		Review review = reviewRepository.findById(updateReviewRequests.getReviewId())
 			.orElseThrow(() -> new NonExistResourceException("Review does not exist"));
 
-		if (!user.getId().equals(review.getUser().getId())) {
-			throw new WrongRequestException("user inconsistency");
-		}
+		checkUserIsMatch(user, review.getUser());
 
-		Review updatedReview = reviewRepository.save(reviewMapper.updateReviewRequestsToEntity(updateReviewRequests));
+		review.updateReview(updateReviewRequests);
 
-		return reviewMapper.entityToResponse(updatedReview);
+		return ReviewMapper.of().entityToResponse(review);
 	}
 
 	@Transactional
@@ -94,7 +87,14 @@ public class ReviewService {
 			throw new WrongRequestException("user inconsistency");
 		}
 
-		Review deletedReview = reviewRepository.save(Review.builder().id(review.getId()).state(true).build());
-		return reviewMapper.deletedEntityToResponse(deletedReview);
+		checkUserIsMatch(user, review.getUser());
+
+		return ReviewMapper.of().deletedEntityToResponse(review);
+	}
+
+	private void checkUserIsMatch(User expect, User result) {
+		if (!expect.equals(result)) {
+			throw new WrongRequestException("user inconsistency");
+		}
 	}
 }

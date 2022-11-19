@@ -58,18 +58,8 @@ class ReviewServiceTest {
 
 		User user = User.builder().id(userId).build();
 
-		Review review = Review.builder()
-			.user(User.builder().id(userId).build())
-			.rate(rate)
-			.content(content)
-			.state(false)
-			.build();
-
-		Reservation beforeUpdateReservation = Reservation.builder().id(reservationId).review(null).build();
-
-		Reservation afterUpdateReservation = Reservation.builder()
+		Reservation reservation = Reservation.builder()
 			.id(reservationId)
-			.review(review)
 			.user(user)
 			.checkInDate("2022-11-17 11:00:00")
 			.checkOutDate("2022-11-19 16:00:00")
@@ -80,10 +70,17 @@ class ReviewServiceTest {
 			.accommodation(Accommodation.builder().id(1L).build())
 			.build();
 
-		given(reservationRepository.findById(reservationId)).willReturn(Optional.ofNullable(beforeUpdateReservation));
+		Review review = Review.builder()
+			.user(User.builder().id(userId).build())
+			.reservation(reservation)
+			.rate(rate)
+			.content(content)
+			.state(false)
+			.build();
+
+		given(reservationRepository.findById(reservationId)).willReturn(Optional.ofNullable(reservation));
 		given(userRepository.findById(userId)).willReturn(Optional.ofNullable(user));
 		given(reviewRepository.save(any(Review.class))).willReturn(review);
-		given(reservationRepository.save(any(Reservation.class))).willReturn(afterUpdateReservation);
 		//when
 		RegistReviewResponse registReviewResponse = reviewService.registReview(registReviewRequests);
 
@@ -106,17 +103,8 @@ class ReviewServiceTest {
 
 		User user = User.builder().id(userId).build();
 
-		Review review = Review.builder()
-			.user(User.builder().id(userId).build())
-			.rate(rate)
-			.state(false)
-			.build();
-
-		Reservation beforeUpdateReservation = Reservation.builder().id(reservationId).review(null).build();
-
-		Reservation afterUpdateReservation = Reservation.builder()
+		Reservation reservation = Reservation.builder()
 			.id(reservationId)
-			.review(review)
 			.user(user)
 			.checkInDate("2022-11-17 11:00:00")
 			.checkOutDate("2022-11-19 16:00:00")
@@ -127,10 +115,16 @@ class ReviewServiceTest {
 			.accommodation(Accommodation.builder().id(1L).build())
 			.build();
 
-		given(reservationRepository.findById(reservationId)).willReturn(Optional.ofNullable(beforeUpdateReservation));
+		Review review = Review.builder()
+			.user(User.builder().id(userId).build())
+			.reservation(reservation)
+			.rate(rate)
+			.state(false)
+			.build();
+
+		given(reservationRepository.findById(reservationId)).willReturn(Optional.ofNullable(reservation));
 		given(userRepository.findById(userId)).willReturn(Optional.ofNullable(user));
 		given(reviewRepository.save(any(Review.class))).willReturn(review);
-		given(reservationRepository.save(any(Reservation.class))).willReturn(afterUpdateReservation);
 		//when
 		RegistReviewResponse registReviewResponse = reviewService.registReview(registReviewRequests);
 
@@ -183,6 +177,28 @@ class ReviewServiceTest {
 	}
 
 	@Test
+	@DisplayName("Regist Review service - user does not match fail")
+	void registReviewUserDoesNotMatchFail() {
+		//given
+		Long userId = 1L;
+		Integer rate = 5;
+		String content = "very good";
+		Long reservationId = 1L;
+
+		RegistReviewRequests registReviewRequests = new RegistReviewRequests(userId, rate, content, reservationId);
+
+		given(userRepository.findById(userId)).willReturn(Optional.ofNullable(User.builder().id(userId).build()));
+		given(reservationRepository.findById(reservationId)).willReturn(
+			Optional.ofNullable(Reservation.builder().id(1L).user(User.builder().id(2L).build()).build()));
+
+		//when
+		Assertions.assertThrows(WrongRequestException.class, () -> {
+			//then
+			reviewService.registReview(registReviewRequests);
+		});
+	}
+
+	@Test
 	@DisplayName("Find review details service - success")
 	void findReviewDetailsSuccess() {
 		//given
@@ -192,18 +208,19 @@ class ReviewServiceTest {
 		Long reservationId = 1L;
 		Long reviewId = 25L;
 
+		Reservation reservation = Reservation.builder().id(reservationId).build();
+
 		Review review = Review.builder()
 			.id(reviewId)
+			.reservation(reservation)
 			.user(User.builder().id(userId).build())
 			.rate(rate)
 			.content(content)
 			.state(false)
 			.build();
 
-		Reservation reservation = Reservation.builder().id(reservationId).review(review).build();
-
 		given(reservationRepository.findById(reservationId)).willReturn(Optional.ofNullable(reservation));
-
+		given(reviewRepository.findByReservationId(reservation)).willReturn(Optional.ofNullable(review));
 		//when
 		ReviewDetailsResponse reviewDetailsResponse = reviewService.findReviewDetails(reservationId);
 
@@ -222,6 +239,7 @@ class ReviewServiceTest {
 		Reservation reservation = Reservation.builder().id(reservationId).build();
 
 		given(reservationRepository.findById(reservationId)).willReturn(Optional.ofNullable(reservation));
+		given(reviewRepository.findByReservationId(reservation)).willReturn(Optional.empty());
 		//when
 		Assertions.assertThrows(NonExistResourceException.class, () -> {
 			//then
@@ -251,32 +269,25 @@ class ReviewServiceTest {
 		Integer rate = 5;
 		String content = "very good";
 		Long reviewId = 25L;
-
-		Review review = Review.builder()
-			.id(reviewId)
-			.user(User.builder().id(userId).build())
-			.rate(rate)
-			.content(content)
-			.state(true)
-			.build();
-
-		Review beforeUpdateReview = Review.builder()
-			.id(reviewId)
-			.user(User.builder().id(userId).build())
-			.rate(rate)
-			.content(content)
-			.state(false)
-			.build();
+		Reservation reservation = Reservation.builder().id(27L).build();
 
 		User user = User.builder()
 			.id(userId)
 			.build();
 
+		Review review = Review.builder()
+			.id(reviewId)
+			.reservation(reservation)
+			.user(user)
+			.rate(rate)
+			.content(content)
+			.state(false)
+			.build();
+
 		DeleteReviewRequests deleteReviewRequests = new DeleteReviewRequests(reviewId, userId);
 
 		given(userRepository.findById(userId)).willReturn(Optional.ofNullable(user));
-		given(reviewRepository.findById(reviewId)).willReturn(Optional.ofNullable(beforeUpdateReview));
-		given(reviewRepository.save(any(Review.class))).willReturn(review);
+		given(reviewRepository.findById(reviewId)).willReturn(Optional.ofNullable(review));
 
 		//when
 		DeleteReviewResponse deleteReviewResponse = reviewService.deleteReview(deleteReviewRequests);
@@ -360,6 +371,7 @@ class ReviewServiceTest {
 		Integer rate = 5;
 		String content = "very good";
 		Long reviewId = 25L;
+		Reservation reservation = Reservation.builder().id(27L).build();
 
 		Integer updateRate = 3;
 		String updateContent = "not bad";
@@ -371,16 +383,9 @@ class ReviewServiceTest {
 		Review review = Review.builder()
 			.id(reviewId)
 			.user(user)
+			.reservation(reservation)
 			.rate(rate)
 			.content(content)
-			.state(false)
-			.build();
-
-		Review updatedReview = Review.builder()
-			.id(reviewId)
-			.user(user)
-			.rate(updateRate)
-			.content(updateContent)
 			.state(false)
 			.build();
 
@@ -389,7 +394,6 @@ class ReviewServiceTest {
 
 		given(userRepository.findById(userId)).willReturn(Optional.ofNullable(user));
 		given(reviewRepository.findById(reviewId)).willReturn(Optional.ofNullable(review));
-		given(reviewRepository.save(any(Review.class))).willReturn(updatedReview);
 		//when
 		ReviewDetailsResponse reviewDetailsResponse = reviewService.updateReview(updateReviewRequests);
 
@@ -407,6 +411,7 @@ class ReviewServiceTest {
 		Integer rate = 5;
 		String content = "very good";
 		Long reviewId = 25L;
+		Reservation reservation = Reservation.builder().id(27L).build();
 
 		Integer updateRate = 3;
 
@@ -417,16 +422,9 @@ class ReviewServiceTest {
 		Review review = Review.builder()
 			.id(reviewId)
 			.user(user)
+			.reservation(reservation)
 			.rate(rate)
 			.content(content)
-			.state(false)
-			.build();
-
-		Review updatedReview = Review.builder()
-			.id(reviewId)
-			.user(user)
-			.rate(updateRate)
-			.content(null)
 			.state(false)
 			.build();
 
@@ -435,7 +433,6 @@ class ReviewServiceTest {
 
 		given(userRepository.findById(userId)).willReturn(Optional.ofNullable(user));
 		given(reviewRepository.findById(reviewId)).willReturn(Optional.ofNullable(review));
-		given(reviewRepository.save(any(Review.class))).willReturn(updatedReview);
 		//when
 		ReviewDetailsResponse reviewDetailsResponse = reviewService.updateReview(updateReviewRequests);
 

@@ -10,12 +10,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
+import com.encore.petandbe.controller.accommodation.review.requests.UpdateReviewRequests;
 import com.encore.petandbe.model.BaseEntity;
+import com.encore.petandbe.model.accommodation.reservation.Reservation;
 import com.encore.petandbe.model.user.user.User;
 
 import lombok.AccessLevel;
@@ -40,6 +43,10 @@ public class Review extends BaseEntity {
 	@JoinColumn(nullable = false, name = "user_id")
 	private User user;
 
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(nullable = false, name = "reservation_id")
+	private Reservation reservation;
+
 	@Column
 	private Integer rate;
 
@@ -49,9 +56,19 @@ public class Review extends BaseEntity {
 	@Column(nullable = false, columnDefinition = "bit(1) default 0", length = 1)
 	private Boolean state;
 
-	public Review(Long id, User user, Integer rate, String content, Boolean state) {
+	public void updateReview(UpdateReviewRequests updateReviewRequests) {
+		this.rate = updateReviewRequests.getRate();
+		this.content = updateReviewRequests.getContent();
+	}
+
+	public void deleteReview() {
+		this.state = true;
+	}
+
+	public Review(Long id, User user, Reservation reservation, Integer rate, String content, Boolean state) {
 		this.id = id;
 		this.user = user;
+		this.reservation = reservation;
 		this.rate = rate;
 		this.content = content;
 		this.state = state;
@@ -75,8 +92,8 @@ public class Review extends BaseEntity {
 			return false;
 		Review review = (Review)o;
 		return Objects.equals(id, review.id) && Objects.equals(user, review.user)
-			&& Objects.equals(rate, review.rate) && Objects.equals(content, review.content)
-			&& Objects.equals(state, review.state);
+			&& Objects.equals(reservation, review.reservation) && Objects.equals(rate, review.rate)
+			&& Objects.equals(content, review.content) && Objects.equals(state, review.state);
 	}
 
 	@Override

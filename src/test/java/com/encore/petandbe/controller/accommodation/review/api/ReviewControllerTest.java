@@ -81,8 +81,10 @@ class ReviewControllerTest {
 		Long userId = 1L;
 		Integer rate = 5;
 		String content = "very good";
+		Long reservationId = 25L;
 
-		ReviewDetailsResponse reviewDetailsResponse = new ReviewDetailsResponse(reviewId, userId, rate, content);
+		ReviewDetailsResponse reviewDetailsResponse = new ReviewDetailsResponse(reviewId, userId, rate, content,
+			reservationId);
 
 		when(reviewService.findReviewDetails(anyLong())).thenReturn(reviewDetailsResponse);
 		//when
@@ -99,7 +101,8 @@ class ReviewControllerTest {
 					fieldWithPath("reviewId").type(JsonFieldType.NUMBER).description("Review의 Id"),
 					fieldWithPath("userId").type(JsonFieldType.NUMBER).description("Review를 작성한 User의 Id"),
 					fieldWithPath("rate").type(JsonFieldType.NUMBER).description("점수"),
-					fieldWithPath("content").type(JsonFieldType.STRING).description("리뷰 본문")
+					fieldWithPath("content").type(JsonFieldType.STRING).description("리뷰 본문"),
+					fieldWithPath("reservationId").type(JsonFieldType.NUMBER).description("예약 Id")
 				)
 			)).andDo(print());
 	}
@@ -112,9 +115,11 @@ class ReviewControllerTest {
 		Long userId = 1L;
 		Integer rate = 3;
 		String content = "not bad";
+		Long reservationId = 25L;
 
 		UpdateReviewRequests updateReviewRequests = new UpdateReviewRequests(reviewId, userId, rate, content);
-		ReviewDetailsResponse reviewDetailsResponse = new ReviewDetailsResponse(reviewId, userId, rate, content);
+		ReviewDetailsResponse reviewDetailsResponse = new ReviewDetailsResponse(reviewId, userId, rate, content,
+			reservationId);
 
 		when(reviewService.updateReview(any(UpdateReviewRequests.class))).thenReturn(reviewDetailsResponse);
 		//when
@@ -130,7 +135,8 @@ class ReviewControllerTest {
 					fieldWithPath("reviewId").type(JsonFieldType.NUMBER).description("수정한 리뷰의 Id"),
 					fieldWithPath("userId").type(JsonFieldType.NUMBER).description("User의 token id"),
 					fieldWithPath("rate").type(JsonFieldType.NUMBER).description("수정한 점수 rate"),
-					fieldWithPath("content").type(JsonFieldType.STRING).description("수정한 리뷰의 내용")
+					fieldWithPath("content").type(JsonFieldType.STRING).description("수정한 리뷰의 내용"),
+					fieldWithPath("reservationId").type(JsonFieldType.NUMBER).description("예약 Id")
 				))).andDo(print());
 	}
 
@@ -140,9 +146,10 @@ class ReviewControllerTest {
 		//given
 		Long reviewId = 1L;
 		Boolean state = true;
+		Long reservationId = 25L;
 
 		DeleteReviewRequests deleteReviewRequests = new DeleteReviewRequests(reviewId, 1L);
-		DeleteReviewResponse deleteReviewResponse = new DeleteReviewResponse(reviewId, state);
+		DeleteReviewResponse deleteReviewResponse = new DeleteReviewResponse(reviewId, state, reservationId);
 
 		when(reviewService.deleteReview(any(DeleteReviewRequests.class))).thenReturn(deleteReviewResponse);
 		//when
@@ -156,7 +163,8 @@ class ReviewControllerTest {
 			.andDo(document("delete-review",
 				responseFields(
 					fieldWithPath("reviewId").type(JsonFieldType.NUMBER).description("삭제한 리뷰의 Id"),
-					fieldWithPath("state").type(JsonFieldType.BOOLEAN).description("삭제한 리뷰의 상태값")
+					fieldWithPath("state").type(JsonFieldType.BOOLEAN).description("삭제한 리뷰의 상태값"),
+					fieldWithPath("reservationId").type(JsonFieldType.NUMBER).description("예약 Id")
 				))).andDo(print());
 	}
 }

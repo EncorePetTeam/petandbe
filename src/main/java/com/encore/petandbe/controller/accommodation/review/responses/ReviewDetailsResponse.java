@@ -9,11 +9,13 @@ public class ReviewDetailsResponse {
 	private Long userId;
 	private Integer rate;
 	private String content;
+	private Long reservationId;
 
-	public ReviewDetailsResponse(Long reviewId, Long userId, Integer rate, String content) {
+	public ReviewDetailsResponse(Long reviewId, Long userId, Integer rate, String content, Long reservationId) {
 		this.reviewId = reviewId;
 		this.userId = userId;
 		this.rate = rate;
 		this.content = content;
+		this.reservationId = reservationId;
 	}
 }

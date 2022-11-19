@@ -6,11 +6,11 @@ import lombok.Getter;
 public class UpdateReviewRequests {
 
     private Long reviewId;
-    private String userId;
+    private Long userId;
     private Integer rate;
     private String content;
 
-    public UpdateReviewRequests(Long reviewId, String userId, Integer rate, String content) {
+    public UpdateReviewRequests(Long reviewId, Long userId, Integer rate, String content) {
         this.reviewId = reviewId;
         this.userId = userId;
         this.rate = rate;

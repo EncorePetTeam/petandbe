@@ -15,6 +15,7 @@ import com.encore.petandbe.controller.accommodation.review.requests.DeleteReview
 import com.encore.petandbe.controller.accommodation.review.requests.RegistReviewRequests;
 import com.encore.petandbe.controller.accommodation.review.requests.UpdateReviewRequests;
 import com.encore.petandbe.controller.accommodation.review.responses.DeleteReviewResponse;
+import com.encore.petandbe.controller.accommodation.review.responses.RegistReviewResponse;
 import com.encore.petandbe.controller.accommodation.review.responses.ReviewDetailsResponse;
 import com.encore.petandbe.service.accommodation.review.ReviewService;
 
@@ -29,12 +30,12 @@ public class ReviewController {
 	}
 
 	@PostMapping
-	public ResponseEntity<ReviewDetailsResponse> registReview(@RequestBody RegistReviewRequests registReviewRequests) {
+	public ResponseEntity<RegistReviewResponse> registReview(@RequestBody RegistReviewRequests registReviewRequests) {
 		return ResponseEntity.status(HttpStatus.CREATED).body(reviewService.registReview(registReviewRequests));
 	}
 
 	@GetMapping("/{reservation-id}")
-	public ResponseEntity<ReviewDetailsResponse> reviewDetails(@PathVariable("reservation-id") String reservationId) {
+	public ResponseEntity<ReviewDetailsResponse> reviewDetails(@PathVariable("reservation-id") Long reservationId) {
 		return ResponseEntity.ok().body(reviewService.findReviewDetails(reservationId));
 	}
 

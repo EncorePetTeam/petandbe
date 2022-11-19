@@ -3,7 +3,7 @@ package com.encore.petandbe.controller.accommodation.review.responses;
 import lombok.Getter;
 
 @Getter
-public class ReviewDetailsResponse {
+public class RegistReviewResponse {
 
 	private Long reviewId;
 	private Long userId;
@@ -11,7 +11,7 @@ public class ReviewDetailsResponse {
 	private String content;
 	private Long reservationId;
 
-	public ReviewDetailsResponse(Long reviewId, Long userId, Integer rate, String content, Long reservationId) {
+	public RegistReviewResponse(Long reviewId, Long userId, Integer rate, String content, Long reservationId) {
 		this.reviewId = reviewId;
 		this.userId = userId;
 		this.rate = rate;

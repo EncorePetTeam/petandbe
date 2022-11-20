@@ -39,13 +39,15 @@ public class ReviewController {
 		return ResponseEntity.ok().body(reviewService.findReviewDetails(reservationId));
 	}
 
-	@PutMapping
-	public ResponseEntity<ReviewDetailsResponse> updateReview(@RequestBody UpdateReviewRequests updateReviewRequests) {
-		return ResponseEntity.ok().body(reviewService.updateReview(updateReviewRequests));
+	@PutMapping("/{review-id}")
+	public ResponseEntity<ReviewDetailsResponse> updateReview(@PathVariable("review-id") Long reviewId,
+		@RequestBody UpdateReviewRequests updateReviewRequests) {
+		return ResponseEntity.ok().body(reviewService.updateReview(reviewId, updateReviewRequests));
 	}
 
-	@DeleteMapping
-	public ResponseEntity<DeleteReviewResponse> deleteReview(@RequestBody DeleteReviewRequests deleteReviewRequests) {
-		return ResponseEntity.ok().body(reviewService.deleteReview(deleteReviewRequests));
+	@DeleteMapping("/{review-id}")
+	public ResponseEntity<DeleteReviewResponse> deleteReview(@PathVariable("review-id") Long reviewId,
+		@RequestBody DeleteReviewRequests deleteReviewRequests) {
+		return ResponseEntity.ok().body(reviewService.deleteReview(reviewId, deleteReviewRequests));
 	}
 }

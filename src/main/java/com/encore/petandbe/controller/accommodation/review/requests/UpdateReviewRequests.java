@@ -5,13 +5,11 @@ import lombok.Getter;
 @Getter
 public class UpdateReviewRequests {
 
-    private Long reviewId;
     private Long userId;
     private Integer rate;
     private String content;
 
-    public UpdateReviewRequests(Long reviewId, Long userId, Integer rate, String content) {
-        this.reviewId = reviewId;
+    public UpdateReviewRequests(Long userId, Integer rate, String content) {
         this.userId = userId;
         this.rate = rate;
         this.content = content;

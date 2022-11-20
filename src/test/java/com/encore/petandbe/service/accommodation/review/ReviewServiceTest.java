@@ -3,6 +3,8 @@ package com.encore.petandbe.service.accommodation.review;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Assertions;
@@ -78,9 +80,18 @@ class ReviewServiceTest {
 			.state(false)
 			.build();
 
+		List<Reservation> reservationList = new ArrayList<>();
+
+		reservationList.add(reservation);
+
+		List<Integer> rateList = new ArrayList<>();
+		rateList.add(rate);
+
 		given(reservationRepository.findById(reservationId)).willReturn(Optional.ofNullable(reservation));
 		given(userRepository.findById(userId)).willReturn(Optional.ofNullable(user));
 		given(reviewRepository.save(any(Review.class))).willReturn(review);
+		given(reservationRepository.findByAccommodationId(anyLong())).willReturn(reservationList);
+		given(reviewRepository.findRateById(anyList())).willReturn(rateList);
 		//when
 		RegistReviewResponse registReviewResponse = reviewService.registReview(registReviewRequests);
 
@@ -122,9 +133,17 @@ class ReviewServiceTest {
 			.state(false)
 			.build();
 
+		List<Reservation> reservationList = new ArrayList<>();
+		reservationList.add(reservation);
+
+		List<Integer> rateList = new ArrayList<>();
+		rateList.add(rate);
+
 		given(reservationRepository.findById(reservationId)).willReturn(Optional.ofNullable(reservation));
 		given(userRepository.findById(userId)).willReturn(Optional.ofNullable(user));
 		given(reviewRepository.save(any(Review.class))).willReturn(review);
+		given(reservationRepository.findByAccommodationId(anyLong())).willReturn(reservationList);
+		given(reviewRepository.findRateById(anyList())).willReturn(rateList);
 		//when
 		RegistReviewResponse registReviewResponse = reviewService.registReview(registReviewRequests);
 
@@ -269,7 +288,9 @@ class ReviewServiceTest {
 		Integer rate = 5;
 		String content = "very good";
 		Long reviewId = 25L;
-		Reservation reservation = Reservation.builder().id(27L).build();
+
+		Accommodation accommodation = Accommodation.builder().id(23L).build();
+		Reservation reservation = Reservation.builder().id(27L).accommodation(accommodation).build();
 
 		User user = User.builder()
 			.id(userId)
@@ -286,11 +307,18 @@ class ReviewServiceTest {
 
 		DeleteReviewRequests deleteReviewRequests = new DeleteReviewRequests(reviewId, userId);
 
+		List<Reservation> reservationList = new ArrayList<>();
+		reservationList.add(reservation);
+
+		List<Integer> rateList = new ArrayList<>();
+		rateList.add(rate);
+
 		given(userRepository.findById(userId)).willReturn(Optional.ofNullable(user));
 		given(reviewRepository.findById(reviewId)).willReturn(Optional.ofNullable(review));
-
+		given(reservationRepository.findByAccommodationId(anyLong())).willReturn(reservationList);
+		given(reviewRepository.findRateById(anyList())).willReturn(rateList);
 		//when
-		DeleteReviewResponse deleteReviewResponse = reviewService.deleteReview(deleteReviewRequests);
+		DeleteReviewResponse deleteReviewResponse = reviewService.deleteReview(reviewId, deleteReviewRequests);
 
 		//then
 		assertEquals(reviewId, deleteReviewResponse.getReviewId());
@@ -304,13 +332,13 @@ class ReviewServiceTest {
 		Long userId = 1L;
 		Long reviewId = 1L;
 
-		DeleteReviewRequests deleteReviewRequests = new DeleteReviewRequests(reviewId, userId);
+		DeleteReviewRequests deleteReviewRequests = new DeleteReviewRequests(userId, reviewId);
 
 		given(userRepository.findById(userId)).willReturn(Optional.empty());
 		//when
 		Assertions.assertThrows(NonExistResourceException.class, () -> {
 			//then
-			reviewService.deleteReview(deleteReviewRequests);
+			reviewService.deleteReview(reviewId, deleteReviewRequests);
 		});
 	}
 
@@ -325,14 +353,14 @@ class ReviewServiceTest {
 			.id(userId)
 			.build();
 
-		DeleteReviewRequests deleteReviewRequests = new DeleteReviewRequests(reviewId, userId);
+		DeleteReviewRequests deleteReviewRequests = new DeleteReviewRequests(userId, reviewId);
 
 		given(userRepository.findById(userId)).willReturn(Optional.ofNullable(user));
 		given(reviewRepository.findById(anyLong())).willReturn(Optional.empty());
 		//when
 		Assertions.assertThrows(NonExistResourceException.class, () -> {
 			//then
-			reviewService.deleteReview(deleteReviewRequests);
+			reviewService.deleteReview(reviewId, deleteReviewRequests);
 		});
 	}
 
@@ -352,14 +380,14 @@ class ReviewServiceTest {
 			.user(User.builder().id(2L).build())
 			.build();
 
-		DeleteReviewRequests deleteReviewRequests = new DeleteReviewRequests(reviewId, userId);
+		DeleteReviewRequests deleteReviewRequests = new DeleteReviewRequests(userId, reviewId);
 
 		given(userRepository.findById(userId)).willReturn(Optional.ofNullable(user));
 		given(reviewRepository.findById(anyLong())).willReturn(Optional.ofNullable(review));
 		//when
 		Assertions.assertThrows(WrongRequestException.class, () -> {
 			//then
-			reviewService.deleteReview(deleteReviewRequests);
+			reviewService.deleteReview(reviewId, deleteReviewRequests);
 		});
 	}
 
@@ -371,7 +399,9 @@ class ReviewServiceTest {
 		Integer rate = 5;
 		String content = "very good";
 		Long reviewId = 25L;
-		Reservation reservation = Reservation.builder().id(27L).build();
+
+		Accommodation accommodation = Accommodation.builder().id(23L).build();
+		Reservation reservation = Reservation.builder().id(27L).accommodation(accommodation).build();
 
 		Integer updateRate = 3;
 		String updateContent = "not bad";
@@ -389,13 +419,21 @@ class ReviewServiceTest {
 			.state(false)
 			.build();
 
-		UpdateReviewRequests updateReviewRequests = new UpdateReviewRequests(reviewId, userId, updateRate,
+		UpdateReviewRequests updateReviewRequests = new UpdateReviewRequests(userId, updateRate,
 			updateContent);
+
+		List<Reservation> reservationList = new ArrayList<>();
+		reservationList.add(reservation);
+
+		List<Integer> rateList = new ArrayList<>();
+		rateList.add(rate);
 
 		given(userRepository.findById(userId)).willReturn(Optional.ofNullable(user));
 		given(reviewRepository.findById(reviewId)).willReturn(Optional.ofNullable(review));
+		given(reservationRepository.findByAccommodationId(anyLong())).willReturn(reservationList);
+		given(reviewRepository.findRateById(anyList())).willReturn(rateList);
 		//when
-		ReviewDetailsResponse reviewDetailsResponse = reviewService.updateReview(updateReviewRequests);
+		ReviewDetailsResponse reviewDetailsResponse = reviewService.updateReview(reviewId, updateReviewRequests);
 
 		//then
 		assertEquals(reviewId, reviewDetailsResponse.getReviewId());
@@ -411,7 +449,9 @@ class ReviewServiceTest {
 		Integer rate = 5;
 		String content = "very good";
 		Long reviewId = 25L;
-		Reservation reservation = Reservation.builder().id(27L).build();
+
+		Accommodation accommodation = Accommodation.builder().id(23L).build();
+		Reservation reservation = Reservation.builder().id(27L).accommodation(accommodation).build();
 
 		Integer updateRate = 3;
 
@@ -428,13 +468,21 @@ class ReviewServiceTest {
 			.state(false)
 			.build();
 
-		UpdateReviewRequests updateReviewRequests = new UpdateReviewRequests(reviewId, userId, updateRate,
+		UpdateReviewRequests updateReviewRequests = new UpdateReviewRequests(userId, updateRate,
 			null);
+
+		List<Reservation> reservationList = new ArrayList<>();
+		reservationList.add(reservation);
+
+		List<Integer> rateList = new ArrayList<>();
+		rateList.add(rate);
 
 		given(userRepository.findById(userId)).willReturn(Optional.ofNullable(user));
 		given(reviewRepository.findById(reviewId)).willReturn(Optional.ofNullable(review));
+		given(reservationRepository.findByAccommodationId(anyLong())).willReturn(reservationList);
+		given(reviewRepository.findRateById(anyList())).willReturn(rateList);
 		//when
-		ReviewDetailsResponse reviewDetailsResponse = reviewService.updateReview(updateReviewRequests);
+		ReviewDetailsResponse reviewDetailsResponse = reviewService.updateReview(reviewId, updateReviewRequests);
 
 		//then
 		assertEquals(reviewId, reviewDetailsResponse.getReviewId());
@@ -451,13 +499,13 @@ class ReviewServiceTest {
 		Integer rate = 5;
 		String content = "";
 
-		UpdateReviewRequests deleteReviewRequests = new UpdateReviewRequests(reviewId, userId, rate, content);
+		UpdateReviewRequests deleteReviewRequests = new UpdateReviewRequests(userId, rate, content);
 
 		given(userRepository.findById(userId)).willReturn(Optional.empty());
 		//when
 		Assertions.assertThrows(NonExistResourceException.class, () -> {
 			//then
-			reviewService.updateReview(deleteReviewRequests);
+			reviewService.updateReview(reviewId, deleteReviewRequests);
 		});
 	}
 
@@ -474,14 +522,14 @@ class ReviewServiceTest {
 			.id(userId)
 			.build();
 
-		UpdateReviewRequests deleteReviewRequests = new UpdateReviewRequests(reviewId, userId, rate, content);
+		UpdateReviewRequests deleteReviewRequests = new UpdateReviewRequests(userId, rate, content);
 
 		given(userRepository.findById(userId)).willReturn(Optional.ofNullable(user));
 		given(reviewRepository.findById(reviewId)).willReturn(Optional.empty());
 		//when
 		Assertions.assertThrows(NonExistResourceException.class, () -> {
 			//then
-			reviewService.updateReview(deleteReviewRequests);
+			reviewService.updateReview(reviewId, deleteReviewRequests);
 		});
 	}
 
@@ -503,14 +551,14 @@ class ReviewServiceTest {
 			.user(User.builder().id(2L).build())
 			.build();
 
-		UpdateReviewRequests deleteReviewRequests = new UpdateReviewRequests(reviewId, userId, rate, content);
+		UpdateReviewRequests deleteReviewRequests = new UpdateReviewRequests(userId, rate, content);
 
 		given(userRepository.findById(userId)).willReturn(Optional.ofNullable(user));
 		given(reviewRepository.findById(reviewId)).willReturn(Optional.ofNullable(review));
 		//when
 		Assertions.assertThrows(WrongRequestException.class, () -> {
 			//then
-			reviewService.updateReview(deleteReviewRequests);
+			reviewService.updateReview(reviewId, deleteReviewRequests);
 		});
 	}
 }

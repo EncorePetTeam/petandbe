@@ -117,20 +117,23 @@ class ReviewControllerTest {
 		String content = "not bad";
 		Long reservationId = 25L;
 
-		UpdateReviewRequests updateReviewRequests = new UpdateReviewRequests(reviewId, userId, rate, content);
+		UpdateReviewRequests updateReviewRequests = new UpdateReviewRequests(userId, rate, content);
 		ReviewDetailsResponse reviewDetailsResponse = new ReviewDetailsResponse(reviewId, userId, rate, content,
 			reservationId);
 
-		when(reviewService.updateReview(any(UpdateReviewRequests.class))).thenReturn(reviewDetailsResponse);
+		when(reviewService.updateReview(anyLong(), any(UpdateReviewRequests.class))).thenReturn(reviewDetailsResponse);
 		//when
 		ResultActions resultActions = mockMvc.perform(RestDocumentationRequestBuilders
-			.put("/review")
+			.put("/review/{review-id}", 1L)
 			.content(objectMapper.writeValueAsString(updateReviewRequests))
 			.contentType(MediaType.APPLICATION_JSON)
 			.accept(MediaType.APPLICATION_JSON));
 		//then
 		resultActions.andExpect(status().isOk())
 			.andDo(document("update-review",
+				pathParameters(
+					parameterWithName("review-id").description("review의 ID")
+				),
 				responseFields(
 					fieldWithPath("reviewId").type(JsonFieldType.NUMBER).description("수정한 리뷰의 Id"),
 					fieldWithPath("userId").type(JsonFieldType.NUMBER).description("User의 token id"),
@@ -145,22 +148,26 @@ class ReviewControllerTest {
 	void deleteReviewSuccess() throws Exception {
 		//given
 		Long reviewId = 1L;
+		Long userId = 1L;
 		Boolean state = true;
 		Long reservationId = 25L;
 
-		DeleteReviewRequests deleteReviewRequests = new DeleteReviewRequests(reviewId, 1L);
+		DeleteReviewRequests deleteReviewRequests = new DeleteReviewRequests(userId, reviewId);
 		DeleteReviewResponse deleteReviewResponse = new DeleteReviewResponse(reviewId, state, reservationId);
 
-		when(reviewService.deleteReview(any(DeleteReviewRequests.class))).thenReturn(deleteReviewResponse);
+		when(reviewService.deleteReview(anyLong(), any(DeleteReviewRequests.class))).thenReturn(deleteReviewResponse);
 		//when
 		ResultActions resultActions = mockMvc.perform(RestDocumentationRequestBuilders
-			.delete("/review")
+			.delete("/review/{review-id}", 1L)
 			.content(objectMapper.writeValueAsString(deleteReviewRequests))
 			.contentType(MediaType.APPLICATION_JSON)
 			.accept(MediaType.APPLICATION_JSON));
 		//then
 		resultActions.andExpect(status().isOk())
 			.andDo(document("delete-review",
+				pathParameters(
+					parameterWithName("review-id").description("review의 ID")
+				),
 				responseFields(
 					fieldWithPath("reviewId").type(JsonFieldType.NUMBER).description("삭제한 리뷰의 Id"),
 					fieldWithPath("state").type(JsonFieldType.BOOLEAN).description("삭제한 리뷰의 상태값"),

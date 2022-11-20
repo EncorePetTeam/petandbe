@@ -75,6 +75,10 @@ public class Accommodation extends BaseEntity {
 	@Column(nullable = false, columnDefinition = "bit(1) default 0", length = 1)
 	private Boolean state;
 
+	public void updateAvgRate(double newAvgRate) {
+		this.avgRate = newAvgRate;
+	}
+
 	public Accommodation(Long id, Address address, User user, String accommodationName, String workingHours,
 		String wkWorkingHours, String hotelLocation, String lotNumber, String addressDetail, String accomoodationType,
 		Double avgRate, String detailInfo, Boolean state) {

@@ -1,5 +1,7 @@
 package com.encore.petandbe.service.accommodation.review;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,9 +13,11 @@ import com.encore.petandbe.controller.accommodation.review.responses.RegistRevie
 import com.encore.petandbe.controller.accommodation.review.responses.ReviewDetailsResponse;
 import com.encore.petandbe.exception.NonExistResourceException;
 import com.encore.petandbe.exception.WrongRequestException;
+import com.encore.petandbe.model.accommodation.accommodation.Accommodation;
 import com.encore.petandbe.model.accommodation.reservation.Reservation;
 import com.encore.petandbe.model.accommodation.review.Review;
 import com.encore.petandbe.model.user.user.User;
+import com.encore.petandbe.repository.AccommodationRepository;
 import com.encore.petandbe.repository.ReservationRepository;
 import com.encore.petandbe.repository.ReviewRepository;
 import com.encore.petandbe.repository.UserRepository;
@@ -25,12 +29,14 @@ public class ReviewService {
 	private ReviewRepository reviewRepository;
 	private UserRepository userRepository;
 	private ReservationRepository reservationRepository;
+	private AccommodationRepository accommodationRepository;
 
 	public ReviewService(ReviewRepository reviewRepository, UserRepository userRepository,
-		ReservationRepository reservationRepository) {
+		ReservationRepository reservationRepository, AccommodationRepository accommodationRepository) {
 		this.reviewRepository = reviewRepository;
 		this.userRepository = userRepository;
 		this.reservationRepository = reservationRepository;
+		this.accommodationRepository = accommodationRepository;
 	}
 
 	@Transactional
@@ -45,6 +51,8 @@ public class ReviewService {
 
 		Review savedReview = reviewRepository.save(
 			ReviewMapper.of().registReviewRequestsToEntity(registReviewRequests, user, reservation));
+
+		updateAccommodationRate(reservation.getAccommodation());
 
 		return ReviewMapper.of().registedEntityToResponse(savedReview);
 	}
@@ -61,33 +69,35 @@ public class ReviewService {
 	}
 
 	@Transactional
-	public ReviewDetailsResponse updateReview(UpdateReviewRequests updateReviewRequests) {
+	public ReviewDetailsResponse updateReview(Long reviewId, UpdateReviewRequests updateReviewRequests) {
 		User user = userRepository.findById(updateReviewRequests.getUserId())
-			.orElseThrow(() -> new NonExistResourceException("user does not exist"));
+			.orElseThrow(() -> new NonExistResourceException("User does not exist"));
 
-		Review review = reviewRepository.findById(updateReviewRequests.getReviewId())
+		Review review = reviewRepository.findById(reviewId)
 			.orElseThrow(() -> new NonExistResourceException("Review does not exist"));
 
 		checkUserIsMatch(user, review.getUser());
 
 		review.updateReview(updateReviewRequests);
 
+		updateAccommodationRate(review.getReservation().getAccommodation());
+
 		return ReviewMapper.of().entityToResponse(review);
 	}
 
 	@Transactional
-	public DeleteReviewResponse deleteReview(DeleteReviewRequests deleteReviewRequests) {
+	public DeleteReviewResponse deleteReview(Long reviewId, DeleteReviewRequests deleteReviewRequests) {
 		User user = userRepository.findById(deleteReviewRequests.getUserId())
-			.orElseThrow(() -> new NonExistResourceException("user could not be found"));
+			.orElseThrow(() -> new NonExistResourceException("User could not be found"));
 
-		Review review = reviewRepository.findById(deleteReviewRequests.getReviewId())
-			.orElseThrow(() -> new NonExistResourceException("review could not be found"));
-
-		if (!user.getId().equals(review.getUser().getId())) {
-			throw new WrongRequestException("user inconsistency");
-		}
+		Review review = reviewRepository.findById(reviewId)
+			.orElseThrow(() -> new NonExistResourceException("Review could not be found"));
 
 		checkUserIsMatch(user, review.getUser());
+
+		review.deleteReview();
+
+		updateAccommodationRate(review.getReservation().getAccommodation());
 
 		return ReviewMapper.of().deletedEntityToResponse(review);
 	}
@@ -96,5 +106,15 @@ public class ReviewService {
 		if (!expect.equals(result)) {
 			throw new WrongRequestException("user inconsistency");
 		}
+	}
+
+	private void updateAccommodationRate(Accommodation accommodation) {
+		List<Reservation> reservationList = reservationRepository.findByAccommodationId(accommodation.getId());
+
+		List<Integer> reviewList = reviewRepository.findRateById(reservationList);
+
+		double avgRate = reviewList.stream().mapToInt(Integer::intValue).average().getAsDouble();
+
+		accommodation.updateAvgRate(Math.round(avgRate * 10) / 10.0);
 	}
 }

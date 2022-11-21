@@ -115,6 +115,6 @@ public class ReviewService {
 
 		double avgRate = reviewList.stream().mapToInt(Integer::intValue).average().getAsDouble();
 
-		accommodation.updateAvgRate(Math.round(avgRate * 10) / 10.0);
+		accommodation.updateAvgRate(avgRate);
 	}
 }

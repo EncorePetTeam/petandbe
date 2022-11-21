@@ -64,7 +64,7 @@ public class Accommodation extends BaseEntity {
 	private String addressDetail;
 
 	@Column(nullable = false, length = 16)
-	private String accomoodationType;
+	private String accommodationType;
 
 	@Column
 	private Double avgRate;
@@ -80,7 +80,7 @@ public class Accommodation extends BaseEntity {
 	}
 
 	public Accommodation(Long id, Address address, User user, String accommodationName, String workingHours,
-		String wkWorkingHours, String hotelLocation, String lotNumber, String addressDetail, String accomoodationType,
+		String wkWorkingHours, String hotelLocation, String lotNumber, String addressDetail, String accommodationType,
 		Double avgRate, String detailInfo, Boolean state) {
 		this.id = id;
 		this.address = address;
@@ -91,7 +91,7 @@ public class Accommodation extends BaseEntity {
 		this.hotelLocation = hotelLocation;
 		this.lotNumber = lotNumber;
 		this.addressDetail = addressDetail;
-		this.accomoodationType = accomoodationType;
+		this.accommodationType = accommodationType;
 		this.avgRate = avgRate;
 		this.detailInfo = detailInfo;
 		this.state = state;
@@ -107,7 +107,7 @@ public class Accommodation extends BaseEntity {
 			", hotelLocation='" + hotelLocation + '\'' +
 			", lotNumber='" + lotNumber + '\'' +
 			", addressDetail='" + addressDetail + '\'' +
-			", accomoodationType='" + accomoodationType + '\'' +
+			", accomoodationType='" + accommodationType + '\'' +
 			", avgRate=" + avgRate +
 			", detailInfo='" + detailInfo + '\'' +
 			", state=" + state +
@@ -126,7 +126,7 @@ public class Accommodation extends BaseEntity {
 			that.accommodationName) && Objects.equals(workingHours, that.workingHours)
 			&& Objects.equals(wkWorkingHours, that.wkWorkingHours) && Objects.equals(hotelLocation,
 			that.hotelLocation) && Objects.equals(lotNumber, that.lotNumber) && Objects.equals(
-			addressDetail, that.addressDetail) && Objects.equals(accomoodationType, that.accomoodationType)
+			addressDetail, that.addressDetail) && Objects.equals(accommodationType, that.accommodationType)
 			&& Objects.equals(avgRate, that.avgRate) && Objects.equals(detailInfo, that.detailInfo)
 			&& Objects.equals(state, that.state);
 	}
@@ -135,6 +135,6 @@ public class Accommodation extends BaseEntity {
 	public int hashCode() {
 		return Objects.hash(id, accommodationName, workingHours, wkWorkingHours, hotelLocation, lotNumber,
 			addressDetail,
-			accomoodationType, avgRate, detailInfo, state);
+			accommodationType, avgRate, detailInfo, state);
 	}
 }

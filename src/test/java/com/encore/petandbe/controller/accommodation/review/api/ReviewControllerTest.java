@@ -1,7 +1,6 @@
 package com.encore.petandbe.controller.accommodation.review.api;
 
 import static com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper.*;
-import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.*;
@@ -64,6 +63,12 @@ class ReviewControllerTest {
 		//then
 		resultActions.andExpect(status().isCreated())
 			.andDo(document("regist-review",
+				requestFields(
+					fieldWithPath("rate").type(JsonFieldType.NUMBER).description("리뷰 점수"),
+					fieldWithPath("userId").type(JsonFieldType.NUMBER).description("리뷰 등록 유저 아이디"),
+					fieldWithPath("content").type(JsonFieldType.STRING).description("리뷰 구체사항"),
+					fieldWithPath("reservationId").type(JsonFieldType.NUMBER).description("예약 Id")
+				),
 				responseFields(
 					fieldWithPath("reviewId").type(JsonFieldType.NUMBER).description("작성한 리뷰의 Id"),
 					fieldWithPath("userId").type(JsonFieldType.NUMBER).description("작성한 User의 token id"),
@@ -124,7 +129,7 @@ class ReviewControllerTest {
 		when(reviewService.updateReview(anyLong(), any(UpdateReviewRequests.class))).thenReturn(reviewDetailsResponse);
 		//when
 		ResultActions resultActions = mockMvc.perform(RestDocumentationRequestBuilders
-			.put("/review/{review-id}", 1L)
+			.put("/review/{review-id}", reviewId)
 			.content(objectMapper.writeValueAsString(updateReviewRequests))
 			.contentType(MediaType.APPLICATION_JSON)
 			.accept(MediaType.APPLICATION_JSON));
@@ -133,6 +138,11 @@ class ReviewControllerTest {
 			.andDo(document("update-review",
 				pathParameters(
 					parameterWithName("review-id").description("review의 ID")
+				),
+				requestFields(
+					fieldWithPath("rate").type(JsonFieldType.NUMBER).description("리뷰 점수"),
+					fieldWithPath("userId").type(JsonFieldType.NUMBER).description("리뷰 등록 유저 아이디"),
+					fieldWithPath("content").type(JsonFieldType.STRING).description("리뷰 구체사항")
 				),
 				responseFields(
 					fieldWithPath("reviewId").type(JsonFieldType.NUMBER).description("수정한 리뷰의 Id"),
@@ -158,7 +168,7 @@ class ReviewControllerTest {
 		when(reviewService.deleteReview(anyLong(), any(DeleteReviewRequests.class))).thenReturn(deleteReviewResponse);
 		//when
 		ResultActions resultActions = mockMvc.perform(RestDocumentationRequestBuilders
-			.delete("/review/{review-id}", 1L)
+			.delete("/review/{review-id}", reviewId)
 			.content(objectMapper.writeValueAsString(deleteReviewRequests))
 			.contentType(MediaType.APPLICATION_JSON)
 			.accept(MediaType.APPLICATION_JSON));
@@ -167,6 +177,10 @@ class ReviewControllerTest {
 			.andDo(document("delete-review",
 				pathParameters(
 					parameterWithName("review-id").description("review의 ID")
+				),
+				requestFields(
+					fieldWithPath("userId").type(JsonFieldType.NUMBER).description("리뷰 등록 유저 아이디"),
+					fieldWithPath("reviewId").type(JsonFieldType.NUMBER).description("삭제할 리뷰 아이디")
 				),
 				responseFields(
 					fieldWithPath("reviewId").type(JsonFieldType.NUMBER).description("삭제한 리뷰의 Id"),

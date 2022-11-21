@@ -12,7 +12,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 import com.encore.petandbe.model.BaseEntity;
@@ -29,7 +28,6 @@ import lombok.NoArgsConstructor;
 @Builder
 @DynamicInsert
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@SQLDelete(sql = "UPDATE accommodation SET state = true WHERE id = ?")
 @Where(clause = "state = false")
 public class Accommodation extends BaseEntity {
 
@@ -52,10 +50,10 @@ public class Accommodation extends BaseEntity {
 	private String workingHours;
 
 	@Column(nullable = false, length = 8)
-	private String wkWorkingHours;
+	private String weekendWorkingHours;
 
 	@Column(nullable = false, length = 10)
-	private String hotelLocation;
+	private String location;
 
 	@Column(nullable = false, length = 8)
 	private String lotNumber;
@@ -64,10 +62,10 @@ public class Accommodation extends BaseEntity {
 	private String addressDetail;
 
 	@Column(nullable = false, length = 16)
-	private String accommodationType;
+	private AccommodationType accommodationType;
 
 	@Column
-	private Double avgRate;
+	private Double averageRate;
 
 	@Column
 	private String detailInfo;
@@ -76,23 +74,23 @@ public class Accommodation extends BaseEntity {
 	private Boolean state;
 
 	public void updateAvgRate(double newAvgRate) {
-		this.avgRate = newAvgRate;
+		this.averageRate = newAvgRate;
 	}
 
 	public Accommodation(Long id, Address address, User user, String accommodationName, String workingHours,
-		String wkWorkingHours, String hotelLocation, String lotNumber, String addressDetail, String accommodationType,
+		String weekendWorkingHours, String hotelLocation, String lotNumber, String addressDetail, AccommodationType accomoodationType,
 		Double avgRate, String detailInfo, Boolean state) {
 		this.id = id;
 		this.address = address;
 		this.user = user;
 		this.accommodationName = accommodationName;
 		this.workingHours = workingHours;
-		this.wkWorkingHours = wkWorkingHours;
-		this.hotelLocation = hotelLocation;
+		this.weekendWorkingHours = weekendWorkingHours;
+		this.location = hotelLocation;
 		this.lotNumber = lotNumber;
 		this.addressDetail = addressDetail;
-		this.accommodationType = accommodationType;
-		this.avgRate = avgRate;
+		this.accommodationType = accomoodationType;
+		this.averageRate = avgRate;
 		this.detailInfo = detailInfo;
 		this.state = state;
 	}
@@ -103,12 +101,12 @@ public class Accommodation extends BaseEntity {
 			"id=" + id +
 			", accommodationName='" + accommodationName + '\'' +
 			", workingHours='" + workingHours + '\'' +
-			", wkWorkingHours='" + wkWorkingHours + '\'' +
-			", hotelLocation='" + hotelLocation + '\'' +
+			", wkWorkingHours='" + weekendWorkingHours + '\'' +
+			", hotelLocation='" + location + '\'' +
 			", lotNumber='" + lotNumber + '\'' +
 			", addressDetail='" + addressDetail + '\'' +
-			", accomoodationType='" + accommodationType + '\'' +
-			", avgRate=" + avgRate +
+			", accommodationType='" + accommodationType + '\'' +
+			", avgRate=" + averageRate +
 			", detailInfo='" + detailInfo + '\'' +
 			", state=" + state +
 			'}';
@@ -124,17 +122,16 @@ public class Accommodation extends BaseEntity {
 		return Objects.equals(id, that.id) && Objects.equals(address, that.address)
 			&& Objects.equals(user, that.user) && Objects.equals(accommodationName,
 			that.accommodationName) && Objects.equals(workingHours, that.workingHours)
-			&& Objects.equals(wkWorkingHours, that.wkWorkingHours) && Objects.equals(hotelLocation,
-			that.hotelLocation) && Objects.equals(lotNumber, that.lotNumber) && Objects.equals(
+			&& Objects.equals(weekendWorkingHours, that.weekendWorkingHours) && Objects.equals(location,
+			that.location) && Objects.equals(lotNumber, that.lotNumber) && Objects.equals(
 			addressDetail, that.addressDetail) && Objects.equals(accommodationType, that.accommodationType)
-			&& Objects.equals(avgRate, that.avgRate) && Objects.equals(detailInfo, that.detailInfo)
+			&& Objects.equals(averageRate, that.averageRate) && Objects.equals(detailInfo, that.detailInfo)
 			&& Objects.equals(state, that.state);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, accommodationName, workingHours, wkWorkingHours, hotelLocation, lotNumber,
-			addressDetail,
-			accommodationType, avgRate, detailInfo, state);
+		return Objects.hash(id, accommodationName, workingHours, weekendWorkingHours, location, lotNumber,
+			addressDetail, accommodationType, averageRate, detailInfo, state);
 	}
 }

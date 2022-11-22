@@ -112,6 +112,10 @@ public class FilteringService {
 	private PageRequest getPageRequest(Integer page, String sortCategory) {
 		Sort sort;
 
+		if (page == null) {
+			page = 1;
+		}
+
 		if (sortCategory != null) {
 			if (sortCategory.equals("최신 등록 순")) {
 				sort = Sort.by("id").descending();

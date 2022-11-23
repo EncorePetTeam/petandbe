@@ -12,7 +12,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-import javax.persistence.Table;
 
 import org.hibernate.annotations.DynamicInsert;
 
@@ -36,8 +35,8 @@ public class User extends BaseEntity {
 	private Long id;
 
 	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(nullable = true, name = "host_id", referencedColumnName = "id")
-	private Host hostId;
+	@JoinColumn(nullable = true, name = "host_id")
+	private Host host;
 
 	@Column(nullable = false, length = 100, unique = true)
 	private String userTokenId;
@@ -58,11 +57,15 @@ public class User extends BaseEntity {
 	@Column(nullable = false)
 	private Role role;
 
-	public User(Long id, Host hostId, String userTokenId, String username, String password, String nickname,
+	public void becomeHost(Host host) {
+		this.host = host;
+	}
+
+	public User(Long id, Host host, String userTokenId, String username, String password, String nickname,
 		String email,
 		Role role) {
 		this.id = id;
-		this.hostId = hostId;
+		this.host = host;
 		this.userTokenId = userTokenId;
 		this.username = username;
 		this.password = password;
@@ -75,7 +78,7 @@ public class User extends BaseEntity {
 	public String toString() {
 		return "User{" +
 			"id=" + id +
-			", hostId=" + hostId +
+			", hostId=" + host +
 			", userTokenId='" + userTokenId + '\'' +
 			", username='" + username + '\'' +
 			", password='" + password + '\'' +
@@ -92,7 +95,7 @@ public class User extends BaseEntity {
 		if (o == null || getClass() != o.getClass())
 			return false;
 		User user = (User)o;
-		return Objects.equals(id, user.id) && Objects.equals(hostId, user.hostId)
+		return Objects.equals(id, user.id) && Objects.equals(host, user.host)
 			&& Objects.equals(userTokenId, user.userTokenId) && Objects.equals(username, user.username)
 			&& Objects.equals(password, user.password) && Objects.equals(nickname, user.nickname)
 			&& Objects.equals(email, user.email) && role == user.role;
@@ -100,6 +103,6 @@ public class User extends BaseEntity {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, hostId, userTokenId, username, password, nickname, email, role);
+		return Objects.hash(id, host, userTokenId, username, password, nickname, email, role);
 	}
 }

@@ -17,7 +17,6 @@ import com.encore.petandbe.model.accommodation.accommodation.Accommodation;
 import com.encore.petandbe.model.accommodation.reservation.Reservation;
 import com.encore.petandbe.model.accommodation.review.Review;
 import com.encore.petandbe.model.user.user.User;
-import com.encore.petandbe.repository.AccommodationRepository;
 import com.encore.petandbe.repository.ReservationRepository;
 import com.encore.petandbe.repository.ReviewRepository;
 import com.encore.petandbe.repository.UserRepository;
@@ -29,14 +28,12 @@ public class ReviewService {
 	private ReviewRepository reviewRepository;
 	private UserRepository userRepository;
 	private ReservationRepository reservationRepository;
-	private AccommodationRepository accommodationRepository;
 
 	public ReviewService(ReviewRepository reviewRepository, UserRepository userRepository,
-		ReservationRepository reservationRepository, AccommodationRepository accommodationRepository) {
+		ReservationRepository reservationRepository) {
 		this.reviewRepository = reviewRepository;
 		this.userRepository = userRepository;
 		this.reservationRepository = reservationRepository;
-		this.accommodationRepository = accommodationRepository;
 	}
 
 	@Transactional

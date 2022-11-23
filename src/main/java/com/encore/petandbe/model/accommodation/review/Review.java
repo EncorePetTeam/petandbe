@@ -13,7 +13,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 import com.encore.petandbe.controller.accommodation.review.requests.UpdateReviewRequests;
@@ -31,7 +30,6 @@ import lombok.NoArgsConstructor;
 @Builder
 @DynamicInsert
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@SQLDelete(sql = "UPDATE review SET state = true WHERE id = ?")
 @Where(clause = "state = false")
 public class Review extends BaseEntity {
 

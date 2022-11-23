@@ -239,7 +239,7 @@ class ReviewServiceTest {
 			.build();
 
 		given(reservationRepository.findById(reservationId)).willReturn(Optional.ofNullable(reservation));
-		given(reviewRepository.findByReservationId(reservation)).willReturn(Optional.ofNullable(review));
+		given(reviewRepository.findByReservationId(reservation.getId())).willReturn(Optional.ofNullable(review));
 		//when
 		ReviewDetailsResponse reviewDetailsResponse = reviewService.findReviewDetails(reservationId);
 
@@ -258,7 +258,7 @@ class ReviewServiceTest {
 		Reservation reservation = Reservation.builder().id(reservationId).build();
 
 		given(reservationRepository.findById(reservationId)).willReturn(Optional.ofNullable(reservation));
-		given(reviewRepository.findByReservationId(reservation)).willReturn(Optional.empty());
+		given(reviewRepository.findByReservationId(reservation.getId())).willReturn(Optional.empty());
 		//when
 		Assertions.assertThrows(NonExistResourceException.class, () -> {
 			//then

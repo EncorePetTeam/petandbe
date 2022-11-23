@@ -49,6 +49,10 @@ public class ReviewService {
 
 		checkUserIsMatch(user, reservation.getUser());
 
+		if (!reviewRepository.findByReservationId(reservation.getId()).isEmpty()) {
+			throw new WrongRequestException("Review already exist, please update review");
+		}
+
 		Review savedReview = reviewRepository.save(
 			ReviewMapper.of().registReviewRequestsToEntity(registReviewRequests, user, reservation));
 
@@ -62,7 +66,7 @@ public class ReviewService {
 		Reservation reservation = reservationRepository.findById(reservationId)
 			.orElseThrow(() -> new NonExistResourceException("Reservation could not be found"));
 
-		Review review = reviewRepository.findByReservationId(reservation)
+		Review review = reviewRepository.findByReservationId(reservation.getId())
 			.orElseThrow(() -> new NonExistResourceException("Review could not be found"));
 
 		return ReviewMapper.of().entityToResponse(review);
@@ -113,8 +117,12 @@ public class ReviewService {
 
 		List<Integer> reviewList = reviewRepository.findRateById(reservationList);
 
-		double avgRate = reviewList.stream().mapToInt(Integer::intValue).average().getAsDouble();
+		double avgRate = 0;
 
-		accommodation.updateAvgRate(Math.round(avgRate * 10) / 10.0);
+		if (!reviewList.isEmpty()) {
+			avgRate = reviewList.stream().mapToInt(Integer::intValue).average().getAsDouble();
+		}
+
+		accommodation.updateAvgRate(avgRate);
 	}
 }

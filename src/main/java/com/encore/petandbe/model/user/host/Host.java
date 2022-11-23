@@ -9,9 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
 
+import com.encore.petandbe.controller.user.host.requests.HostRegistrationRequest;
 import com.encore.petandbe.model.BaseEntity;
 
 import lombok.AccessLevel;
@@ -24,8 +23,6 @@ import lombok.NoArgsConstructor;
 @Builder
 @DynamicInsert
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@SQLDelete(sql = "UPDATE host SET state = true WHERE id = ?")
-@Where(clause = "state = false")
 public class Host extends BaseEntity {
 
 	@Id
@@ -43,6 +40,13 @@ public class Host extends BaseEntity {
 
 	@Column(nullable = false, columnDefinition = "bit(1) default 0", length = 1)
 	private Boolean state;
+
+	public void updateHostInfo(HostRegistrationRequest hostRegistrationRequest, boolean state) {
+		this.registrationNumber = hostRegistrationRequest.getRegistrationNumber();
+		this.openDate = hostRegistrationRequest.getOpenDate();
+		this.hostName = hostRegistrationRequest.getHostName();
+		this.state = state;
+	}
 
 	public Host(Long id, String registrationNumber, String hostName, String openDate, Boolean state) {
 		this.id = id;

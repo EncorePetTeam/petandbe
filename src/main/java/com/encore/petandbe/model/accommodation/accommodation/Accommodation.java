@@ -1,5 +1,6 @@
 package com.encore.petandbe.model.accommodation.accommodation;
 
+import java.time.LocalTime;
 import java.util.Objects;
 
 import javax.persistence.Column;
@@ -46,11 +47,17 @@ public class Accommodation extends BaseEntity {
 	@Column(nullable = false, length = 100)
 	private String accommodationName;
 
-	@Column(nullable = false, length = 8)
-	private String workingHours;
+	@Column(nullable = false, columnDefinition = "TIME")
+	private LocalTime workingStart;
 
-	@Column(nullable = false, length = 8)
-	private String weekendWorkingHours;
+	@Column(nullable = false, columnDefinition = "TIME")
+	private LocalTime workingEnd;
+
+	@Column(nullable = false, columnDefinition = "TIME")
+	private LocalTime weekendWorkingStart;
+
+	@Column(nullable = false, columnDefinition = "TIME")
+	private LocalTime weekendWorkingEnd;
 
 	@Column(nullable = false, length = 10)
 	private String location;
@@ -70,6 +77,9 @@ public class Accommodation extends BaseEntity {
 	@Column
 	private String detailInfo;
 
+	@Column(columnDefinition = "int default 0")
+	private Integer bookmarkCount;
+
 	@Column(nullable = false, columnDefinition = "bit(1) default 0", length = 1)
 	private Boolean state;
 
@@ -77,21 +87,26 @@ public class Accommodation extends BaseEntity {
 		this.averageRate = newAvgRate;
 	}
 
-	public Accommodation(Long id, Address address, User user, String accommodationName, String workingHours,
-		String weekendWorkingHours, String hotelLocation, String lotNumber, String addressDetail, AccommodationType accomoodationType,
-		Double avgRate, String detailInfo, Boolean state) {
+	public Accommodation(Long id, Address address, User user, String accommodationName, LocalTime workingStart,
+		LocalTime workingEnd, LocalTime weekendWorkingStart, LocalTime weekendWorkingEnd, String location,
+		String lotNumber,
+		String addressDetail, AccommodationType accommodationType, Double averageRate, String detailInfo,
+		Integer bookmarkCount, Boolean state) {
 		this.id = id;
 		this.address = address;
 		this.user = user;
 		this.accommodationName = accommodationName;
-		this.workingHours = workingHours;
-		this.weekendWorkingHours = weekendWorkingHours;
-		this.location = hotelLocation;
+		this.workingStart = workingStart;
+		this.workingEnd = workingEnd;
+		this.weekendWorkingStart = weekendWorkingStart;
+		this.weekendWorkingEnd = weekendWorkingEnd;
+		this.location = location;
 		this.lotNumber = lotNumber;
 		this.addressDetail = addressDetail;
-		this.accommodationType = accomoodationType;
-		this.averageRate = avgRate;
+		this.accommodationType = accommodationType;
+		this.averageRate = averageRate;
 		this.detailInfo = detailInfo;
+		this.bookmarkCount = bookmarkCount;
 		this.state = state;
 	}
 
@@ -100,14 +115,17 @@ public class Accommodation extends BaseEntity {
 		return "Accommodation{" +
 			"id=" + id +
 			", accommodationName='" + accommodationName + '\'' +
-			", workingHours='" + workingHours + '\'' +
-			", wkWorkingHours='" + weekendWorkingHours + '\'' +
-			", hotelLocation='" + location + '\'' +
+			", workingStart=" + workingStart +
+			", workingEnd=" + workingEnd +
+			", weekendWorkingStart=" + weekendWorkingStart +
+			", weekendWorkingEnd=" + weekendWorkingEnd +
+			", location='" + location + '\'' +
 			", lotNumber='" + lotNumber + '\'' +
 			", addressDetail='" + addressDetail + '\'' +
-			", accommodationType='" + accommodationType + '\'' +
-			", avgRate=" + averageRate +
+			", accommodationType=" + accommodationType +
+			", averageRate=" + averageRate +
 			", detailInfo='" + detailInfo + '\'' +
+			", bookmarkCount=" + bookmarkCount +
 			", state=" + state +
 			'}';
 	}
@@ -121,17 +139,19 @@ public class Accommodation extends BaseEntity {
 		Accommodation that = (Accommodation)o;
 		return Objects.equals(id, that.id) && Objects.equals(address, that.address)
 			&& Objects.equals(user, that.user) && Objects.equals(accommodationName,
-			that.accommodationName) && Objects.equals(workingHours, that.workingHours)
-			&& Objects.equals(weekendWorkingHours, that.weekendWorkingHours) && Objects.equals(location,
-			that.location) && Objects.equals(lotNumber, that.lotNumber) && Objects.equals(
-			addressDetail, that.addressDetail) && Objects.equals(accommodationType, that.accommodationType)
-			&& Objects.equals(averageRate, that.averageRate) && Objects.equals(detailInfo, that.detailInfo)
-			&& Objects.equals(state, that.state);
+			that.accommodationName) && Objects.equals(workingStart, that.workingStart)
+			&& Objects.equals(workingEnd, that.workingEnd) && Objects.equals(weekendWorkingStart,
+			that.weekendWorkingStart) && Objects.equals(weekendWorkingEnd, that.weekendWorkingEnd)
+			&& Objects.equals(location, that.location) && Objects.equals(lotNumber, that.lotNumber)
+			&& Objects.equals(addressDetail, that.addressDetail) && accommodationType == that.accommodationType
+			&& Objects.equals(averageRate, that.averageRate) && Objects.equals(detailInfo,
+			that.detailInfo) && Objects.equals(bookmarkCount, that.bookmarkCount) && Objects.equals(
+			state, that.state);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, accommodationName, workingHours, weekendWorkingHours, location, lotNumber,
-			addressDetail, accommodationType, averageRate, detailInfo, state);
+		return Objects.hash(id, accommodationName, workingStart, workingEnd, weekendWorkingStart, weekendWorkingEnd,
+			location, lotNumber, addressDetail, accommodationType, averageRate, detailInfo, bookmarkCount, state);
 	}
 }

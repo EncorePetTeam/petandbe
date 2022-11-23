@@ -11,7 +11,7 @@ spring:
       path: /h2-console
   datasource:
     driver-class-name: org.h2.Driver
-    url: jdbc:h2:tcp://localhost/~/test;MODE=MYSQL;DB_CLOSE_DELAY=-1;NON_KEYWORDS=USER
+    url: jdbc:h2:mem:test_db;MODE=MYSQL;DB_CLOSE_DELAY=-1;NON_KEYWORDS=USER
     username: sa
     password:
     hikari:

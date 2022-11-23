@@ -9,4 +9,6 @@ import com.encore.petandbe.model.user.user.User;
 public interface UserRepository extends JpaRepository<User, String> {
 
 	Optional<User> findByEmail(String email);
+
+	Optional<User> findByUserCode(String userCode);
 }

@@ -18,9 +18,9 @@
 spring:
   application:
     name: programmers spring assignments
-  profiles:
-    include: oauth, db
-    active: test
+#  profiles:
+#    include: oauth, db
+#    active: test
   messages:
     basename: i18n/messages, errors
     encoding: UTF-8
@@ -39,7 +39,7 @@ spring:
       path: /h2-console
   datasource:
     driver-class-name: org.h2.Driver
-    url: jdbc:h2:mem:test_db;MODE=MYSQL;DB_CLOSE_DELAY=-1
+    url: jdbc:h2:mem:test_db;MODE=MYSQL;DB_CLOSE_DELAY=-1;NON_KEYWORDS=USER
     username: sa
     password:
     hikari:

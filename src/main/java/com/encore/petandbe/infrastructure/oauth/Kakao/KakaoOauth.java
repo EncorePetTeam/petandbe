@@ -39,6 +39,8 @@ public class KakaoOauth implements OAuthManager {
 		InterruptedException {
 		return convertAccessTokenToOAuthInformation(convertAuthorizationCodeToAccessToken(authorizationCode));
 	}
+	// GET /oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code HTTP/1.1
+
 
 	//인가코드 받아온거 보내고 access token 받아오기, POST
 	private String convertAuthorizationCodeToAccessToken(String authorizationCode) throws
@@ -85,7 +87,6 @@ public class KakaoOauth implements OAuthManager {
 
 		infoResult.put("id", tree.get("id").asText());
 		infoResult.put("nickname", oauthUserProfile.get("nickname").asText());
-		infoResult.put("profile_image", oauthUserProfile.get("profile_image_url").asText());
 		return infoResult;
 	}
 }

@@ -18,14 +18,17 @@ import org.hibernate.annotations.Where;
 import com.encore.petandbe.model.BaseEntity;
 import com.encore.petandbe.model.accommodation.address.Address;
 import com.encore.petandbe.model.user.user.User;
+import com.encore.petandbe.service.accommodation.accomodation.dto.AccommodationUpdatingDTO;
 
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Getter
+@Setter(AccessLevel.PRIVATE)
 @Builder
 @DynamicInsert
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -87,7 +90,7 @@ public class Accommodation extends BaseEntity {
 		this.averageRate = newAvgRate;
 	}
 
-	public Accommodation(Long id, Address address, User user, String accommodationName, LocalTime workingStart,
+	protected Accommodation(Long id, Address address, User user, String accommodationName, LocalTime workingStart,
 		LocalTime workingEnd, LocalTime weekendWorkingStart, LocalTime weekendWorkingEnd, String location,
 		String lotNumber,
 		String addressDetail, AccommodationType accommodationType, Double averageRate, String detailInfo,
@@ -108,6 +111,24 @@ public class Accommodation extends BaseEntity {
 		this.detailInfo = detailInfo;
 		this.bookmarkCount = bookmarkCount;
 		this.state = state;
+	}
+
+	public void updateAccommodation(AccommodationUpdatingDTO dto) {
+		setAddress(dto.getAddress());
+		setAccommodationName(dto.getAccommodationName());
+		setWorkingStart(dto.getWorkingStart());
+		setWorkingEnd(dto.getWorkingEnd());
+		setWeekendWorkingStart(dto.getWeekendWorkingStart());
+		setWorkingEnd(dto.getWeekendWorkingEnd());
+		setLocation(dto.getLocation());
+		setLotNumber(dto.getLotNumber());
+		setAddressDetail(dto.getAddressDetail());
+		setAccommodationType(dto.getAccommodationType());
+		setDetailInfo(dto.getDetailInfo());
+	}
+
+	public void deleteAccommodation() {
+		setState(true);
 	}
 
 	@Override

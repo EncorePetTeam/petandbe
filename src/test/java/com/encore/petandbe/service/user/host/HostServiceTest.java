@@ -32,7 +32,7 @@ class HostServiceTest {
 	@BeforeAll
 	public void init() {
 		try (Connection conn = dataSource.getConnection()) {
-			ScriptUtils.executeSqlScript(conn, new ClassPathResource("/testdb/data.sql"));
+			ScriptUtils.executeSqlScript(conn, new ClassPathResource("/data.sql"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

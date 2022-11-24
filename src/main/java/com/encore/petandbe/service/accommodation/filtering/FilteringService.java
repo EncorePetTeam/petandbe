@@ -75,11 +75,11 @@ public class FilteringService {
 			.equals("")) {
 			LocalTime localTime = parseStringToTime(filteringAccommodationRequests.getCheckIn());
 			if (checkWeekend(filteringAccommodationRequests.getCheckIn())) {
-				booleanBuilder.and(qAccommodation.weekendWorkingStart.before(localTime));
-				booleanBuilder.and(qAccommodation.weekendWorkingEnd.after(localTime));
+				booleanBuilder.and(qAccommodation.weekendWorkingStart.before(localTime))
+					.and(qAccommodation.weekendWorkingEnd.after(localTime));
 			} else {
-				booleanBuilder.and(qAccommodation.workingStart.before(localTime));
-				booleanBuilder.and(qAccommodation.workingEnd.after(localTime));
+				booleanBuilder.and(qAccommodation.workingStart.before(localTime))
+					.and(qAccommodation.workingEnd.after(localTime));
 			}
 		}
 
@@ -87,11 +87,11 @@ public class FilteringService {
 			.equals("")) {
 			LocalTime localTime = parseStringToTime(filteringAccommodationRequests.getCheckOut());
 			if (checkWeekend(filteringAccommodationRequests.getCheckIn())) {
-				booleanBuilder.and(qAccommodation.weekendWorkingStart.loe(localTime));
-				booleanBuilder.and(qAccommodation.weekendWorkingEnd.goe(localTime));
+				booleanBuilder.and(qAccommodation.weekendWorkingStart.loe(localTime))
+					.and(qAccommodation.weekendWorkingEnd.goe(localTime));
 			} else {
-				booleanBuilder.and(qAccommodation.workingStart.loe(localTime));
-				booleanBuilder.and(qAccommodation.workingEnd.goe(localTime));
+				booleanBuilder.and(qAccommodation.workingStart.loe(localTime))
+					.and(qAccommodation.workingEnd.goe(localTime));
 			}
 		}
 

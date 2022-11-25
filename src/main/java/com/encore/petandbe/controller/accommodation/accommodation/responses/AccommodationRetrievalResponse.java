@@ -2,9 +2,11 @@ package com.encore.petandbe.controller.accommodation.accommodation.responses;
 
 import com.encore.petandbe.model.accommodation.accommodation.AccommodationType;
 
+import lombok.Builder;
 import lombok.Getter;
 
 @Getter
+@Builder
 public class AccommodationRetrievalResponse {
 	private String addressCode;
 	private String accommodationName;

@@ -1,5 +1,7 @@
 INSERT INTO address (address_code, state_name, city_name)
 VALUES ('05300', '서울특별시', '관악구');
+INSERT INTO address (address_code, state_name, city_name)
+VALUES ('05301', '서울특별시', '서대문구');
 
 INSERT INTO user (email, nickname, password, user_token_id, username, role)
 VALUES ('say01v@naver.com', 'jji', 'bjfajid12ighsi9832h', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjmFtZSI6IkpvaG4gRG9lIi', '정정일', 'USER'),

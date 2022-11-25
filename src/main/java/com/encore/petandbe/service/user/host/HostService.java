@@ -1,5 +1,7 @@
 package com.encore.petandbe.service.user.host;
 
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,7 +40,16 @@ public class HostService {
 			throw new WrongRequestException("Business Inconsistency");
 		}
 
-		Host host = hostRepository.save(HostMapper.of().registHostRequestsToEntity(hostRegistrationRequest));
+		Optional<Host> optionalHost = hostRepository.findByRegistrationNumber(
+			hostRegistrationRequest.getRegistrationNumber());
+
+		Host host;
+		if (!optionalHost.isEmpty()) {
+			host = optionalHost.get();
+			host.updateHostInfo(hostRegistrationRequest, false);
+		} else {
+			host = hostRepository.save(HostMapper.of().registHostRequestsToEntity(hostRegistrationRequest));
+		}
 
 		user.becomeHost(host);
 

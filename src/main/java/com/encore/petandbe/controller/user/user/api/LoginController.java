@@ -23,6 +23,7 @@ public class LoginController {
 		this.userService = userService;
 	}
 
+	//code = authorization code
 	@GetMapping("/kakao")
 	public ResponseEntity<String> loginByKakao(@RequestParam String code) throws IOException, InterruptedException {
 		Map<String, String> user = kakaoOauthService.findUserByKakao(code);

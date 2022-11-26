@@ -6,17 +6,19 @@ import java.util.Optional;
 import com.encore.petandbe.controller.user.user.responses.UserDetailsResponse;
 import com.encore.petandbe.model.user.user.User;
 import com.encore.petandbe.repository.UserRepository;
-import com.sun.xml.bind.v2.TODO;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public UserDetailsResponse findUserDetails(String token) {
@@ -43,4 +45,6 @@ public class UserService {
 
         return foundUser.get();
     }
+
+
 }

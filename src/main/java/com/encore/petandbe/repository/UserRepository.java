@@ -6,9 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.encore.petandbe.model.user.user.User;
 
-public interface UserRepository extends JpaRepository<User, String> {
-
-	Optional<User> findByEmail(String email);
-
+public interface UserRepository extends JpaRepository<User, Long> {
 	Optional<User> findByUserCode(String userCode);
 }

@@ -4,15 +4,19 @@ import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 import com.encore.petandbe.model.BaseEntity;
+import com.encore.petandbe.model.user.user.User;
 
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -32,6 +36,11 @@ public class Host extends BaseEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "user_id")
+	private User user;
+
 	@Column(nullable = false, length = 12, unique = true)
 	private String registrationNumber;
 
@@ -44,8 +53,9 @@ public class Host extends BaseEntity {
 	@Column(nullable = false, columnDefinition = "bit(1) default 0", length = 1)
 	private Boolean state;
 
-	public Host(Long id, String registrationNumber, String hostName, String openDate, Boolean state) {
+	public Host(Long id, User user, String registrationNumber, String hostName, String openDate, Boolean state) {
 		this.id = id;
+		this.user = user;
 		this.registrationNumber = registrationNumber;
 		this.hostName = hostName;
 		this.openDate = openDate;

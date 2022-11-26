@@ -1,7 +1,7 @@
 INSERT INTO address (address_code, state_name, city_name)
 VALUES ('05300', '서울특별시', '관악구');
 
-INSERT INTO user (email, nickname, password, user_token_id, username, role)
+INSERT INTO user (email, nickname, password, user_token_id, user_code, role)
 VALUES ('say01v@naver.com', 'jji', 'bjfajid12ighsi9832h', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjmFtZSI6IkpvaG4gRG9lIi', '정정일', 'USER'),
        ('say02v@naver.com', 'j2', 'bfkdgmdfk832h', 'hytnfgncCI6IkpXVCJ9.eyJzdWIiOiIvsdvnksdnklfsdRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeK', '정정이', 'USER'),
        ('say03v@naver.com', 'j3', 'jtytthsi9832h', 'sgdsvdsXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5M', '정정삼','USER'),

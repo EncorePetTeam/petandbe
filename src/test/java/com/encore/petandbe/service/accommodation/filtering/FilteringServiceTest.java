@@ -18,26 +18,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.encore.petandbe.controller.accommodation.filtering.requests.FilteringAccommodationRequests;
 import com.encore.petandbe.controller.accommodation.filtering.responses.FilteringAccommodationListResponse;
+import com.encore.petandbe.model.accommodation.filtering.category.SortCategory;
 
 @SpringBootTest
 @Transactional
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class FilteringServiceTest {
 
 	@Autowired
 	private FilteringService filteringService;
-
-	@Autowired
-	DataSource dataSource;
-
-	@BeforeAll
-	public void init() {
-		try (Connection conn = dataSource.getConnection()) {
-			ScriptUtils.executeSqlScript(conn, new ClassPathResource("/testdb/filteringdata.sql"));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 
 	@Test
 	@DisplayName("filtering without filter - success")
@@ -71,7 +59,7 @@ class FilteringServiceTest {
 		String checkOut = "2022-11-24 18:00:00";
 		String petCategory = "DOG";
 		String weight = "5.8";
-		String sortCategory = "최신 등록 순";
+		SortCategory sortCategory = SortCategory.NEWEST;
 
 		FilteringAccommodationRequests filteringAccommodationRequests = new FilteringAccommodationRequests(address,
 			checkIn, checkOut, petCategory, weight, sortCategory, page);
@@ -94,7 +82,7 @@ class FilteringServiceTest {
 		String checkOut = "2022-11-28 15:30:00";
 		String petCategory = "CAT";
 		String weight = "4.3";
-		String sortCategory = "averageRate";
+		SortCategory sortCategory = SortCategory.AVERAGE;
 
 		FilteringAccommodationRequests filteringAccommodationRequests = new FilteringAccommodationRequests(address,
 			checkIn, checkOut, petCategory, weight, sortCategory, page);
@@ -117,7 +105,7 @@ class FilteringServiceTest {
 		String checkOut = "2022-11-28 16:00:00";
 		String petCategory = "CAT";
 		String weight = "4.3";
-		String sortCategory = "북마크 많은 순";
+		SortCategory sortCategory = SortCategory.BOOKMARK;
 
 		FilteringAccommodationRequests filteringAccommodationRequests = new FilteringAccommodationRequests(address,
 			checkIn, checkOut, petCategory, weight, sortCategory, page);

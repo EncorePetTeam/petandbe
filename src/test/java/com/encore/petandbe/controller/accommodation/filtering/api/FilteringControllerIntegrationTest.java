@@ -39,18 +39,6 @@ public class FilteringControllerIntegrationTest {
 	@Autowired
 	private MockMvc mockMvc;
 
-	@Autowired
-	DataSource dataSource;
-
-	@BeforeAll
-	public void init() {
-		try (Connection conn = dataSource.getConnection()) {
-			ScriptUtils.executeSqlScript(conn, new ClassPathResource("/testdb/filteringdata.sql"));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
 	@Test
 	@DisplayName("Filtering accommodation controller - success")
 	void filteringAccommodationSuccess() throws Exception {
@@ -61,7 +49,7 @@ public class FilteringControllerIntegrationTest {
 		info.add("checkOut", "2022-11-18 11:00:00");
 		info.add("petCategory", "DOG");
 		info.add("weight", "4.9");
-		info.add("sortCategory", "평점순");
+		info.add("sortCategory", "AVERAGE");
 		info.add("page", "1");
 
 		//when

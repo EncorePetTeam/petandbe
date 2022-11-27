@@ -18,75 +18,73 @@ import com.encore.petandbe.controller.accommodation.filtering.responses.Filterin
 import com.encore.petandbe.controller.accommodation.filtering.responses.FilteringAccommodationResponse;
 import com.encore.petandbe.model.accommodation.accommodation.Accommodation;
 import com.encore.petandbe.model.accommodation.accommodation.QAccommodation;
+import com.encore.petandbe.model.accommodation.filtering.category.SortCategory;
 import com.encore.petandbe.model.accommodation.room.QRoom;
 import com.encore.petandbe.repository.AccommodationRepository;
-import com.encore.petandbe.repository.AddressRepository;
 import com.encore.petandbe.repository.RoomRepository;
 import com.querydsl.core.BooleanBuilder;
 
 @Service
 public class FilteringService {
 
-	private AccommodationRepository accommodationRepository;
-	private AddressRepository addressRepository;
-	private RoomRepository roomRepository;
+	private final AccommodationRepository accommodationRepository;
+	private final RoomRepository roomRepository;
+	private BooleanBuilder booleanBuilder;
+	private List<Long> accommodationIdList;
+	private static final QAccommodation qAccommodation = QAccommodation.accommodation;
 
-	public FilteringService(AccommodationRepository accommodationRepository, AddressRepository addressRepository,
+	public FilteringService(AccommodationRepository accommodationRepository,
 		RoomRepository roomRepository) {
 		this.accommodationRepository = accommodationRepository;
-		this.addressRepository = addressRepository;
 		this.roomRepository = roomRepository;
 	}
 
 	public FilteringAccommodationListResponse filteringAccommodation(
 		FilteringAccommodationRequests filteringAccommodationRequests) {
-		QAccommodation qAccommodation = QAccommodation.accommodation;
 
-		BooleanBuilder booleanBuilder = new BooleanBuilder();
+		accommodationIdList = null;
+		booleanBuilder = new BooleanBuilder();
 
 		PageRequest pageRequest = getPageRequest(filteringAccommodationRequests.getPage(),
 			filteringAccommodationRequests.getSortCategory());
 
-		List<Long> accommodationIdList = null;
+		filterByAddressIfRequirementsExist(filteringAccommodationRequests.getAddress());
 
-		if (filteringAccommodationRequests.getAddress() != null && !filteringAccommodationRequests.getAddress()
-			.equals("")) {
-			booleanBuilder.and(qAccommodation.address.addressCode.eq(filteringAccommodationRequests.getAddress()));
+		getAccommodationIdListByPetCategoryIfRequirementsExist(filteringAccommodationRequests.getPetCategory());
+
+		getAccommodationIdListFilteredByWeightIfRequirementsExist(filteringAccommodationRequests.getWeight());
+
+		filterByCheckInOutTimeIfRequirementsExist(filteringAccommodationRequests.getCheckIn());
+
+		filterByCheckInOutTimeIfRequirementsExist(filteringAccommodationRequests.getCheckOut());
+
+		filterByAccommodationIdListIfPetCategoryOrWeightRequirementsExist();
+
+		Page<Accommodation> result = accommodationRepository.findAll(booleanBuilder, pageRequest);
+
+		List<FilteringAccommodationResponse> resultList = getFilteringAccommodationResponses(
+			result);
+
+		return new FilteringAccommodationListResponse(resultList);
+	}
+
+	private List<FilteringAccommodationResponse> getFilteringAccommodationResponses(Page<Accommodation> result) {
+		return result.stream()
+			.map(e -> new FilteringAccommodationResponse(e.getId(), e.getAccommodationName(),
+				e.getAddress().getAddressCode(), e.getAverageRate()))
+			.collect(Collectors.toList());
+	}
+
+	private void filterByAccommodationIdListIfPetCategoryOrWeightRequirementsExist() {
+		if (!checkAccommodationIdListIsNull()) {
+			booleanBuilder.and(qAccommodation.id.in(accommodationIdList));
 		}
+	}
 
-		if (filteringAccommodationRequests.getPetCategory() != null
-			&& !filteringAccommodationRequests.getPetCategory().equals("")) {
-			accommodationIdList = roomRepository.findByPetCategory(
-				filteringAccommodationRequests.getPetCategory());
-		}
-
-		if (filteringAccommodationRequests.getWeight() != null && !filteringAccommodationRequests.getWeight()
-			.equals("")) {
-			if (accommodationIdList == null) {
-				accommodationIdList = filteringByWeight(filteringAccommodationRequests.getWeight());
-			} else {
-				List<Long> accommodationFilterdList = filteringByWeight(filteringAccommodationRequests.getWeight());
-
-				accommodationIdList.retainAll(accommodationFilterdList);
-			}
-		}
-
-		if (filteringAccommodationRequests.getCheckIn() != null && !filteringAccommodationRequests.getCheckIn()
-			.equals("")) {
-			LocalTime localTime = parseStringToTime(filteringAccommodationRequests.getCheckIn());
-			if (checkWeekend(filteringAccommodationRequests.getCheckIn())) {
-				booleanBuilder.and(qAccommodation.weekendWorkingStart.before(localTime))
-					.and(qAccommodation.weekendWorkingEnd.after(localTime));
-			} else {
-				booleanBuilder.and(qAccommodation.workingStart.before(localTime))
-					.and(qAccommodation.workingEnd.after(localTime));
-			}
-		}
-
-		if (filteringAccommodationRequests.getCheckOut() != null && !filteringAccommodationRequests.getCheckIn()
-			.equals("")) {
-			LocalTime localTime = parseStringToTime(filteringAccommodationRequests.getCheckOut());
-			if (checkWeekend(filteringAccommodationRequests.getCheckIn())) {
+	private void filterByCheckInOutTimeIfRequirementsExist(String time) {
+		if (isRequirementExist(time)) {
+			LocalTime localTime = parseStringToTime(time);
+			if (checkWeekend(time)) {
 				booleanBuilder.and(qAccommodation.weekendWorkingStart.loe(localTime))
 					.and(qAccommodation.weekendWorkingEnd.goe(localTime));
 			} else {
@@ -94,22 +92,38 @@ public class FilteringService {
 					.and(qAccommodation.workingEnd.goe(localTime));
 			}
 		}
-
-		if (accommodationIdList != null) {
-			booleanBuilder.and(qAccommodation.id.in(accommodationIdList));
-		}
-
-		Page<Accommodation> result = accommodationRepository.findAll(booleanBuilder, pageRequest);
-
-		List<FilteringAccommodationResponse> resultList = result.stream()
-			.map(e -> new FilteringAccommodationResponse(e.getId(), e.getAccommodationName(),
-				e.getAddress().getAddressCode(), e.getAverageRate()))
-			.collect(Collectors.toList());
-
-		return new FilteringAccommodationListResponse(resultList);
 	}
 
-	private PageRequest getPageRequest(Integer page, String sortCategory) {
+	private void getAccommodationIdListFilteredByWeightIfRequirementsExist(String weight) {
+		if (isRequirementExist(weight)) {
+			if (checkAccommodationIdListIsNull()) {
+				accommodationIdList = filteringByWeight(weight);
+			} else {
+				List<Long> accommodationFilteredList = filteringByWeight(weight);
+				accommodationIdList.retainAll(accommodationFilteredList);
+			}
+		}
+	}
+
+	private void getAccommodationIdListByPetCategoryIfRequirementsExist(String petCategory) {
+		if (isRequirementExist(petCategory)) {
+			if (checkAccommodationIdListIsNull()) {
+				accommodationIdList = roomRepository.findByPetCategory(
+					petCategory);
+			} else {
+				List<Long> accommodationFilteredList = roomRepository.findByPetCategory(petCategory);
+				accommodationIdList.retainAll(accommodationFilteredList);
+			}
+		}
+	}
+
+	private void filterByAddressIfRequirementsExist(String address) {
+		if (isRequirementExist(address)) {
+			booleanBuilder.and(qAccommodation.address.addressCode.eq(address));
+		}
+	}
+
+	private PageRequest getPageRequest(Integer page, SortCategory sortCategory) {
 		Sort sort;
 
 		if (page == null) {
@@ -117,9 +131,9 @@ public class FilteringService {
 		}
 
 		if (sortCategory != null) {
-			if (sortCategory.equals("최신 등록 순")) {
+			if (sortCategory.equals(SortCategory.NEWEST)) {
 				sort = Sort.by("id").descending();
-			} else if (sortCategory.equals("북마크 많은 순")) {
+			} else if (sortCategory.equals(SortCategory.BOOKMARK)) {
 				sort = Sort.by("bookmarkCount").descending();
 			} else {
 				sort = Sort.by("averageRate").descending();
@@ -134,19 +148,19 @@ public class FilteringService {
 	private List<Long> filteringByWeight(String weight) {
 		QRoom qRoom = QRoom.room;
 
-		BooleanBuilder booleanBuild = new BooleanBuilder();
+		BooleanBuilder roomBooleanBuild = new BooleanBuilder();
 
 		if (Double.parseDouble(weight) <= 5) {
-			booleanBuild.and(qRoom.weight.loe("5"));
+			roomBooleanBuild.and(qRoom.weight.loe("5"));
 		} else {
-			booleanBuild.and(qRoom.weight.gt("5"));
+			roomBooleanBuild.and(qRoom.weight.gt("5"));
 		}
 
-		booleanBuild.and(qRoom.state.eq(false));
+		roomBooleanBuild.and(qRoom.state.eq(false));
 
 		List<Long> result = new ArrayList<>();
 
-		roomRepository.findAll(booleanBuild).forEach(e -> result.add(e.getAccommodation().getId()));
+		roomRepository.findAll(roomBooleanBuild).forEach(e -> result.add(e.getAccommodation().getId()));
 
 		return result;
 	}
@@ -159,15 +173,19 @@ public class FilteringService {
 
 		int dayOfWeekNumber = dayOfWeek.getValue();
 
-		if (dayOfWeekNumber > 5) {
-			return true;
-		} else {
-			return false;
-		}
+		return dayOfWeekNumber > 5;
 	}
 
 	private LocalTime parseStringToTime(String dateTime) {
 		return LocalTime.parse(dateTime.substring(dateTime.length() - 8),
 			DateTimeFormatter.ofPattern("HH:mm:ss"));
+	}
+
+	private boolean isRequirementExist(String requirement) {
+		return requirement != null && !requirement.equals("");
+	}
+
+	private boolean checkAccommodationIdListIsNull() {
+		return accommodationIdList == null;
 	}
 }

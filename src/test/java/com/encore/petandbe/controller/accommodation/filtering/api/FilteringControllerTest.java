@@ -55,7 +55,7 @@ class FilteringControllerTest {
 		info.add("checkOut", "2022-11-18 11:00:00");
 		info.add("petCategory", "Dog");
 		info.add("weight", "4.9");
-		info.add("sortCategory", "평점순");
+		info.add("sortCategory", "AVERAGE");
 		info.add("page", "3");
 
 		List<FilteringAccommodationResponse> filteringAccommodationResponses = new ArrayList<>();

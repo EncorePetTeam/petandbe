@@ -26,3 +26,6 @@ spring:
     hiddenmethod:
       filter:
         enabled: true
+  profiles:
+    active:
+      - secret

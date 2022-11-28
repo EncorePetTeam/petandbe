@@ -1,7 +1,6 @@
 package com.encore.petandbe.infrastructure;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -12,6 +11,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 import com.encore.petandbe.controller.user.host.requests.HostRegistrationRequest;
@@ -19,9 +20,18 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Component
+@PropertySource("classpath:application-secret.yml")
 public class BusinessAuthenticityImpl implements BusinessAuthenticity {
 
-	private ObjectMapper objectMapper;
+	@Value("${spring.secret.business-authenticity.service-key}")
+	private String serviceKey;
+	@Value("${spring.secret.business-authenticity.url}")
+	private String url;
+	private final String requstKeyRegistrationNumber = "b_no";
+	private final String requstKeyStartDate = "start_dt";
+	private final String requstKeyCEOName = "p_nm";
+	private final String successResult = "01";
+	private final ObjectMapper objectMapper;
 
 	public BusinessAuthenticityImpl(ObjectMapper objectMapper) {
 		this.objectMapper = objectMapper;
@@ -30,47 +40,68 @@ public class BusinessAuthenticityImpl implements BusinessAuthenticity {
 	@Override
 	public boolean checkAuthenticity(HostRegistrationRequest hostRegistrationRequest) {
 
-		String serviceKey = "SDknnRn8ZJSaepNdwIW7WeV5ZUqyNaK31vkjERfM7Lwi%2F9xJ8ArunrvWB0PYzHQJz5rawN8U4eADXTDXOzZoSg%3D%3D";
+		String requestBodyJSON = getRequestBodyJSON(hostRegistrationRequest);
 
+		HttpRequest httpRequest = getHttpRequest(requestBodyJSON);
+
+		HttpResponse<String> response = getStringHttpResponse(httpRequest);
+
+		String resultCode = getResultCode(response);
+
+		return isAuthenticitySuccess(resultCode);
+	}
+
+	private String getResultCode(HttpResponse<String> response) {
 		try {
-			String url = "http://api.odcloud.kr/api/nts-businessman/v1/validate?serviceKey=" + serviceKey;
-
-			Map<String, String> params = new LinkedHashMap<>();
-			params.put("b_no", hostRegistrationRequest.getRegistrationNumber());
-			params.put("start_dt", hostRegistrationRequest.getOpenDate());
-			params.put("p_nm", hostRegistrationRequest.getHostName());
-
-			List<Object> list = new ArrayList<>();
-			list.add(params);
-
-			Map<String, Object> body = new LinkedHashMap<>();
-			body.put("businesses", list);
-
-			String data = objectMapper.writeValueAsString(body);
-
-			HttpRequest request = HttpRequest.newBuilder(URI.create(url))
-				.POST(HttpRequest.BodyPublishers.ofString(data))
-				.header("Content-Type", "application/json")
-				.header("Data-Type", "JSON")
-				.build();
-
-			HttpClient client = HttpClient.newHttpClient();
-			var response = client.send(request, HttpResponse.BodyHandlers.ofString(StandardCharsets.UTF_8));
-
-			String result = objectMapper.readTree(response.body()).get("data").get(0).get("valid").asText();
-
-			if (result.equals("01")) {
-				return true;
-			}
-
-		} catch (MalformedURLException | JsonProcessingException e) {
+			return objectMapper.readTree(response.body()).get("data").get(0).get("valid").asText();
+		} catch (JsonProcessingException e) {
 			throw new RuntimeException(e);
+		}
+	}
+
+	private boolean isAuthenticitySuccess(String resultCode) {
+		return resultCode.equals(successResult);
+	}
+
+	private static HttpResponse<String> getStringHttpResponse(HttpRequest httpRequest) {
+		HttpClient client = HttpClient.newHttpClient();
+		try {
+			return client.send(httpRequest, HttpResponse.BodyHandlers.ofString(StandardCharsets.UTF_8));
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		} catch (InterruptedException e) {
 			throw new RuntimeException(e);
 		}
-		
-		return false;
+	}
+
+	private HttpRequest getHttpRequest(String data) {
+		return HttpRequest.newBuilder(URI.create(url + serviceKey))
+			.POST(HttpRequest.BodyPublishers.ofString(data))
+			.header("Content-Type", "application/json")
+			.header("Data-Type", "JSON")
+			.build();
+	}
+
+	private String getRequestBodyJSON(HostRegistrationRequest hostRegistrationRequest) {
+		List<Object> requestParamList = getRequestParams(hostRegistrationRequest);
+
+		Map<String, Object> body = new LinkedHashMap<>();
+		body.put("businesses", requestParamList);
+		try {
+			return objectMapper.writeValueAsString(body);
+		} catch (JsonProcessingException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	private List<Object> getRequestParams(HostRegistrationRequest hostRegistrationRequest) {
+		Map<String, String> requestParams = new LinkedHashMap<>();
+		requestParams.put(requstKeyRegistrationNumber, hostRegistrationRequest.getRegistrationNumber());
+		requestParams.put(requstKeyStartDate, hostRegistrationRequest.getOpenDate());
+		requestParams.put(requstKeyCEOName, hostRegistrationRequest.getHostName());
+
+		List<Object> requestParamList = new ArrayList<>();
+		requestParamList.add(requestParams);
+		return requestParamList;
 	}
 }

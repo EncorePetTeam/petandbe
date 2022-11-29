@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.encore.petandbe.controller.accommodation.room.requests.RoomRegistrationRequest;
-import com.encore.petandbe.controller.accommodation.room.requests.RoomUpdatingequest;
+import com.encore.petandbe.controller.accommodation.room.requests.RoomUpdateRequest;
 import com.encore.petandbe.controller.accommodation.room.responses.RoomIdResponse;
 import com.encore.petandbe.controller.accommodation.room.responses.RoomRetrievalResponse;
 import com.encore.petandbe.service.accommodation.room.RoomService;
@@ -34,7 +34,7 @@ public class RoomController {
 
 	@PutMapping("{room-id}")
 	public ResponseEntity<RoomIdResponse> updateRoom(@PathVariable("room-id") Long roomId,
-		@RequestBody RoomUpdatingequest request) {
+		@RequestBody RoomUpdateRequest request) {
 		return ResponseEntity.ok().body(new RoomIdResponse(roomService.updateRoom(request, roomId)));
 	}
 

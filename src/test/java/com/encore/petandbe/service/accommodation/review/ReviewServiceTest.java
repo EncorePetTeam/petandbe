@@ -48,8 +48,8 @@ class ReviewServiceTest {
 	private ReservationRepository reservationRepository;
 
 	@Test
-	@DisplayName("Regist Review service - success ")
-	void registReviewSuccess() {
+	@DisplayName("Register Review service - success ")
+	void registerReviewSuccess() {
 		//given
 		Long userId = 1L;
 		Integer rate = 5;
@@ -103,8 +103,8 @@ class ReviewServiceTest {
 	}
 
 	@Test
-	@DisplayName("Regist Review service without content - success ")
-	void registReviewWithoutContentSuccess() {
+	@DisplayName("Register Review service without content - success ")
+	void registerReviewWithoutContentSuccess() {
 		//given
 		Long userId = 1L;
 		Integer rate = 5;
@@ -151,12 +151,12 @@ class ReviewServiceTest {
 		assertEquals(reservationId, registReviewResponse.getReservationId());
 		assertEquals(userId, registReviewResponse.getUserId());
 		assertEquals(rate, registReviewResponse.getRate());
-		assertEquals(null, registReviewResponse.getContent());
+		assertNull(registReviewResponse.getContent());
 	}
 
 	@Test
-	@DisplayName("Regist Review service - user not found fail")
-	void registReviewUserNotFoundFail() {
+	@DisplayName("Register Review service - user not found fail")
+	void registerReviewUserNotFoundFail() {
 		//given
 		Long userId = 1L;
 		Integer rate = 5;
@@ -175,8 +175,8 @@ class ReviewServiceTest {
 	}
 
 	@Test
-	@DisplayName("Regist Review service - reservation not found fail")
-	void registReviewReservationNotFoundFail() {
+	@DisplayName("Register Review service - reservation not found fail")
+	void registerReviewReservationNotFoundFail() {
 		//given
 		Long userId = 1L;
 		Integer rate = 5;
@@ -196,8 +196,8 @@ class ReviewServiceTest {
 	}
 
 	@Test
-	@DisplayName("Regist Review service - user does not match fail")
-	void registReviewUserDoesNotMatchFail() {
+	@DisplayName("Register Review service - user does not match fail")
+	void registerReviewUserDoesNotMatchFail() {
 		//given
 		Long userId = 1L;
 		Integer rate = 5;
@@ -258,6 +258,7 @@ class ReviewServiceTest {
 		Reservation reservation = Reservation.builder().id(reservationId).build();
 
 		given(reservationRepository.findById(reservationId)).willReturn(Optional.ofNullable(reservation));
+		assert reservation != null;
 		given(reviewRepository.findByReservationId(reservation.getId())).willReturn(Optional.empty());
 		//when
 		Assertions.assertThrows(NonExistResourceException.class, () -> {
@@ -487,7 +488,7 @@ class ReviewServiceTest {
 		//then
 		assertEquals(reviewId, reviewDetailsResponse.getReviewId());
 		assertEquals(updateRate, reviewDetailsResponse.getRate());
-		assertEquals(null, reviewDetailsResponse.getContent());
+		assertNull(reviewDetailsResponse.getContent());
 	}
 
 	@Test

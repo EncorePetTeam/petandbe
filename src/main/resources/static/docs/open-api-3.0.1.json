@@ -432,35 +432,46 @@
         }
       }
     },
-    "/review-list/get-by-userid" : {
-      "post" : {
+    "/review-list" : {
+      "get" : {
         "tags" : [ "review-list" ],
         "operationId" : "get-review-list-by-userid",
-        "requestBody" : {
-          "content" : {
-            "application/json;charset=UTF-8" : {
-              "schema" : {
-                "$ref" : "#/components/schemas/review-list-get-by-userid486549215"
-              },
-              "examples" : {
-                "get-review-list-by-userid" : {
-                  "value" : "{\"userId\":\"token123\",\"pageNum\":3,\"amount\":10}"
-                }
-              }
-            }
+        "parameters" : [ {
+          "name" : "userId",
+          "in" : "query",
+          "description" : "user 아이디",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
           }
-        },
+        }, {
+          "name" : "pageNum",
+          "in" : "query",
+          "description" : "페이지 번호",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "amount",
+          "in" : "query",
+          "description" : "요청할 데이터 개수",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
         "responses" : {
           "200" : {
             "description" : "200",
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/review-list-get-by-userid826252810"
+                  "$ref" : "#/components/schemas/review-list1229325162"
                 },
                 "examples" : {
                   "get-review-list-by-userid" : {
-                    "value" : "{\"endPage\":13,\"startPage\":1,\"nextPageExist\":true,\"prevPageExist\":true,\"selectPage\":3,\"amountItem\":10}"
+                    "value" : "{\"endPage\":13,\"selectPage\":3,\"amountItem\":10,\"reviewWithAccommodationResponsesList\":[{\"accommodationName\":\"정정일 애견 호텔0\",\"accommodationId\":0,\"reservationId\":0,\"reviewRate\":5,\"reviewContent\":\"Very good 0\"},{\"accommodationName\":\"정정일 애견 호텔1\",\"accommodationId\":1,\"reservationId\":1,\"reviewRate\":5,\"reviewContent\":\"Very good 1\"},{\"accommodationName\":\"정정일 애견 호텔2\",\"accommodationId\":2,\"reservationId\":2,\"reviewRate\":5,\"reviewContent\":\"Very good 2\"},{\"accommodationName\":\"정정일 애견 호텔3\",\"accommodationId\":3,\"reservationId\":3,\"reviewRate\":5,\"reviewContent\":\"Very good 3\"},{\"accommodationName\":\"정정일 애견 호텔4\",\"accommodationId\":4,\"reservationId\":4,\"reviewRate\":5,\"reviewContent\":\"Very good 4\"},{\"accommodationName\":\"정정일 애견 호텔5\",\"accommodationId\":5,\"reservationId\":5,\"reviewRate\":5,\"reviewContent\":\"Very good 5\"},{\"accommodationName\":\"정정일 애견 호텔6\",\"accommodationId\":6,\"reservationId\":6,\"reviewRate\":5,\"reviewContent\":\"Very good 6\"},{\"accommodationName\":\"정정일 애견 호텔7\",\"accommodationId\":7,\"reservationId\":7,\"reviewRate\":5,\"reviewContent\":\"Very good 7\"},{\"accommodationName\":\"정정일 애견 호텔8\",\"accommodationId\":8,\"reservationId\":8,\"reviewRate\":5,\"reviewContent\":\"Very good 8\"},{\"accommodationName\":\"정정일 애견 호텔9\",\"accommodationId\":9,\"reservationId\":9,\"reviewRate\":5,\"reviewContent\":\"Very good 9\"}]}"
                   }
                 }
               }
@@ -868,6 +879,52 @@
           }
         }
       },
+      "review-list1229325162" : {
+        "type" : "object",
+        "properties" : {
+          "selectPage" : {
+            "type" : "number",
+            "description" : "현재 조회하는 페이지"
+          },
+          "amountItem" : {
+            "type" : "number",
+            "description" : "데이터 개수"
+          },
+          "endPage" : {
+            "type" : "number",
+            "description" : "페이지네이션의 끝번호"
+          },
+          "reviewWithAccommodationResponsesList" : {
+            "type" : "array",
+            "description" : "리뷰 조회 결과 List",
+            "items" : {
+              "type" : "object",
+              "properties" : {
+                "reviewRate" : {
+                  "type" : "number",
+                  "description" : "부여한 평점"
+                },
+                "reservationId" : {
+                  "type" : "number",
+                  "description" : "예약 Id"
+                },
+                "reviewContent" : {
+                  "type" : "string",
+                  "description" : "User가 작성한 리뷰 내용"
+                },
+                "accommodationId" : {
+                  "type" : "number",
+                  "description" : "숙소 Id"
+                },
+                "accommodationName" : {
+                  "type" : "string",
+                  "description" : "숙소 이름"
+                }
+              }
+            }
+          }
+        }
+      },
       "room-363473800" : {
         "type" : "object",
         "properties" : {
@@ -977,35 +1034,6 @@
           }
         }
       },
-      "review-list-get-by-userid826252810" : {
-        "type" : "object",
-        "properties" : {
-          "selectPage" : {
-            "type" : "number",
-            "description" : "현재 조회하는 페이지"
-          },
-          "prevPageExist" : {
-            "type" : "boolean",
-            "description" : "이전버튼 황설화 여부"
-          },
-          "startPage" : {
-            "type" : "number",
-            "description" : "페이지네이션의 시작번호"
-          },
-          "amountItem" : {
-            "type" : "number",
-            "description" : "데이터 개수"
-          },
-          "nextPageExist" : {
-            "type" : "boolean",
-            "description" : "다음버튼 활성화 여부"
-          },
-          "endPage" : {
-            "type" : "number",
-            "description" : "페이지네이션의 끝번호"
-          }
-        }
-      },
       "room-room-id-736575899" : {
         "type" : "object",
         "properties" : {
@@ -1043,9 +1071,6 @@
             "description" : "룸 이름"
           }
         }
-      },
-      "review-list-get-by-userid486549215" : {
-        "type" : "object"
       },
       "accommodation-accommodation-id-71401215" : {
         "type" : "object",

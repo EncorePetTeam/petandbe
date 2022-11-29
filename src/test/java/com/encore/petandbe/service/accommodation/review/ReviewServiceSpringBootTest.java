@@ -25,27 +25,14 @@ import com.encore.petandbe.controller.accommodation.review.responses.ReviewDetai
 
 @SpringBootTest
 @Transactional
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class ReviewServiceSpringBootTest {
+class ReviewServiceSpringBootTest {
 
 	@Autowired
 	private ReviewService reviewService;
 
-	@Autowired
-	DataSource dataSource;
-
-	@BeforeAll
-	public void init() {
-		try (Connection conn = dataSource.getConnection()) {
-			ScriptUtils.executeSqlScript(conn, new ClassPathResource("/data.sql"));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
 	@Test
-	@DisplayName("regist review real test - success")
-	void registReview() {
+	@DisplayName("register review real test - success")
+	void registerReview() {
 		//given
 		Long userId = 2L;
 		Integer rate = 5;
@@ -59,7 +46,6 @@ public class ReviewServiceSpringBootTest {
 		assertEquals(rate, registReviewResponse.getRate());
 		assertEquals(userId, registReviewResponse.getUserId());
 		assertEquals(reservationId, registReviewResponse.getReservationId());
-		assertEquals(2L, registReviewResponse.getReviewId());
 	}
 
 	@Test

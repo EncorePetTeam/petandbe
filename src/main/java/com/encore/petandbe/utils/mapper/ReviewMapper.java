@@ -8,6 +8,10 @@ import com.encore.petandbe.model.accommodation.reservation.Reservation;
 import com.encore.petandbe.model.accommodation.review.Review;
 import com.encore.petandbe.model.user.user.User;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ReviewMapper {
 
 	private static ReviewMapper reviewMapper = null;
@@ -19,7 +23,7 @@ public class ReviewMapper {
 		return reviewMapper;
 	}
 
-	public Review registReviewRequestsToEntity(RegistReviewRequests registReviewRequests, User user,
+	public Review registerReviewRequestsToEntity(RegistReviewRequests registReviewRequests, User user,
 		Reservation reservation) {
 		return Review.builder().user(user)
 			.reservation(reservation)
@@ -28,7 +32,7 @@ public class ReviewMapper {
 			.build();
 	}
 
-	public RegistReviewResponse registedEntityToResponse(Review afterSaveReview) {
+	public RegistReviewResponse registerEntityToResponse(Review afterSaveReview) {
 		return new RegistReviewResponse(afterSaveReview.getId(), afterSaveReview.getUser().getId(),
 			afterSaveReview.getRate(), afterSaveReview.getContent(), afterSaveReview.getReservation().getId());
 	}

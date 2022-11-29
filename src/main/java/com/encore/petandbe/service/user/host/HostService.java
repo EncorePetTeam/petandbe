@@ -18,9 +18,9 @@ import com.encore.petandbe.utils.mapper.HostMapper;
 @Service
 public class HostService {
 
-	private UserRepository userRepository;
-	private HostRepository hostRepository;
-	private BusinessAuthenticity businessAuthenticity;
+	private final UserRepository userRepository;
+	private final HostRepository hostRepository;
+	private final BusinessAuthenticity businessAuthenticity;
 
 	public HostService(UserRepository userRepository, HostRepository hostRepository,
 		BusinessAuthenticity businessAuthenticity) {
@@ -34,9 +34,7 @@ public class HostService {
 		User user = userRepository.findById(hostRegistrationRequest.getUserId())
 			.orElseThrow(() -> new NonExistResourceException("User could not be found"));
 
-		boolean result = businessAuthenticity.checkAuthenticity(hostRegistrationRequest);
-
-		if (!result) {
+		if (!businessAuthenticity.checkAuthenticity(hostRegistrationRequest)) {
 			throw new WrongRequestException("Business Inconsistency");
 		}
 
@@ -44,7 +42,7 @@ public class HostService {
 			hostRegistrationRequest.getRegistrationNumber());
 
 		Host host;
-		if (!optionalHost.isEmpty()) {
+		if (optionalHost.isPresent()) {
 			host = optionalHost.get();
 			host.updateHostInfo(hostRegistrationRequest, false);
 		} else {

@@ -25,9 +25,9 @@ import com.encore.petandbe.utils.mapper.ReviewMapper;
 @Service
 public class ReviewService {
 
-	private ReviewRepository reviewRepository;
-	private UserRepository userRepository;
-	private ReservationRepository reservationRepository;
+	private final ReviewRepository reviewRepository;
+	private final UserRepository userRepository;
+	private final ReservationRepository reservationRepository;
 
 	public ReviewService(ReviewRepository reviewRepository, UserRepository userRepository,
 		ReservationRepository reservationRepository) {
@@ -51,11 +51,11 @@ public class ReviewService {
 		}
 
 		Review savedReview = reviewRepository.save(
-			ReviewMapper.of().registReviewRequestsToEntity(registReviewRequests, user, reservation));
+			ReviewMapper.of().registerReviewRequestsToEntity(registReviewRequests, user, reservation));
 
 		updateAccommodationRate(reservation.getAccommodation());
 
-		return ReviewMapper.of().registedEntityToResponse(savedReview);
+		return ReviewMapper.of().registerEntityToResponse(savedReview);
 	}
 
 	@Transactional

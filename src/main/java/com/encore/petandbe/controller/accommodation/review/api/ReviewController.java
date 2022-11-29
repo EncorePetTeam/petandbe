@@ -30,7 +30,7 @@ public class ReviewController {
 	}
 
 	@PostMapping
-	public ResponseEntity<RegistReviewResponse> registReview(@RequestBody RegistReviewRequests registReviewRequests) {
+	public ResponseEntity<RegistReviewResponse> registerReview(@RequestBody RegistReviewRequests registReviewRequests) {
 		return ResponseEntity.status(HttpStatus.CREATED).body(reviewService.registReview(registReviewRequests));
 	}
 

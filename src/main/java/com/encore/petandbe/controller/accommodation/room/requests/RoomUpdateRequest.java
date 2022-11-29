@@ -5,7 +5,7 @@ import com.encore.petandbe.model.accommodation.filtering.category.PetCategory;
 import lombok.Getter;
 
 @Getter
-public class RoomUpdatingequest {
+public class RoomUpdateRequest {
 
 	private Long accommodationId;
 	private String roomName;
@@ -14,7 +14,7 @@ public class RoomUpdatingequest {
 	private String weight;
 	private String detailInfo;
 
-	public RoomUpdatingequest(Long accommodationId, String roomName, Integer amount,
+	public RoomUpdateRequest(Long accommodationId, String roomName, Integer amount,
 		PetCategory petCategory, String weight, String detailInfo) {
 		this.accommodationId = accommodationId;
 		this.roomName = roomName;

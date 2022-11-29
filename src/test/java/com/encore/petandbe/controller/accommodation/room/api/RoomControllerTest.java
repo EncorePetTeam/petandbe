@@ -19,7 +19,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
 import com.encore.petandbe.controller.accommodation.room.requests.RoomRegistrationRequest;
-import com.encore.petandbe.controller.accommodation.room.requests.RoomUpdatingequest;
+import com.encore.petandbe.controller.accommodation.room.requests.RoomUpdateRequest;
 import com.encore.petandbe.controller.accommodation.room.responses.RoomRetrievalResponse;
 import com.encore.petandbe.model.accommodation.filtering.category.PetCategory;
 import com.encore.petandbe.service.accommodation.room.RoomService;
@@ -78,13 +78,13 @@ class RoomControllerTest {
 	@Test
 	void updateRoomSuccess() throws Exception {
 		//given
-		RoomUpdatingequest roomUpdatingequest = new RoomUpdatingequest(accommodationId, roomName, amount, petCategory,
+		RoomUpdateRequest roomUpdateRequest = new RoomUpdateRequest(accommodationId, roomName, amount, petCategory,
 			weight, detailInfo);
 
-		when(roomService.updateRoom(roomUpdatingequest, roomId)).thenReturn(roomId);
+		when(roomService.updateRoom(roomUpdateRequest, roomId)).thenReturn(roomId);
 		//when
 		ResultActions resultActions = mockMvc.perform(put("/room/{room-id}", roomId)
-			.content(objectMapper.writeValueAsString(roomUpdatingequest))
+			.content(objectMapper.writeValueAsString(roomUpdateRequest))
 			.contentType(MediaType.APPLICATION_JSON)
 			.accept(MediaType.APPLICATION_JSON));
 		//then

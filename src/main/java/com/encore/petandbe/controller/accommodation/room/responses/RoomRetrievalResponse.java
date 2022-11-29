@@ -2,9 +2,11 @@ package com.encore.petandbe.controller.accommodation.room.responses;
 
 import com.encore.petandbe.model.accommodation.filtering.category.PetCategory;
 
+import lombok.Builder;
 import lombok.Getter;
 
 @Getter
+@Builder
 public class RoomRetrievalResponse {
 
 	private Long accommodationId;

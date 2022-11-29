@@ -17,17 +17,21 @@ import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
+import com.encore.petandbe.controller.accommodation.room.requests.RoomUpdateRequest;
 import com.encore.petandbe.model.BaseEntity;
 import com.encore.petandbe.model.accommodation.accommodation.Accommodation;
 import com.encore.petandbe.model.accommodation.filtering.category.PetCategory;
+import com.encore.petandbe.service.accommodation.room.dto.RoomUpdateDTO;
 
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Getter
+@Setter(AccessLevel.PRIVATE)
 @Builder
 @DynamicInsert
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -72,6 +76,18 @@ public class Room extends BaseEntity {
 		this.weight = weight;
 		this.detailInfo = detailInfo;
 		this.state = state;
+	}
+
+	public void updateRoom(RoomUpdateDTO roomUpdateDTO){
+		setRoomName(roomUpdateDTO.getRoomName());
+		setAmount(roomUpdateDTO.getAmount());
+		setPetCategory(roomUpdateDTO.getPetCategory());
+		setWeight(roomUpdateDTO.getWeight());
+		setDetailInfo(roomUpdateDTO.getDetailInfo());
+	}
+
+	public void deleteRoom(){
+		setState(true);
 	}
 
 	@Override

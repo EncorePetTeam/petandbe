@@ -39,52 +39,45 @@ public class User extends BaseEntity {
 	private Host host;
 
 	@Column(nullable = false, length = 100, unique = true)
-	private String userTokenId;
-
-	@Column(nullable = false, length = 30, unique = true)
-	private String username;
-
-	@Column(length = 100)
-	private String password;
+	private String userCode;
 
 	@Column(nullable = false, length = 10, unique = true)
 	private String nickname;
 
-	@Column(nullable = false, length = 123)
+	@Column(nullable = true, length = 123)
 	private String email;
 
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false)
 	private Role role;
 
+	@Column(nullable = false, columnDefinition = "bit(1) default 0", length = 1)
+	private Boolean state;
+
 	public void becomeHost(Host host) {
 		this.host = host;
 	}
 
-	public User(Long id, Host host, String userTokenId, String username, String password, String nickname,
-		String email,
-		Role role) {
+	public User(Long id, Host host, String userCode, String nickname, String email, Role role, Boolean state) {
 		this.id = id;
 		this.host = host;
-		this.userTokenId = userTokenId;
-		this.username = username;
-		this.password = password;
+		this.userCode = userCode;
 		this.nickname = nickname;
 		this.email = email;
 		this.role = role;
+		this.state = state;
 	}
 
 	@Override
 	public String toString() {
 		return "User{" +
 			"id=" + id +
-			", hostId=" + host +
-			", userTokenId='" + userTokenId + '\'' +
-			", username='" + username + '\'' +
-			", password='" + password + '\'' +
+			", host=" + host +
+			", userCode='" + userCode + '\'' +
 			", nickname='" + nickname + '\'' +
 			", email='" + email + '\'' +
 			", role=" + role +
+			", state=" + state +
 			'}';
 	}
 
@@ -92,17 +85,17 @@ public class User extends BaseEntity {
 	public boolean equals(Object o) {
 		if (this == o)
 			return true;
-		if (o == null || getClass() != o.getClass())
+		if (!(o instanceof User))
 			return false;
 		User user = (User)o;
 		return Objects.equals(id, user.id) && Objects.equals(host, user.host)
-			&& Objects.equals(userTokenId, user.userTokenId) && Objects.equals(username, user.username)
-			&& Objects.equals(password, user.password) && Objects.equals(nickname, user.nickname)
-			&& Objects.equals(email, user.email) && role == user.role;
+			&& Objects.equals(userCode, user.userCode) && Objects.equals(nickname, user.nickname)
+			&& Objects.equals(email, user.email) && role == user.role && Objects.equals(state,
+			user.state);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, host, userTokenId, username, password, nickname, email, role);
+		return Objects.hash(id, host, userCode, nickname, email, role, state);
 	}
 }

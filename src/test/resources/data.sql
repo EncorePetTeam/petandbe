@@ -50,3 +50,8 @@ VALUES (3, 2, 5, 'very good'),
        (5, 8, 5, 'very very good'),
        (5, 9, 4, 'good'),
        (5, 10, 5, 'wonderful');
+
+INSERT INTO bookmark(user_id, accommodation_id, state)
+VALUES (5, 1, false),
+       (5, 2, false),
+       (5, 3, true);

@@ -18,6 +18,7 @@ import com.encore.petandbe.model.accommodation.reservation.Reservation;
 import com.encore.petandbe.model.accommodation.review.Review;
 import com.encore.petandbe.model.user.user.User;
 import com.encore.petandbe.repository.ReservationRepository;
+import com.encore.petandbe.repository.ReviewListSearchRepository;
 import com.encore.petandbe.repository.ReviewRepository;
 import com.encore.petandbe.repository.UserRepository;
 import com.encore.petandbe.utils.mapper.ReviewMapper;
@@ -28,12 +29,14 @@ public class ReviewService {
 	private final ReviewRepository reviewRepository;
 	private final UserRepository userRepository;
 	private final ReservationRepository reservationRepository;
+	private final ReviewListSearchRepository reviewListSearchRepository;
 
 	public ReviewService(ReviewRepository reviewRepository, UserRepository userRepository,
-		ReservationRepository reservationRepository) {
+		ReservationRepository reservationRepository, ReviewListSearchRepository reviewListSearchRepository) {
 		this.reviewRepository = reviewRepository;
 		this.userRepository = userRepository;
 		this.reservationRepository = reservationRepository;
+		this.reviewListSearchRepository = reviewListSearchRepository;
 	}
 
 	@Transactional
@@ -53,7 +56,7 @@ public class ReviewService {
 		Review savedReview = reviewRepository.save(
 			ReviewMapper.of().registerReviewRequestsToEntity(registReviewRequests, user, reservation));
 
-		updateAccommodationRate(reservation.getAccommodation());
+		updateAccommodationRate(reservation.getRoom().getAccommodation());
 
 		return ReviewMapper.of().registerEntityToResponse(savedReview);
 	}
@@ -81,7 +84,7 @@ public class ReviewService {
 
 		review.updateReview(updateReviewRequests);
 
-		updateAccommodationRate(review.getReservation().getAccommodation());
+		updateAccommodationRate(review.getReservation().getRoom().getAccommodation());
 
 		return ReviewMapper.of().entityToResponse(review);
 	}
@@ -98,7 +101,7 @@ public class ReviewService {
 
 		review.deleteReview();
 
-		updateAccommodationRate(review.getReservation().getAccommodation());
+		updateAccommodationRate(review.getReservation().getRoom().getAccommodation());
 
 		return ReviewMapper.of().deletedEntityToResponse(review);
 	}
@@ -110,14 +113,12 @@ public class ReviewService {
 	}
 
 	private void updateAccommodationRate(Accommodation accommodation) {
-		List<Reservation> reservationList = reservationRepository.findByAccommodationId(accommodation.getId());
-
-		List<Integer> reviewList = reviewRepository.findRateById(reservationList);
+		List<Integer> reviewRates = reviewListSearchRepository.getReviewRatesByAccommodationId(accommodation);
 
 		double avgRate = 0;
 
-		if (!reviewList.isEmpty()) {
-			avgRate = reviewList.stream().mapToInt(Integer::intValue).average().getAsDouble();
+		if (!reviewRates.isEmpty()) {
+			avgRate = reviewRates.stream().mapToInt(Integer::intValue).average().getAsDouble();
 		}
 
 		accommodation.updateAvgRate(avgRate);

@@ -29,7 +29,7 @@ VALUES (1, '애견 호텔 5KG 이하', 30000, 'DOG', 5),
        (4, '애묘 유치원 5KG 이하', 40000, 'CAT', 5),
        (4, '애묘 유치원 5KG 이상', 70000, 'CAT', 10);
 
-INSERT INTO reservation (accommodation_id, user_id, check_in_date, check_out_date, pet_category, weight)
+INSERT INTO reservation (room_id, user_id, check_in_date, check_out_date, pet_category, weight)
 VALUES (1, 2, '20221121 140000', '20221123 160000', 'DOG', 5.9),
        (1, 3, '20221121 140000', '20221123 160000', 'DOG', 4.9),
        (1, 4, '20221121 140000', '20221123 160000', 'DOG', 4.3),

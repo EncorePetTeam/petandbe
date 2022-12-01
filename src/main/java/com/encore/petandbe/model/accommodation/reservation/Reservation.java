@@ -15,12 +15,11 @@ import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 import com.encore.petandbe.model.BaseEntity;
-import com.encore.petandbe.model.accommodation.accommodation.Accommodation;
 import com.encore.petandbe.model.accommodation.filtering.category.PetCategory;
+import com.encore.petandbe.model.accommodation.room.Room;
 import com.encore.petandbe.model.user.user.User;
 
 import lombok.AccessLevel;
@@ -34,7 +33,6 @@ import lombok.NoArgsConstructor;
 @DynamicInsert
 @DynamicUpdate
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@SQLDelete(sql = "UPDATE reservation SET state = true WHERE id = ?")
 @Where(clause = "state = false")
 public class Reservation extends BaseEntity {
 
@@ -43,8 +41,8 @@ public class Reservation extends BaseEntity {
 	private Long id;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(nullable = false, name = "accommodation_id")
-	private Accommodation accommodation;
+	@JoinColumn(nullable = false, name = "room_id")
+	private Room room;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(nullable = false, name = "user_id")
@@ -66,10 +64,10 @@ public class Reservation extends BaseEntity {
 	@Column(nullable = false, columnDefinition = "bit(1) default 0", length = 1)
 	private Boolean state;
 
-	public Reservation(Long id, Accommodation accommodation, User user, String checkInDate,
-		String checkOutDate, PetCategory petCategory, String weight, Boolean state) {
+	public Reservation(Long id, Room room, User user, String checkInDate, String checkOutDate, PetCategory petCategory,
+		String weight, Boolean state) {
 		this.id = id;
-		this.accommodation = accommodation;
+		this.room = room;
 		this.user = user;
 		this.checkInDate = checkInDate;
 		this.checkOutDate = checkOutDate;
@@ -97,7 +95,7 @@ public class Reservation extends BaseEntity {
 		if (o == null || getClass() != o.getClass())
 			return false;
 		Reservation that = (Reservation)o;
-		return Objects.equals(id, that.id) && Objects.equals(accommodation, that.accommodation)
+		return Objects.equals(id, that.id) && Objects.equals(room, that.room)
 			&& Objects.equals(user, that.user) && Objects.equals(checkInDate, that.checkInDate)
 			&& Objects.equals(checkOutDate, that.checkOutDate) && petCategory == that.petCategory
 			&& Objects.equals(weight, that.weight) && Objects.equals(state, that.state);

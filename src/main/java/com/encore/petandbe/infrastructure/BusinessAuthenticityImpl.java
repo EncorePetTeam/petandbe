@@ -16,6 +16,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 import com.encore.petandbe.controller.user.host.requests.HostRegistrationRequest;
+import com.encore.petandbe.exception.BusinessAuthenticityException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -55,7 +56,7 @@ public class BusinessAuthenticityImpl implements BusinessAuthenticity {
 		try {
 			return objectMapper.readTree(response.body()).get("data").get(0).get("valid").asText();
 		} catch (JsonProcessingException e) {
-			throw new RuntimeException(e);
+			throw new BusinessAuthenticityException("BusinessAuthenticity API response parsing exception");
 		}
 	}
 
@@ -63,14 +64,14 @@ public class BusinessAuthenticityImpl implements BusinessAuthenticity {
 		return resultCode.equals(successResult);
 	}
 
-	private static HttpResponse<String> getStringHttpResponse(HttpRequest httpRequest) {
+	private HttpResponse<String> getStringHttpResponse(HttpRequest httpRequest) {
 		HttpClient client = HttpClient.newHttpClient();
 		try {
 			return client.send(httpRequest, HttpResponse.BodyHandlers.ofString(StandardCharsets.UTF_8));
 		} catch (IOException e) {
-			throw new RuntimeException(e);
+			throw new BusinessAuthenticityException("Request BusinessAuthenticity API IOException");
 		} catch (InterruptedException e) {
-			throw new RuntimeException(e);
+			throw new BusinessAuthenticityException("Request BusinessAuthenticity API Interrupted Exception");
 		}
 	}
 
@@ -90,7 +91,7 @@ public class BusinessAuthenticityImpl implements BusinessAuthenticity {
 		try {
 			return objectMapper.writeValueAsString(body);
 		} catch (JsonProcessingException e) {
-			throw new RuntimeException(e);
+			throw new BusinessAuthenticityException("Request data parse to Json JsonProcessing Exception");
 		}
 	}
 

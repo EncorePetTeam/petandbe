@@ -27,8 +27,10 @@ import com.encore.petandbe.model.accommodation.accommodation.Accommodation;
 import com.encore.petandbe.model.accommodation.filtering.category.PetCategory;
 import com.encore.petandbe.model.accommodation.reservation.Reservation;
 import com.encore.petandbe.model.accommodation.review.Review;
+import com.encore.petandbe.model.accommodation.room.Room;
 import com.encore.petandbe.model.user.user.User;
 import com.encore.petandbe.repository.ReservationRepository;
+import com.encore.petandbe.repository.ReviewListSearchRepository;
 import com.encore.petandbe.repository.ReviewRepository;
 import com.encore.petandbe.repository.UserRepository;
 
@@ -47,6 +49,9 @@ class ReviewServiceTest {
 	@Mock
 	private ReservationRepository reservationRepository;
 
+	@Mock
+	private ReviewListSearchRepository reviewListSearchRepository;
+
 	@Test
 	@DisplayName("Register Review service - success ")
 	void registerReviewSuccess() {
@@ -60,6 +65,8 @@ class ReviewServiceTest {
 
 		User user = User.builder().id(userId).build();
 
+		Accommodation accommodation = Accommodation.builder().id(1L).build();
+
 		Reservation reservation = Reservation.builder()
 			.id(reservationId)
 			.user(user)
@@ -69,7 +76,7 @@ class ReviewServiceTest {
 			.petCategory(
 				PetCategory.DOG)
 			.weight("5")
-			.accommodation(Accommodation.builder().id(1L).build())
+			.room(Room.builder().id(1L).accommodation(accommodation).build())
 			.build();
 
 		Review review = Review.builder()
@@ -90,8 +97,8 @@ class ReviewServiceTest {
 		given(reservationRepository.findById(reservationId)).willReturn(Optional.ofNullable(reservation));
 		given(userRepository.findById(userId)).willReturn(Optional.ofNullable(user));
 		given(reviewRepository.save(any(Review.class))).willReturn(review);
-		given(reservationRepository.findByAccommodationId(anyLong())).willReturn(reservationList);
-		given(reviewRepository.findRateById(anyList())).willReturn(rateList);
+		given(reviewListSearchRepository.getReviewRatesByAccommodationId(any(Accommodation.class))).willReturn(
+			rateList);
 		//when
 		RegistReviewResponse registReviewResponse = reviewService.registReview(registReviewRequests);
 
@@ -114,6 +121,8 @@ class ReviewServiceTest {
 
 		User user = User.builder().id(userId).build();
 
+		Accommodation accommodation = Accommodation.builder().id(1L).build();
+
 		Reservation reservation = Reservation.builder()
 			.id(reservationId)
 			.user(user)
@@ -123,7 +132,7 @@ class ReviewServiceTest {
 			.petCategory(
 				PetCategory.DOG)
 			.weight("5")
-			.accommodation(Accommodation.builder().id(1L).build())
+			.room(Room.builder().id(1L).accommodation(accommodation).build())
 			.build();
 
 		Review review = Review.builder()
@@ -142,8 +151,8 @@ class ReviewServiceTest {
 		given(reservationRepository.findById(reservationId)).willReturn(Optional.ofNullable(reservation));
 		given(userRepository.findById(userId)).willReturn(Optional.ofNullable(user));
 		given(reviewRepository.save(any(Review.class))).willReturn(review);
-		given(reservationRepository.findByAccommodationId(anyLong())).willReturn(reservationList);
-		given(reviewRepository.findRateById(anyList())).willReturn(rateList);
+		given(reviewListSearchRepository.getReviewRatesByAccommodationId(any(Accommodation.class))).willReturn(
+			rateList);
 		//when
 		RegistReviewResponse registReviewResponse = reviewService.registReview(registReviewRequests);
 
@@ -291,7 +300,8 @@ class ReviewServiceTest {
 		Long reviewId = 25L;
 
 		Accommodation accommodation = Accommodation.builder().id(23L).build();
-		Reservation reservation = Reservation.builder().id(27L).accommodation(accommodation).build();
+		Room room = Room.builder().id(23L).accommodation(accommodation).build();
+		Reservation reservation = Reservation.builder().id(27L).room(room).build();
 
 		User user = User.builder()
 			.id(userId)
@@ -316,8 +326,8 @@ class ReviewServiceTest {
 
 		given(userRepository.findById(userId)).willReturn(Optional.ofNullable(user));
 		given(reviewRepository.findById(reviewId)).willReturn(Optional.ofNullable(review));
-		given(reservationRepository.findByAccommodationId(anyLong())).willReturn(reservationList);
-		given(reviewRepository.findRateById(anyList())).willReturn(rateList);
+		given(reviewListSearchRepository.getReviewRatesByAccommodationId(any(Accommodation.class))).willReturn(
+			rateList);
 		//when
 		DeleteReviewResponse deleteReviewResponse = reviewService.deleteReview(reviewId, deleteReviewRequests);
 
@@ -402,7 +412,8 @@ class ReviewServiceTest {
 		Long reviewId = 25L;
 
 		Accommodation accommodation = Accommodation.builder().id(23L).build();
-		Reservation reservation = Reservation.builder().id(27L).accommodation(accommodation).build();
+		Room room = Room.builder().id(23L).accommodation(accommodation).build();
+		Reservation reservation = Reservation.builder().id(27L).room(room).build();
 
 		Integer updateRate = 3;
 		String updateContent = "not bad";
@@ -431,8 +442,8 @@ class ReviewServiceTest {
 
 		given(userRepository.findById(userId)).willReturn(Optional.ofNullable(user));
 		given(reviewRepository.findById(reviewId)).willReturn(Optional.ofNullable(review));
-		given(reservationRepository.findByAccommodationId(anyLong())).willReturn(reservationList);
-		given(reviewRepository.findRateById(anyList())).willReturn(rateList);
+		given(reviewListSearchRepository.getReviewRatesByAccommodationId(any(Accommodation.class))).willReturn(
+			rateList);
 		//when
 		ReviewDetailsResponse reviewDetailsResponse = reviewService.updateReview(reviewId, updateReviewRequests);
 
@@ -452,7 +463,8 @@ class ReviewServiceTest {
 		Long reviewId = 25L;
 
 		Accommodation accommodation = Accommodation.builder().id(23L).build();
-		Reservation reservation = Reservation.builder().id(27L).accommodation(accommodation).build();
+		Room room = Room.builder().id(23L).accommodation(accommodation).build();
+		Reservation reservation = Reservation.builder().id(27L).room(room).build();
 
 		Integer updateRate = 3;
 
@@ -480,8 +492,8 @@ class ReviewServiceTest {
 
 		given(userRepository.findById(userId)).willReturn(Optional.ofNullable(user));
 		given(reviewRepository.findById(reviewId)).willReturn(Optional.ofNullable(review));
-		given(reservationRepository.findByAccommodationId(anyLong())).willReturn(reservationList);
-		given(reviewRepository.findRateById(anyList())).willReturn(rateList);
+		given(reviewListSearchRepository.getReviewRatesByAccommodationId(any(Accommodation.class))).willReturn(
+			rateList);
 		//when
 		ReviewDetailsResponse reviewDetailsResponse = reviewService.updateReview(reviewId, updateReviewRequests);
 

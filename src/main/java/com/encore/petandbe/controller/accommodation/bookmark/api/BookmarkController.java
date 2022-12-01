@@ -30,7 +30,7 @@ public class BookmarkController {
 	public ResponseEntity<BookmarkDetailsResponse> registerBookmark(
 		@RequestBody BookmarkRegistrationRequests bookmarkRegistrationRequests) {
 		return ResponseEntity.status(HttpStatus.CREATED)
-			.body(bookmarkService.registBookmark(bookmarkRegistrationRequests));
+			.body(bookmarkService.registerBookmark(bookmarkRegistrationRequests));
 	}
 
 	@DeleteMapping("/{accommodation-id}")

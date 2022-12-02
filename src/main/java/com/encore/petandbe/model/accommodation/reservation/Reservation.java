@@ -1,5 +1,7 @@
 package com.encore.petandbe.model.accommodation.reservation;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Objects;
 
 import javax.persistence.Column;
@@ -16,11 +18,16 @@ import javax.persistence.ManyToOne;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Where;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import com.encore.petandbe.model.BaseEntity;
 import com.encore.petandbe.model.accommodation.filtering.category.PetCategory;
 import com.encore.petandbe.model.accommodation.room.Room;
 import com.encore.petandbe.model.user.user.User;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -48,11 +55,11 @@ public class Reservation extends BaseEntity {
 	@JoinColumn(nullable = false, name = "user_id")
 	private User user;
 
-	@Column(nullable = false, length = 20)
-	private String checkInDate;
+	@Column(nullable = false, columnDefinition = "TIMESTAMP")
+	private LocalDateTime checkInDate;
 
-	@Column(nullable = false, length = 20)
-	private String checkOutDate;
+	@Column(nullable = false, columnDefinition = "TIMESTAMP")
+	private LocalDateTime checkOutDate;
 
 	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)
@@ -64,8 +71,8 @@ public class Reservation extends BaseEntity {
 	@Column(nullable = false, columnDefinition = "bit(1) default 0", length = 1)
 	private Boolean state;
 
-	public Reservation(Long id, Room room, User user, String checkInDate, String checkOutDate, PetCategory petCategory,
-		String weight, Boolean state) {
+	public Reservation(Long id, Room room, User user, LocalDateTime checkInDate, LocalDateTime checkOutDate,
+		PetCategory petCategory, String weight, Boolean state) {
 		this.id = id;
 		this.room = room;
 		this.user = user;
@@ -80,8 +87,10 @@ public class Reservation extends BaseEntity {
 	public String toString() {
 		return "Reservation{" +
 			"id=" + id +
-			", checkInDate='" + checkInDate + '\'' +
-			", checkOutDate='" + checkOutDate + '\'' +
+			", room=" + room +
+			", user=" + user +
+			", checkInDate=" + checkInDate +
+			", checkOutDate=" + checkOutDate +
 			", petCategory=" + petCategory +
 			", weight='" + weight + '\'' +
 			", state=" + state +
@@ -92,7 +101,7 @@ public class Reservation extends BaseEntity {
 	public boolean equals(Object o) {
 		if (this == o)
 			return true;
-		if (o == null || getClass() != o.getClass())
+		if (!(o instanceof Reservation))
 			return false;
 		Reservation that = (Reservation)o;
 		return Objects.equals(id, that.id) && Objects.equals(room, that.room)
@@ -103,6 +112,6 @@ public class Reservation extends BaseEntity {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, checkInDate, checkOutDate, petCategory, weight, state);
+		return Objects.hash(id, room, user, checkInDate, checkOutDate, petCategory, weight, state);
 	}
 }

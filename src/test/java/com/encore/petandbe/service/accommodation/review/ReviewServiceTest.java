@@ -71,8 +71,8 @@ class ReviewServiceTest {
 		Reservation reservation = Reservation.builder()
 			.id(reservationId)
 			.user(user)
-			.checkInDate(LocalDateTime.parse("2022-11-17T11:00:00"))
-			.checkOutDate(LocalDateTime.parse("2022-11-19T16:00:00"))
+			.checkInDate(LocalDateTime.parse("2022-11-23T16:00:00"))
+			.checkOutDate(LocalDateTime.parse("2022-11-24T17:00:00"))
 			.state(false)
 			.petCategory(
 				PetCategory.DOG)

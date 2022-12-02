@@ -2,7 +2,6 @@ package com.encore.petandbe.model.accommodation.reservation;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -13,16 +12,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Where;
-
 import com.encore.petandbe.model.BaseEntity;
 import com.encore.petandbe.model.accommodation.filtering.category.PetCategory;
 import com.encore.petandbe.model.accommodation.room.Room;
 import com.encore.petandbe.model.user.user.User;
-
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;

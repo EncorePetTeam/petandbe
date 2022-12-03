@@ -3,6 +3,7 @@ package com.encore.petandbe.service.accommodation.review;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -70,8 +71,8 @@ class ReviewServiceTest {
 		Reservation reservation = Reservation.builder()
 			.id(reservationId)
 			.user(user)
-			.checkInDate("2022-11-17 11:00:00")
-			.checkOutDate("2022-11-19 16:00:00")
+			.checkInDate(LocalDateTime.parse("2022-11-17T11:00:00"))
+			.checkOutDate(LocalDateTime.parse("2022-11-19T16:00:00"))
 			.state(false)
 			.petCategory(
 				PetCategory.DOG)
@@ -126,8 +127,8 @@ class ReviewServiceTest {
 		Reservation reservation = Reservation.builder()
 			.id(reservationId)
 			.user(user)
-			.checkInDate("2022-11-17 11:00:00")
-			.checkOutDate("2022-11-19 16:00:00")
+			.checkInDate(LocalDateTime.parse("2022-11-17T11:00:00"))
+			.checkOutDate(LocalDateTime.parse("2022-11-19T16:00:00"))
 			.state(false)
 			.petCategory(
 				PetCategory.DOG)

@@ -1,5 +1,7 @@
 package com.encore.petandbe.controller.accommodation.accommodation.api;
 
+import com.encore.petandbe.config.Permission;
+import com.encore.petandbe.model.user.user.Role;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,6 +19,8 @@ import com.encore.petandbe.controller.accommodation.accommodation.responses.Acco
 import com.encore.petandbe.controller.accommodation.accommodation.requests.AccommodationUpdatingRequest;
 import com.encore.petandbe.service.accommodation.accomodation.AccommodationService;
 
+import javax.servlet.http.HttpServletRequest;
+
 @RestController
 @RequestMapping("/accommodation")
 public class AccommodationController {
@@ -29,13 +33,17 @@ public class AccommodationController {
 	}
 
 	@PostMapping
+	@Permission(role = Role.USER)
 	public ResponseEntity<AccommodationIdResponse> registerAccommodation(@RequestBody
-		AccommodationRegistrationRequest request) {
+		AccommodationRegistrationRequest request, HttpServletRequest httpServletRequest) {
+		Integer userId = (Integer) httpServletRequest.getAttribute(Role.USER.getValue());
+
 		return ResponseEntity.status(HttpStatus.CREATED)
-			.body(new AccommodationIdResponse(accommodationService.createAccommodation(request)));
+			.body(new AccommodationIdResponse(accommodationService.createAccommodation(request, Long.valueOf(userId))));
 	}
 
 	@PutMapping("/{accommodation-id}")
+	@Permission(role = Role.USER)
 	public ResponseEntity<AccommodationIdResponse> updateAccommodation(
 		@PathVariable("accommodation-id") Long accommodationId,
 		@RequestBody AccommodationUpdatingRequest request) {
@@ -44,6 +52,7 @@ public class AccommodationController {
 	}
 
 	@DeleteMapping("/{accommodation-id}")
+	@Permission(role = Role.USER)
 	public ResponseEntity<AccommodationIdResponse> deleteAccommodation(
 		@PathVariable("accommodation-id") Long accommodationId) {
 		return ResponseEntity.ok()

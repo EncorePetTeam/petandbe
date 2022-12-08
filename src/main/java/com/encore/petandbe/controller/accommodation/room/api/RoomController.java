@@ -1,5 +1,7 @@
 package com.encore.petandbe.controller.accommodation.room.api;
 
+import com.encore.petandbe.config.Permission;
+import com.encore.petandbe.model.user.user.Role;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -28,17 +30,20 @@ public class RoomController {
 	}
 
 	@PostMapping
+	@Permission(role = Role.USER)
 	public ResponseEntity<RoomIdResponse> registerRoom(@RequestBody RoomRegistrationRequest request) {
 		return ResponseEntity.status(HttpStatus.CREATED).body(new RoomIdResponse(roomService.createRoom(request)));
 	}
 
 	@PutMapping("{room-id}")
+	@Permission(role = Role.USER)
 	public ResponseEntity<RoomIdResponse> updateRoom(@PathVariable("room-id") Long roomId,
 		@RequestBody RoomUpdateRequest request) {
 		return ResponseEntity.ok().body(new RoomIdResponse(roomService.updateRoom(request, roomId)));
 	}
 
 	@DeleteMapping("{room-id}")
+	@Permission(role = Role.USER)
 	public ResponseEntity<RoomIdResponse> deleteRoom(@PathVariable("room-id") Long roomId) {
 		return ResponseEntity.ok().body(new RoomIdResponse(roomService.deleteRoomById(roomId)));
 	}

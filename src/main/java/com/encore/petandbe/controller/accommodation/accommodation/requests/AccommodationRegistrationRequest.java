@@ -7,22 +7,20 @@ import lombok.Getter;
 @Getter
 public class AccommodationRegistrationRequest {
 
-	private String addressCode;
-	private Long userId;
-	private String accommodationName;
-	private String workingHours;
-	private String weekendWorkingHours;
-	private String location;
-	private String lotNumber;
-	private String addressDetail;
-	private AccommodationType accommodationType;
-	private String detailInfo;
+	private final String addressCode;
+	private final String accommodationName;
+	private final String workingHours;
+	private final String weekendWorkingHours;
+	private final String location;
+	private final String lotNumber;
+	private final String addressDetail;
+	private final AccommodationType accommodationType;
+	private final String detailInfo;
 
-	public AccommodationRegistrationRequest(String addressCode, Long userId, String accommodationName,
+	public AccommodationRegistrationRequest(String addressCode, String accommodationName,
 		String workingHours, String weekendWorkingHours, String location, String lotNumber, String addressDetail,
 		AccommodationType accommodationType, String detailInfo) {
 		this.addressCode = addressCode;
-		this.userId = userId;
 		this.accommodationName = accommodationName;
 		this.workingHours = workingHours;
 		this.weekendWorkingHours = weekendWorkingHours;

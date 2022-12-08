@@ -5,15 +5,13 @@ import lombok.Getter;
 @Getter
 public class HostRegistrationRequest {
 
-	private String registrationNumber;
-	private String hostName;
-	private String openDate;
-	private Long userId;
+	private final String registrationNumber;
+	private final String hostName;
+	private final String openDate;
 
-	public HostRegistrationRequest(String registrationNumber, String hostName, String openDate, Long userId) {
+	public HostRegistrationRequest(String registrationNumber, String hostName, String openDate) {
 		this.registrationNumber = registrationNumber;
 		this.hostName = hostName;
 		this.openDate = openDate;
-		this.userId = userId;
 	}
 }

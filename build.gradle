@@ -34,21 +34,20 @@ ext {
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-//    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
-//    implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.8.0'
     implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
-//    implementation 'io.jsonwebtoken:jjwt:0.9.1'
+    implementation 'io.jsonwebtoken:jjwt:0.9.1'
     implementation group: 'commons-io', name: 'commons-io', version: '2.6'
     implementation 'org.projectlombok:lombok:1.18.22'
-//    implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
     implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
     implementation group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
-
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
     implementation 'org.apache.commons:commons-lang3:3.9'
-//    implementation group: 'com.auth0', name: 'java-jwt', version: '3.16.0'
+
+    implementation 'org.apache.httpcomponents:httpclient:4.5.7'
+    implementation 'org.apache.commons:commons-lang3:3.5'
 
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'mysql:mysql-connector-java'
@@ -61,18 +60,12 @@ dependencies {
     testImplementation 'com.epages:restdocs-api-spec-mockmvc:0.16.2'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
-//    testImplementation 'org.springframework.security:spring-security-test'
 }
 
 tasks.named('test') {
     outputs.dir staticsDir
     useJUnitPlatform()
 }
-
-// 테스트 환경에서는 spring aws cloud를 실행하지 않는다.
-//configurations.testImplementation {
-//    exclude group: 'org.springframework.cloud'
-//}
 
 tasks.named('asciidoctor') {
     inputs.dir snippetsDir

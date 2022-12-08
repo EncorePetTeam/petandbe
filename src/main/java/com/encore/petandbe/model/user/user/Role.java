@@ -6,9 +6,8 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public enum Role {
-	USER("ROLE_USER"),
-	ADMIN("ROLE_ADMIN"),
-	SOCIAL("ROLE_SOCIAL"); // OAuth
+	USER("userId"),
+	ADMIN("adminId"); // OAuth
 
 	private final String value;
 }

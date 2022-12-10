@@ -27,6 +27,7 @@ import com.encore.petandbe.controller.accommodation.reservation.responses.Reserv
 import com.encore.petandbe.controller.accommodation.reservation.responses.ReservationRetrieveResponse;
 import com.encore.petandbe.model.accommodation.filtering.category.PetCategory;
 import com.encore.petandbe.service.accommodation.reservation.ReservationService;
+import com.encore.petandbe.utils.validator.LocalDateTimeValidator;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @WebMvcTest(controllers = ReservationController.class)
@@ -99,9 +100,11 @@ class ReservationControllerTest {
 	void retrieveReservation() throws Exception {
 		//given
 		ReservationRetrieveResponse reservationRetrieveResponse = new ReservationRetrieveResponse(reservationId, userId,
-			roomId, accommodationId, accommodationName, roomName, checkInDate, checkOutDate, petCategory, weight);
+			roomId, accommodationId, accommodationName, roomName,
+			LocalDateTimeValidator.of().convertStringToLocalDateTime(checkInDate),
+			LocalDateTimeValidator.of().convertStringToLocalDateTime(checkOutDate), petCategory, weight);
 
-		when(reservationService.findbyReservationId(anyLong())).thenReturn(reservationRetrieveResponse);
+		when(reservationService.findByReservationId(anyLong())).thenReturn(reservationRetrieveResponse);
 		//when
 		ResultActions resultActions = mockMvc.perform(get("/reservation/{reservation-id}", reservationId)
 			.accept(MediaType.APPLICATION_JSON));
@@ -131,7 +134,7 @@ class ReservationControllerTest {
 	@DisplayName("Update reservation - success")
 	void updateReservation() throws Exception {
 		//given
-		ReservationUpdatingRequest reservationUpdatingRequest = new ReservationUpdatingRequest(userId, roomId,
+		ReservationUpdatingRequest reservationUpdatingRequest = new ReservationUpdatingRequest(userId,
 			checkInDate, checkOutDate, petCategory, weight);
 
 		ReservationDetailsResponse reservationDetailsResponse = new ReservationDetailsResponse(reservationId, userId,

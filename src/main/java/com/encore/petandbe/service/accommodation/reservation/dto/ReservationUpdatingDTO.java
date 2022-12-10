@@ -1,21 +1,21 @@
-package com.encore.petandbe.controller.accommodation.reservation.requests;
+package com.encore.petandbe.service.accommodation.reservation.dto;
+
+import java.time.LocalDateTime;
 
 import com.encore.petandbe.model.accommodation.filtering.category.PetCategory;
 
 import lombok.Getter;
 
 @Getter
-public class ReservationUpdatingRequest {
+public class ReservationUpdatingDTO {
 
-	private Long userId;
-	private String checkInDate;
-	private String checkOutDate;
+	private LocalDateTime checkInDate;
+	private LocalDateTime checkOutDate;
 	private PetCategory petCategory;
 	private String weight;
 
-	public ReservationUpdatingRequest(Long userId, String checkInDate, String checkOutDate,
+	public ReservationUpdatingDTO(LocalDateTime checkInDate, LocalDateTime checkOutDate,
 		PetCategory petCategory, String weight) {
-		this.userId = userId;
 		this.checkInDate = checkInDate;
 		this.checkOutDate = checkOutDate;
 		this.petCategory = petCategory;

@@ -22,6 +22,7 @@ import com.encore.petandbe.model.BaseEntity;
 import com.encore.petandbe.model.accommodation.filtering.category.PetCategory;
 import com.encore.petandbe.model.accommodation.room.Room;
 import com.encore.petandbe.model.user.user.User;
+import com.encore.petandbe.service.accommodation.reservation.dto.ReservationUpdatingDTO;
 
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -65,6 +66,10 @@ public class Reservation extends BaseEntity {
 	@Column(nullable = false, columnDefinition = "bit(1) default 0", length = 1)
 	private Boolean state;
 
+	public void deleteReservation() {
+		this.state = true;
+	}
+
 	public Reservation(Long id, Room room, User user, LocalDateTime checkInDate, LocalDateTime checkOutDate,
 		PetCategory petCategory, String weight, Boolean state) {
 		this.id = id;
@@ -107,5 +112,12 @@ public class Reservation extends BaseEntity {
 	@Override
 	public int hashCode() {
 		return Objects.hash(id, room, user, checkInDate, checkOutDate, petCategory, weight, state);
+	}
+
+	public void updateReservation(ReservationUpdatingDTO reservationUpdatingDTO) {
+		this.checkInDate = reservationUpdatingDTO.getCheckInDate();
+		this.checkOutDate = reservationUpdatingDTO.getCheckOutDate();
+		this.petCategory = reservationUpdatingDTO.getPetCategory();
+		this.weight = reservationUpdatingDTO.getWeight();
 	}
 }

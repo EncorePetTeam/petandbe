@@ -39,7 +39,7 @@ public class ReservationController {
 	@GetMapping("/{reservation-id}")
 	public ResponseEntity<ReservationRetrieveResponse> retrieveReservation(
 		@PathVariable("reservation-id") Long reservationId) {
-		return ResponseEntity.ok().body(reservationService.findbyReservationId(reservationId));
+		return ResponseEntity.ok().body(reservationService.findByReservationId(reservationId));
 	}
 
 	@PutMapping("/{reservation-id}")

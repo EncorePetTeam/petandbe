@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.encore.petandbe.controller.accommodation.review.requests.DeleteReviewRequests;
 import com.encore.petandbe.controller.accommodation.review.requests.RegistReviewRequests;
 import com.encore.petandbe.controller.accommodation.review.requests.UpdateReviewRequests;
 import com.encore.petandbe.controller.accommodation.review.responses.DeleteReviewResponse;
@@ -90,8 +89,8 @@ public class ReviewService {
 	}
 
 	@Transactional
-	public DeleteReviewResponse deleteReview(Long reviewId, DeleteReviewRequests deleteReviewRequests) {
-		User user = userRepository.findById(deleteReviewRequests.getUserId())
+	public DeleteReviewResponse deleteReview(Long reviewId, Long userId) {
+		User user = userRepository.findById(userId)
 			.orElseThrow(() -> new NonExistResourceException("User could not be found"));
 
 		Review review = reviewRepository.findById(reviewId)

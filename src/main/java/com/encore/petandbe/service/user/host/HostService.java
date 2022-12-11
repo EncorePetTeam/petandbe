@@ -30,8 +30,8 @@ public class HostService {
 	}
 
 	@Transactional
-	public Long createHost(HostRegistrationRequest hostRegistrationRequest) {
-		User user = userRepository.findById(hostRegistrationRequest.getUserId())
+	public Long createHost(HostRegistrationRequest hostRegistrationRequest, Long userId) {
+		User user = userRepository.findById(userId)
 			.orElseThrow(() -> new NonExistResourceException("User could not be found"));
 
 		if (!businessAuthenticity.checkAuthenticity(hostRegistrationRequest)) {

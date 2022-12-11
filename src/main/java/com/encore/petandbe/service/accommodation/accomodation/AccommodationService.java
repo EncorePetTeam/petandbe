@@ -31,18 +31,18 @@ public class AccommodationService {
 		this.userRepository = userRepository;
 	}
 
-	public Long createAccommodation(AccommodationRegistrationRequest accommodationRegistrationRequest) {
+	public Long createAccommodation(AccommodationRegistrationRequest accommodationRegistrationRequest, Long userId) {
 		Accommodation savedAccommodation = accommodationRepository.save(
-			createAccommodationInstance(accommodationRegistrationRequest));
+			createAccommodationInstance(accommodationRegistrationRequest, userId));
 		return savedAccommodation.getId();
 	}
 
 	private Accommodation createAccommodationInstance(
-		AccommodationRegistrationRequest request) {
+		AccommodationRegistrationRequest request, Long userId) {
 		Address foundAddress = addressRepository.findById(request.getAddressCode())
 			.orElseThrow(() -> new NonExistResourceException("Address could not be found"));
 
-		User user = userRepository.findById(request.getUserId())
+		User user = userRepository.findById(userId)
 			.orElseThrow(() -> new NonExistResourceException("User could not be found"));
 
 		TimeValidator.validateTime(request.getWorkingHours());

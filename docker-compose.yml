@@ -1,0 +1,29 @@
+version: "3"
+
+networks:
+  backend:
+
+services:
+  app:
+    build: ./app
+    restart: always
+    expose:
+      - "8080"
+    networks:
+      backend:
+        aliases:
+          - app.petandbe.com
+
+  nginx:
+    image: nginx:1.23.2-alpine
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      backend:
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/dev:/etc/nginx/conf.d
+    depends_on:
+      - app

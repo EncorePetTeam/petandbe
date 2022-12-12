@@ -35,7 +35,6 @@ public class PermissionInterceptor implements HandlerInterceptor {
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-		System.out.println("----- 호출 -----");
 		if (checkHandlerMethod(handler) && !checkPermission(handler)) {
 			return true;
 		}

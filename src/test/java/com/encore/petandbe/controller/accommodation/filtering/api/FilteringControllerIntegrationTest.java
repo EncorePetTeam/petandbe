@@ -34,7 +34,7 @@ import org.springframework.util.MultiValueMap;
 @AutoConfigureMockMvc
 @Transactional
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class FilteringControllerIntegrationTest {
+class FilteringControllerIntegrationTest {
 
 	@Autowired
 	private MockMvc mockMvc;

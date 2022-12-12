@@ -39,7 +39,8 @@ public class ReservationController {
 		ReservationRegistrationRequest reservationRegistrationRequest, HttpServletRequest httpServletRequest) {
 		Integer userId = (Integer)httpServletRequest.getAttribute(Role.USER.getValue());
 
-		ReservationRegistrationRequest reservationRegistration = new ReservationRegistrationRequest(Long.valueOf(userId),
+		ReservationRegistrationRequest reservationRegistration = new ReservationRegistrationRequest(
+			Long.valueOf(userId),
 			reservationRegistrationRequest.getRoomId(), reservationRegistrationRequest.getCheckInDate(),
 			reservationRegistrationRequest.getCheckOutDate(), reservationRegistrationRequest.getPetCategory(),
 			reservationRegistrationRequest.getWeight());
@@ -63,7 +64,7 @@ public class ReservationController {
 		Integer userId = (Integer)httpServletRequest.getAttribute(Role.USER.getValue());
 
 		ReservationUpdatingRequest updateRequest = new ReservationUpdatingRequest(Long.valueOf(userId),
-			reservationUpdatingRequest.getRoomId(), reservationUpdatingRequest.getCheckInDate(),
+			reservationUpdatingRequest.getCheckInDate(),
 			reservationUpdatingRequest.getCheckOutDate(), reservationUpdatingRequest.getPetCategory(),
 			reservationUpdatingRequest.getWeight());
 
@@ -77,6 +78,7 @@ public class ReservationController {
 		@PathVariable("reservation-id") Long reservationId, HttpServletRequest httpServletRequest) {
 		Integer userId = (Integer)httpServletRequest.getAttribute(Role.USER.getValue());
 		return ResponseEntity.ok()
-			.body(reservationService.deleteReservation(new DeleteReservationRequest(Long.valueOf(userId), reservationId)));
+			.body(reservationService.deleteReservation(
+				new DeleteReservationRequest(Long.valueOf(userId), reservationId)));
 	}
 }

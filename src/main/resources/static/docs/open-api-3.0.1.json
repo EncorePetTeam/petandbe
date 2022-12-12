@@ -18,11 +18,11 @@
           "content" : {
             "application/json;charset=UTF-8" : {
               "schema" : {
-                "$ref" : "#/components/schemas/accommodation-accommodation-id137329900"
+                "$ref" : "#/components/schemas/accommodation89857475"
               },
               "examples" : {
                 "accommodation-register" : {
-                  "value" : "{\"addressCode\":\"11011\",\"userId\":1,\"accommodationName\":\"훈기호텔\",\"workingHours\":\"09001800\",\"weekendWorkingHours\":\"10001800\",\"location\":\"상수동\",\"lotNumber\":\"202-1\",\"addressDetail\":\"102호같은것\",\"accommodationType\":\"HOTEL\",\"detailInfo\":\"상세정보를 쓰는 공간입니다.\"}"
+                  "value" : "{\"addressCode\":\"11011\",\"accommodationName\":\"훈기호텔\",\"workingHours\":\"09001800\",\"weekendWorkingHours\":\"10001800\",\"location\":\"상수동\",\"lotNumber\":\"202-1\",\"addressDetail\":\"102호같은것\",\"accommodationType\":\"HOTEL\",\"detailInfo\":\"상세정보를 쓰는 공간입니다.\"}"
                 }
               }
             }
@@ -190,6 +190,29 @@
         }
       }
     },
+    "/bookmark/list" : {
+      "get" : {
+        "tags" : [ "bookmark" ],
+        "operationId" : "bookmark-get-list",
+        "responses" : {
+          "200" : {
+            "description" : "200",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/bookmark-list-1717825965"
+                },
+                "examples" : {
+                  "bookmark-get-list" : {
+                    "value" : "{\"userId\":1,\"bookmarkAccommodationResponseList\":[{\"accommodationId\":2,\"accommodationName\":\"정정일 애견 호텔 0\",\"address\":\"05300\",\"avgRate\":4.3},{\"accommodationId\":3,\"accommodationName\":\"정정일 애견 호텔 1\",\"address\":\"05300\",\"avgRate\":4.3},{\"accommodationId\":4,\"accommodationName\":\"정정일 애견 호텔 2\",\"address\":\"05300\",\"avgRate\":4.3},{\"accommodationId\":5,\"accommodationName\":\"정정일 애견 호텔 3\",\"address\":\"05300\",\"avgRate\":4.3},{\"accommodationId\":6,\"accommodationName\":\"정정일 애견 호텔 4\",\"address\":\"05300\",\"avgRate\":4.3}]}"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/bookmark/{accommodation-id}" : {
       "delete" : {
         "tags" : [ "bookmark" ],
@@ -228,38 +251,6 @@
                 "examples" : {
                   "bookmark-delete" : {
                     "value" : "{\"userId\":1,\"accommodationId\":2,\"state\":true}"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/bookmark/{user-id}" : {
-      "get" : {
-        "tags" : [ "bookmark" ],
-        "operationId" : "bookmark-get-list",
-        "parameters" : [ {
-          "name" : "user-id",
-          "in" : "path",
-          "description" : "bookmark 목록을 조회할 user 아이디",
-          "required" : true,
-          "schema" : {
-            "type" : "string"
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "200",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/bookmark-user-id-1717825965"
-                },
-                "examples" : {
-                  "bookmark-get-list" : {
-                    "value" : "{\"userId\":1,\"bookmarkAccommodationResponseList\":[{\"accommodationId\":2,\"accommodationName\":\"정정일 애견 호텔 0\",\"address\":\"05300\",\"avgRate\":4.3},{\"accommodationId\":3,\"accommodationName\":\"정정일 애견 호텔 1\",\"address\":\"05300\",\"avgRate\":4.3},{\"accommodationId\":4,\"accommodationName\":\"정정일 애견 호텔 2\",\"address\":\"05300\",\"avgRate\":4.3},{\"accommodationId\":5,\"accommodationName\":\"정정일 애견 호텔 3\",\"address\":\"05300\",\"avgRate\":4.3},{\"accommodationId\":6,\"accommodationName\":\"정정일 애견 호텔 4\",\"address\":\"05300\",\"avgRate\":4.3}]}"
                   }
                 }
               }
@@ -359,11 +350,11 @@
           "content" : {
             "application/json;charset=UTF-8" : {
               "schema" : {
-                "$ref" : "#/components/schemas/host-1943036127"
+                "$ref" : "#/components/schemas/host-991714372"
               },
               "examples" : {
                 "host-register" : {
-                  "value" : "{\"registrationNumber\":\"123456789012\",\"hostName\":\"김훈기\",\"openDate\":\"19960521\",\"userId\":1}"
+                  "value" : "{\"registrationNumber\":\"123456789012\",\"hostName\":\"김훈기\",\"openDate\":\"19960521\"}"
                 }
               }
             }
@@ -380,6 +371,163 @@
                 "examples" : {
                   "host-register" : {
                     "value" : "{\"hostId\":0}"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/reservation" : {
+      "post" : {
+        "tags" : [ "reservation" ],
+        "operationId" : "reservation-register",
+        "requestBody" : {
+          "content" : {
+            "application/json;charset=UTF-8" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/reservation-1027460540"
+              },
+              "examples" : {
+                "reservation-register" : {
+                  "value" : "{\"userId\":2,\"roomId\":3,\"checkInDate\":\"2022-11-27 13:00:00\",\"checkOutDate\":\"2022-11-28 16:00:00\",\"petCategory\":\"DOG\",\"weight\":\"4.7\"}"
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "201",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/reservation-117711797"
+                },
+                "examples" : {
+                  "reservation-register" : {
+                    "value" : "{\"reservationId\":1,\"userId\":2,\"roomId\":3,\"checkInDate\":\"2022-11-27 13:00:00\",\"checkOutDate\":\"2022-11-28 16:00:00\",\"petCategory\":\"DOG\",\"weight\":\"4.7\"}"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/reservation/{reservation-id}" : {
+      "get" : {
+        "tags" : [ "reservation" ],
+        "operationId" : "reservation-retrieval",
+        "parameters" : [ {
+          "name" : "reservation-id",
+          "in" : "path",
+          "description" : "조회할 예약 id(pk)",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "200",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/reservation-reservation-id-1492099961"
+                },
+                "examples" : {
+                  "reservation-retrieval" : {
+                    "value" : "{\"reservationId\":1,\"userId\":2,\"roomId\":3,\"accommodationId\":4,\"accommodationName\":\"정정일 애견 호텔\",\"roomName\":\"스위트 스위트 슈퍼 스위트 룸\",\"checkInDate\":\"2022-11-27 13:00:00\",\"checkOutDate\":\"2022-11-28 16:00:00\",\"petCategory\":\"DOG\",\"weight\":\"4.7\"}"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "reservation" ],
+        "operationId" : "reservation-update",
+        "parameters" : [ {
+          "name" : "reservation-id",
+          "in" : "path",
+          "description" : "수정할 예약 id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json;charset=UTF-8" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/reservation-reservation-id87486007"
+              },
+              "examples" : {
+                "reservation-update" : {
+                  "value" : "{\"userId\":2,\"checkInDate\":\"2022-11-27 13:00:00\",\"checkOutDate\":\"2022-11-28 16:00:00\",\"petCategory\":\"DOG\",\"weight\":\"4.7\"}"
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "200",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/reservation-reservation-id-1789599206"
+                },
+                "examples" : {
+                  "reservation-update" : {
+                    "value" : "{\"reservationId\":1,\"userId\":2,\"roomId\":3,\"checkInDate\":\"2022-11-27 13:00:00\",\"checkOutDate\":\"2022-11-28 16:00:00\",\"petCategory\":\"DOG\",\"weight\":\"4.7\"}"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "reservation" ],
+        "operationId" : "reservation-delete",
+        "parameters" : [ {
+          "name" : "reservation-id",
+          "in" : "path",
+          "description" : "삭제할 예약 id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json;charset=UTF-8" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/reservation-reservation-id1758577298"
+              },
+              "examples" : {
+                "reservation-delete" : {
+                  "value" : "{\"userId\":2,\"reservationId\":1}"
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "200",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/reservation-reservation-id-1168395762"
+                },
+                "examples" : {
+                  "reservation-delete" : {
+                    "value" : "{\"reservationId\":1,\"state\":true}"
                   }
                 }
               }
@@ -741,6 +889,31 @@
   },
   "components" : {
     "schemas" : {
+      "reservation-reservation-id87486007" : {
+        "type" : "object",
+        "properties" : {
+          "checkOutDate" : {
+            "type" : "string",
+            "description" : "변경 할 체크아웃 날짜 및 시간"
+          },
+          "weight" : {
+            "type" : "string",
+            "description" : "변경 할 동반할 반려동물 무게"
+          },
+          "petCategory" : {
+            "type" : "string",
+            "description" : "변경 할 동반할 반려동물 종"
+          },
+          "checkInDate" : {
+            "type" : "string",
+            "description" : "변경 할 체크인 날짜 및 시간"
+          },
+          "userId" : {
+            "type" : "number",
+            "description" : "숙박 시설을 예약한 유저 아이디"
+          }
+        }
+      },
       "accommodation-accommodation-id137329900" : {
         "type" : "object",
         "properties" : {
@@ -783,6 +956,48 @@
           "accommodationName" : {
             "type" : "string",
             "description" : "숙박 시설 이름"
+          }
+        }
+      },
+      "reservation-reservation-id1758577298" : {
+        "type" : "object",
+        "properties" : {
+          "reservationId" : {
+            "type" : "number",
+            "description" : "삭제할 예약 아이디"
+          },
+          "userId" : {
+            "type" : "number",
+            "description" : "삭제를 요청할 유저 아이디"
+          }
+        }
+      },
+      "reservation-1027460540" : {
+        "type" : "object",
+        "properties" : {
+          "checkOutDate" : {
+            "type" : "string",
+            "description" : "체크아웃 날짜 및 시간"
+          },
+          "weight" : {
+            "type" : "string",
+            "description" : "동반할 반려동물 무게"
+          },
+          "petCategory" : {
+            "type" : "string",
+            "description" : "동반할 반려동물 종"
+          },
+          "checkInDate" : {
+            "type" : "string",
+            "description" : "체크인 날짜 및 시간"
+          },
+          "userId" : {
+            "type" : "number",
+            "description" : "숙박 시설을 예약한 유저 아이디"
+          },
+          "roomId" : {
+            "type" : "number",
+            "description" : "예약한 Room 아이디"
           }
         }
       },
@@ -843,24 +1058,36 @@
           }
         }
       },
-      "host-1943036127" : {
+      "reservation-reservation-id-1789599206" : {
         "type" : "object",
         "properties" : {
-          "hostName" : {
+          "checkOutDate" : {
             "type" : "string",
-            "description" : "사업장에 등록된 호스트 이름(대표자 이름)"
+            "description" : "변경 된 체크아웃 날짜 및 시간"
           },
-          "registrationNumber" : {
-            "type" : "string",
-            "description" : "사업장 등록 번호"
+          "reservationId" : {
+            "type" : "number",
+            "description" : "변경된 예약 아이디(pk)"
           },
-          "openDate" : {
+          "weight" : {
             "type" : "string",
-            "description" : "사업 개장 날짜"
+            "description" : "변경 된 동반할 반려동물 무게"
+          },
+          "petCategory" : {
+            "type" : "string",
+            "description" : "변경 된 동반할 반려동물 종"
+          },
+          "checkInDate" : {
+            "type" : "string",
+            "description" : "변경 된 체크인 날짜 및 시간"
           },
           "userId" : {
             "type" : "number",
-            "description" : "호스트로 등록하려는 유저 아이디"
+            "description" : "숙박 시설을 예약한 유저 아이디"
+          },
+          "roomId" : {
+            "type" : "number",
+            "description" : "예약한 Room 아이디"
           }
         }
       },
@@ -889,7 +1116,7 @@
           }
         }
       },
-      "bookmark-user-id-1717825965" : {
+      "bookmark-list-1717825965" : {
         "type" : "object",
         "properties" : {
           "bookmarkAccommodationResponseList" : {
@@ -994,6 +1221,64 @@
           }
         }
       },
+      "reservation-reservation-id-1168395762" : {
+        "type" : "object",
+        "properties" : {
+          "reservationId" : {
+            "type" : "number",
+            "description" : "삭제한 예약 아이디(pk)"
+          },
+          "state" : {
+            "type" : "boolean",
+            "description" : "삭제 여부 true : 삭제 false : 삭제 안됨"
+          }
+        }
+      },
+      "reservation-reservation-id-1492099961" : {
+        "type" : "object",
+        "properties" : {
+          "checkOutDate" : {
+            "type" : "string",
+            "description" : "체크아웃 날짜 및 시간"
+          },
+          "reservationId" : {
+            "type" : "number",
+            "description" : "조회된 예약 아이디(pk)"
+          },
+          "accommodationId" : {
+            "type" : "number",
+            "description" : "예약한 숙박 시설 아이디"
+          },
+          "weight" : {
+            "type" : "string",
+            "description" : "동반할 반려동물 무게"
+          },
+          "petCategory" : {
+            "type" : "string",
+            "description" : "동반할 반려동물 종"
+          },
+          "checkInDate" : {
+            "type" : "string",
+            "description" : "체크인 날짜 및 시간"
+          },
+          "userId" : {
+            "type" : "number",
+            "description" : "숙박 시설을 예약한 유저 아이디"
+          },
+          "roomName" : {
+            "type" : "string",
+            "description" : "예약한 Room 이름"
+          },
+          "roomId" : {
+            "type" : "number",
+            "description" : "조회된 Room 아이디"
+          },
+          "accommodationName" : {
+            "type" : "string",
+            "description" : "예약한 숙박 시설 이름"
+          }
+        }
+      },
       "bookmark-413705137" : {
         "type" : "object",
         "properties" : {
@@ -1004,6 +1289,47 @@
           "userId" : {
             "type" : "number",
             "description" : "bookmark를 등록하고자 하는 user의 아이디"
+          }
+        }
+      },
+      "accommodation89857475" : {
+        "type" : "object",
+        "properties" : {
+          "addressCode" : {
+            "type" : "string",
+            "description" : "숙박시설의 지역 코드"
+          },
+          "addressDetail" : {
+            "type" : "string",
+            "description" : "숙박 시설 상세 주소"
+          },
+          "detailInfo" : {
+            "type" : "string",
+            "description" : "숙박 시설 상세 정보"
+          },
+          "accommodationType" : {
+            "type" : "string",
+            "description" : "숙박 시설 유형"
+          },
+          "location" : {
+            "type" : "string",
+            "description" : "동 이름"
+          },
+          "lotNumber" : {
+            "type" : "string",
+            "description" : "숙박 시설 지번"
+          },
+          "weekendWorkingHours" : {
+            "type" : "string",
+            "description" : "주말 숙박 시설 영업 시간"
+          },
+          "workingHours" : {
+            "type" : "string",
+            "description" : "평일 숙박 시설 영업 시간"
+          },
+          "accommodationName" : {
+            "type" : "string",
+            "description" : "숙박 시설 이름"
           }
         }
       },
@@ -1033,6 +1359,23 @@
           "roomName" : {
             "type" : "string",
             "description" : "룸 이름"
+          }
+        }
+      },
+      "host-991714372" : {
+        "type" : "object",
+        "properties" : {
+          "hostName" : {
+            "type" : "string",
+            "description" : "사업장에 등록된 호스트 이름(대표자 이름)"
+          },
+          "registrationNumber" : {
+            "type" : "string",
+            "description" : "사업장 등록 번호"
+          },
+          "openDate" : {
+            "type" : "string",
+            "description" : "사업 개장 날짜"
           }
         }
       },
@@ -1269,6 +1612,39 @@
           "userId" : {
             "type" : "number",
             "description" : "취소할 user 아이디"
+          }
+        }
+      },
+      "reservation-117711797" : {
+        "type" : "object",
+        "properties" : {
+          "checkOutDate" : {
+            "type" : "string",
+            "description" : "체크아웃 날짜 및 시간"
+          },
+          "reservationId" : {
+            "type" : "number",
+            "description" : "생성된 예약 아이디(pk)"
+          },
+          "weight" : {
+            "type" : "string",
+            "description" : "동반할 반려동물 무게"
+          },
+          "petCategory" : {
+            "type" : "string",
+            "description" : "동반할 반려동물 종"
+          },
+          "checkInDate" : {
+            "type" : "string",
+            "description" : "체크인 날짜 및 시간"
+          },
+          "userId" : {
+            "type" : "number",
+            "description" : "숙박 시설을 예약한 유저 아이디"
+          },
+          "roomId" : {
+            "type" : "number",
+            "description" : "예약한 Room 아이디"
           }
         }
       },

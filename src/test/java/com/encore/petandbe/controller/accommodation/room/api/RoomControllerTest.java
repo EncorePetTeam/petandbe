@@ -21,6 +21,7 @@ import org.springframework.test.web.servlet.ResultActions;
 import com.encore.petandbe.controller.accommodation.room.requests.RoomRegistrationRequest;
 import com.encore.petandbe.controller.accommodation.room.requests.RoomUpdateRequest;
 import com.encore.petandbe.controller.accommodation.room.responses.RoomRetrievalResponse;
+import com.encore.petandbe.interceptor.PermissionInterceptor;
 import com.encore.petandbe.model.accommodation.filtering.category.PetCategory;
 import com.encore.petandbe.service.accommodation.room.RoomService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -34,6 +35,9 @@ class RoomControllerTest {
 
 	@MockBean
 	private RoomService roomService;
+
+	@MockBean
+	private PermissionInterceptor permissionInterceptor;
 
 	@Autowired
 	private ObjectMapper objectMapper;
@@ -52,6 +56,7 @@ class RoomControllerTest {
 		RoomRegistrationRequest roomRegistrationRequest = new RoomRegistrationRequest(accommodationId, roomName, amount,
 			petCategory, weight, detailInfo);
 		when(roomService.createRoom(roomRegistrationRequest)).thenReturn(roomId);
+		when(permissionInterceptor.preHandle(any(), any(), any())).thenReturn(true);
 		//when
 		ResultActions resultActions = mockMvc.perform(post("/room")
 			.content(objectMapper.writeValueAsString(roomRegistrationRequest))
@@ -82,6 +87,7 @@ class RoomControllerTest {
 			weight, detailInfo);
 
 		when(roomService.updateRoom(roomUpdateRequest, roomId)).thenReturn(roomId);
+		when(permissionInterceptor.preHandle(any(), any(), any())).thenReturn(true);
 		//when
 		ResultActions resultActions = mockMvc.perform(put("/room/{room-id}", roomId)
 			.content(objectMapper.writeValueAsString(roomUpdateRequest))
@@ -113,6 +119,7 @@ class RoomControllerTest {
 	void deleteRoomSuccess() throws Exception {
 		//given
 		when(roomService.deleteRoomById(roomId)).thenReturn(roomId);
+		when(permissionInterceptor.preHandle(any(), any(), any())).thenReturn(true);
 		//when
 		ResultActions resultActions = mockMvc.perform(delete("/room/{room-id}", roomId)
 			.accept(MediaType.APPLICATION_JSON));
@@ -136,6 +143,7 @@ class RoomControllerTest {
 			petCategory, weight, detailInfo);
 
 		when(roomService.findRoomById(roomId)).thenReturn(roomRetrievalResponse);
+		when(permissionInterceptor.preHandle(any(), any(), any())).thenReturn(true);
 		//when
 		ResultActions resultActions = mockMvc.perform(get("/room/{room-id}", roomId)
 			.accept(MediaType.APPLICATION_JSON));
@@ -152,7 +160,7 @@ class RoomControllerTest {
 					fieldWithPath("amount").type(JsonFieldType.NUMBER).description("룸 대여료"),
 					fieldWithPath("weight").type(JsonFieldType.STRING).description("룸을 대여하는 펫의 무게 제한"),
 					fieldWithPath("petCategory").type(JsonFieldType.STRING).description("룸을 대여하는 펫의 타입"),
-					fieldWithPath("detailInfo").type(JsonFieldType.STRING).description("룸의 상세 설명")
+	 				fieldWithPath("detailInfo").type(JsonFieldType.STRING).description("룸의 상세 설명")
 				)));
 	}
 }

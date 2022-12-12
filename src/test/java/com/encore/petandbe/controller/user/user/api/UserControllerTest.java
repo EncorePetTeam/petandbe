@@ -1,6 +1,5 @@
 package com.encore.petandbe.controller.user.user.api;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.*;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
@@ -23,6 +22,7 @@ import org.springframework.test.web.servlet.ResultActions;
 
 import com.encore.petandbe.controller.user.user.requests.UserUpdateRequest;
 import com.encore.petandbe.controller.user.user.responses.UserDetailsResponse;
+import com.encore.petandbe.interceptor.PermissionInterceptor;
 import com.encore.petandbe.service.user.user.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -35,6 +35,9 @@ class UserControllerTest {
 
 	@MockBean
 	private UserService userService;
+
+	@MockBean
+	private PermissionInterceptor permissionInterceptor;
 
 	@Autowired
 	private ObjectMapper objectMapper;
@@ -49,6 +52,7 @@ class UserControllerTest {
 		//given
 		UserDetailsResponse response = new UserDetailsResponse(userId, nickname, email);
 		when(userService.findUserById(userId)).thenReturn(response);
+		when(permissionInterceptor.preHandle(any(), any(), any())).thenReturn(true);
 		//when
 		ResultActions resultActions = mockMvc.perform(get("/user/{user-id}", userId)
 			.accept(MediaType.APPLICATION_JSON));
@@ -71,6 +75,7 @@ class UserControllerTest {
 		//given
 		UserUpdateRequest request = new UserUpdateRequest(nickname, email);
 		when(userService.updateUser(request, userId)).thenReturn(userId);
+		when(permissionInterceptor.preHandle(any(), any(), any())).thenReturn(true);
 		//when
 		ResultActions resultActions = mockMvc.perform(put("/user/{user-id}", userId)
 			.content(objectMapper.writeValueAsString(request))

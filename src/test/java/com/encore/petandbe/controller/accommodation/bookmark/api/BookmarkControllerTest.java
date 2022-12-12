@@ -27,6 +27,8 @@ import com.encore.petandbe.controller.accommodation.bookmark.requests.DeleteBook
 import com.encore.petandbe.controller.accommodation.bookmark.responses.BookmarkAccommodationListResponse;
 import com.encore.petandbe.controller.accommodation.bookmark.responses.BookmarkAccommodationResponse;
 import com.encore.petandbe.controller.accommodation.bookmark.responses.BookmarkDetailsResponse;
+import com.encore.petandbe.interceptor.PermissionInterceptor;
+import com.encore.petandbe.model.user.user.Role;
 import com.encore.petandbe.service.accommodation.bookmark.BookmarkService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -39,6 +41,9 @@ class BookmarkControllerTest {
 
 	@MockBean
 	private BookmarkService bookmarkService;
+
+	@MockBean
+	private PermissionInterceptor permissionInterceptor;
 
 	@Autowired
 	private ObjectMapper objectMapper;
@@ -55,11 +60,13 @@ class BookmarkControllerTest {
 		BookmarkDetailsResponse bookmarkDetailsResponse = new BookmarkDetailsResponse(userId, accommodationId, false);
 		when(bookmarkService.registerBookmark(any(BookmarkRegistrationRequests.class))).thenReturn(
 			bookmarkDetailsResponse);
+		when(permissionInterceptor.preHandle(any(), any(), any())).thenReturn(true);
 		//when
 		ResultActions resultActions = mockMvc.perform(post("/bookmark")
 			.content(objectMapper.writeValueAsString(bookmarkRegistrationRequests))
 			.contentType(MediaType.APPLICATION_JSON)
-			.accept(MediaType.APPLICATION_JSON));
+			.accept(MediaType.APPLICATION_JSON)
+			.requestAttr(Role.USER.getValue(), userId.intValue()));
 		//then
 		resultActions.andExpect(status().isCreated())
 			.andDo(
@@ -86,11 +93,13 @@ class BookmarkControllerTest {
 		BookmarkDetailsResponse bookmarkDetailsResponse = new BookmarkDetailsResponse(userId, accommodationId, true);
 
 		when(bookmarkService.deleteBookmark(any(DeleteBookmarkRequests.class))).thenReturn(bookmarkDetailsResponse);
+		when(permissionInterceptor.preHandle(any(), any(), any())).thenReturn(true);
 		//when
 		ResultActions resultActions = mockMvc.perform(delete("/bookmark/{accommodation-id}", accommodationId)
 			.content(objectMapper.writeValueAsString(deleteBookmarkRequests))
 			.contentType(MediaType.APPLICATION_JSON)
-			.accept(MediaType.APPLICATION_JSON));
+			.accept(MediaType.APPLICATION_JSON)
+			.requestAttr(Role.USER.getValue(), userId.intValue()));
 		//then
 		resultActions.andExpect(status().isOk())
 			.andDo(
@@ -128,16 +137,15 @@ class BookmarkControllerTest {
 		BookmarkAccommodationListResponse bookmarkAccommodationListResponse = new BookmarkAccommodationListResponse(
 			userId, bookmarkAccommodationResponseList);
 		when(bookmarkService.findAccommodationListByBookmark(userId)).thenReturn(bookmarkAccommodationListResponse);
+		when(permissionInterceptor.preHandle(any(), any(), any())).thenReturn(true);
 		//when
-		ResultActions resultActions = mockMvc.perform(get("/bookmark/{user-id}", userId)
-			.accept(MediaType.APPLICATION_JSON));
+		ResultActions resultActions = mockMvc.perform(get("/bookmark/list")
+			.accept(MediaType.APPLICATION_JSON)
+			.requestAttr(Role.USER.getValue(), userId.intValue()));
 		//then
 		resultActions.andExpect(status().isOk())
 			.andDo(
 				document("bookmark-get-list",
-					pathParameters(
-						parameterWithName("user-id").description("bookmark 목록을 조회할 user 아이디")
-					),
 					responseFields(
 						fieldWithPath("userId").type(JsonFieldType.NUMBER).description("조회한 user의 아이디"),
 						fieldWithPath("bookmarkAccommodationResponseList").type(JsonFieldType.ARRAY)

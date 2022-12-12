@@ -25,6 +25,8 @@ import com.encore.petandbe.controller.accommodation.review.requests.UpdateReview
 import com.encore.petandbe.controller.accommodation.review.responses.DeleteReviewResponse;
 import com.encore.petandbe.controller.accommodation.review.responses.RegistReviewResponse;
 import com.encore.petandbe.controller.accommodation.review.responses.ReviewDetailsResponse;
+import com.encore.petandbe.interceptor.PermissionInterceptor;
+import com.encore.petandbe.model.user.user.Role;
 import com.encore.petandbe.service.accommodation.review.ReviewService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -37,6 +39,9 @@ class ReviewControllerTest {
 
 	@MockBean
 	private ReviewService reviewService;
+
+	@MockBean
+	private PermissionInterceptor permissionInterceptor;
 
 	@Autowired
 	private ObjectMapper objectMapper;
@@ -54,12 +59,14 @@ class ReviewControllerTest {
 		RegistReviewResponse registReviewResponse = new RegistReviewResponse(reviewId, userId, rate, content, 1L);
 
 		when(reviewService.registReview(any(RegistReviewRequests.class))).thenReturn(registReviewResponse);
+		when(permissionInterceptor.preHandle(any(), any(), any())).thenReturn(true);
 		//when
 		ResultActions resultActions = mockMvc.perform(RestDocumentationRequestBuilders
 			.post("/review")
 			.content(objectMapper.writeValueAsString(registReviewRequests))
 			.contentType(MediaType.APPLICATION_JSON)
-			.accept(MediaType.APPLICATION_JSON));
+			.accept(MediaType.APPLICATION_JSON)
+			.requestAttr(Role.USER.getValue(), userId.intValue()));
 		//then
 		resultActions.andExpect(status().isCreated())
 			.andDo(document("regist-review",
@@ -92,10 +99,12 @@ class ReviewControllerTest {
 			reservationId);
 
 		when(reviewService.findReviewDetails(anyLong())).thenReturn(reviewDetailsResponse);
+		when(permissionInterceptor.preHandle(any(), any(), any())).thenReturn(true);
 		//when
 		ResultActions resultActions = mockMvc.perform(RestDocumentationRequestBuilders
 			.get("/review/{reservation-id}", "1")
-			.accept(MediaType.APPLICATION_JSON));
+			.accept(MediaType.APPLICATION_JSON)
+			.requestAttr(Role.USER.getValue(), userId.intValue()));
 		//then
 		resultActions.andExpect(status().isOk())
 			.andDo(document("review-details",
@@ -127,12 +136,14 @@ class ReviewControllerTest {
 			reservationId);
 
 		when(reviewService.updateReview(anyLong(), any(UpdateReviewRequests.class))).thenReturn(reviewDetailsResponse);
+		when(permissionInterceptor.preHandle(any(), any(), any())).thenReturn(true);
 		//when
 		ResultActions resultActions = mockMvc.perform(RestDocumentationRequestBuilders
 			.put("/review/{review-id}", reviewId)
 			.content(objectMapper.writeValueAsString(updateReviewRequests))
 			.contentType(MediaType.APPLICATION_JSON)
-			.accept(MediaType.APPLICATION_JSON));
+			.accept(MediaType.APPLICATION_JSON)
+			.requestAttr(Role.USER.getValue(), userId.intValue()));
 		//then
 		resultActions.andExpect(status().isOk())
 			.andDo(document("update-review",
@@ -165,13 +176,15 @@ class ReviewControllerTest {
 		DeleteReviewRequests deleteReviewRequests = new DeleteReviewRequests(userId, reviewId);
 		DeleteReviewResponse deleteReviewResponse = new DeleteReviewResponse(reviewId, state, reservationId);
 
-		when(reviewService.deleteReview(anyLong(), any(DeleteReviewRequests.class))).thenReturn(deleteReviewResponse);
+		when(reviewService.deleteReview(anyLong(), anyLong())).thenReturn(deleteReviewResponse);
+		when(permissionInterceptor.preHandle(any(), any(), any())).thenReturn(true);
 		//when
 		ResultActions resultActions = mockMvc.perform(RestDocumentationRequestBuilders
 			.delete("/review/{review-id}", reviewId)
 			.content(objectMapper.writeValueAsString(deleteReviewRequests))
 			.contentType(MediaType.APPLICATION_JSON)
-			.accept(MediaType.APPLICATION_JSON));
+			.accept(MediaType.APPLICATION_JSON)
+			.requestAttr(Role.USER.getValue(), userId.intValue()));
 		//then
 		resultActions.andExpect(status().isOk())
 			.andDo(document("delete-review",

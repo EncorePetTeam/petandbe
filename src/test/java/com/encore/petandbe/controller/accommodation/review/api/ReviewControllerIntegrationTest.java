@@ -8,11 +8,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
+import static org.mockito.Mockito.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.restdocs.payload.JsonFieldType;
@@ -21,6 +22,9 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+
+import com.encore.petandbe.interceptor.PermissionInterceptor;
+import com.encore.petandbe.model.user.user.Role;
 
 @SpringBootTest
 @AutoConfigureRestDocs
@@ -31,6 +35,9 @@ class ReviewControllerIntegrationTest {
 	@Autowired
 	private MockMvc mockMvc;
 
+	@MockBean
+	private PermissionInterceptor permissionInterceptor;
+
 	@Test
 	@DisplayName("Get review list page - success")
 	void getReviewListPage() throws Exception {
@@ -39,12 +46,13 @@ class ReviewControllerIntegrationTest {
 		param.add("userId", "5");
 		param.add("pageNum", "1");
 		param.add("amount", "10");
-
+		when(permissionInterceptor.preHandle(any(), any(), any())).thenReturn(true);
 		//when
 		ResultActions resultActions = mockMvc.perform(RestDocumentationRequestBuilders
 			.get("/review-list")
 			.params(param)
-			.accept(MediaType.APPLICATION_JSON));
+			.accept(MediaType.APPLICATION_JSON)
+			.requestAttr(Role.USER.getValue(), 5));
 		//then
 		resultActions.andExpect(status().isOk())
 			.andDo(document("get-review-list-by-userid",
@@ -77,20 +85,19 @@ class ReviewControllerIntegrationTest {
 	void getReviewListPageFail() throws Exception {
 		//given
 		MultiValueMap<String, String> param = new LinkedMultiValueMap<>();
-		param.add("userId", "5");
 		param.add("pageNum", "2");
 		param.add("amount", "10");
-
+		when(permissionInterceptor.preHandle(any(), any(), any())).thenReturn(true);
 		//when
 		ResultActions resultActions = mockMvc.perform(RestDocumentationRequestBuilders
 			.get("/review-list")
 			.params(param)
-			.accept(MediaType.APPLICATION_JSON));
+			.accept(MediaType.APPLICATION_JSON)
+			.requestAttr(Role.USER.getValue(), 5));
 		//then
 		resultActions.andExpect(status().isOk())
 			.andDo(document("get-review-list-by-userid",
 				requestParameters(
-					parameterWithName("userId").description("user 아이디"),
 					parameterWithName("pageNum").description("페이지 번호"),
 					parameterWithName("amount").description("요청할 데이터 개수")
 				),

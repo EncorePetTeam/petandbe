@@ -330,7 +330,7 @@ class ReviewServiceTest {
 		given(reviewListSearchRepository.getReviewRatesByAccommodationId(any(Accommodation.class))).willReturn(
 			rateList);
 		//when
-		DeleteReviewResponse deleteReviewResponse = reviewService.deleteReview(reviewId, deleteReviewRequests);
+		DeleteReviewResponse deleteReviewResponse = reviewService.deleteReview(reviewId, userId);
 
 		//then
 		assertEquals(reviewId, deleteReviewResponse.getReviewId());
@@ -350,7 +350,7 @@ class ReviewServiceTest {
 		//when
 		Assertions.assertThrows(NonExistResourceException.class, () -> {
 			//then
-			reviewService.deleteReview(reviewId, deleteReviewRequests);
+			reviewService.deleteReview(reviewId, userId);
 		});
 	}
 
@@ -372,7 +372,7 @@ class ReviewServiceTest {
 		//when
 		Assertions.assertThrows(NonExistResourceException.class, () -> {
 			//then
-			reviewService.deleteReview(reviewId, deleteReviewRequests);
+			reviewService.deleteReview(reviewId, userId);
 		});
 	}
 
@@ -399,7 +399,7 @@ class ReviewServiceTest {
 		//when
 		Assertions.assertThrows(WrongRequestException.class, () -> {
 			//then
-			reviewService.deleteReview(reviewId, deleteReviewRequests);
+			reviewService.deleteReview(reviewId, userId);
 		});
 	}
 

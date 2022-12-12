@@ -29,6 +29,7 @@ import org.springframework.util.MultiValueMap;
 import com.encore.petandbe.controller.accommodation.reservation.requests.ReservationListGetByUserIdRequests;
 import com.encore.petandbe.controller.accommodation.reservation.responses.ReservationListGetByUserIdResponse;
 import com.encore.petandbe.controller.accommodation.reservation.responses.ReservationWithRoomResponse;
+import com.encore.petandbe.interceptor.PermissionInterceptor;
 import com.encore.petandbe.service.accommodation.reservation.ReservationGetListService;
 import com.fasterxml.jackson.databind.node.JsonNodeType;
 
@@ -41,6 +42,9 @@ class ReservationGetListControllerTest {
 
 	@MockBean
 	private ReservationGetListService reservationGetListService;
+
+	@MockBean
+	private PermissionInterceptor permissionInterceptor;
 
 	@Test
 	@DisplayName("Get Reservation List By UserId - Sueccess")
@@ -70,6 +74,7 @@ class ReservationGetListControllerTest {
 		when(reservationGetListService.getReservationListByUserId(
 			any(ReservationListGetByUserIdRequests.class))).thenReturn(
 			reservationListGetByUserIdResponse);
+		when(permissionInterceptor.preHandle(any(), any(), any())).thenReturn(true);
 		//when
 		ResultActions resultActions = mockMvc.perform(RestDocumentationRequestBuilders
 			.get("/reservation-list")

@@ -6,6 +6,7 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.mockito.Mockito.*;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.MockMvc;
@@ -21,6 +23,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.encore.petandbe.controller.accommodation.bookmark.requests.BookmarkRegistrationRequests;
 import com.encore.petandbe.controller.accommodation.bookmark.requests.DeleteBookmarkRequests;
+import com.encore.petandbe.interceptor.PermissionInterceptor;
+import com.encore.petandbe.model.user.user.Role;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @SpringBootTest
@@ -31,6 +35,9 @@ class BookmarkControllerIntergrationTest {
 
 	@Autowired
 	private MockMvc mockMvc;
+
+	@MockBean
+	private PermissionInterceptor permissionInterceptor;
 
 	@Autowired
 	private ObjectMapper objectMapper;
@@ -44,11 +51,13 @@ class BookmarkControllerIntergrationTest {
 		//given
 		BookmarkRegistrationRequests bookmarkRegistrationRequests = new BookmarkRegistrationRequests(accommodationId,
 			userId);
+		when(permissionInterceptor.preHandle(any(), any(), any())).thenReturn(true);
 		//when
 		ResultActions resultActions = mockMvc.perform(post("/bookmark")
 			.content(objectMapper.writeValueAsString(bookmarkRegistrationRequests))
 			.contentType(MediaType.APPLICATION_JSON)
-			.accept(MediaType.APPLICATION_JSON));
+			.accept(MediaType.APPLICATION_JSON)
+			.requestAttr(Role.USER.getValue(), userId.intValue()));
 		//then
 		resultActions.andExpect(status().isCreated())
 			.andDo(
@@ -74,11 +83,13 @@ class BookmarkControllerIntergrationTest {
 		Long accommodationId = 3L;
 		BookmarkRegistrationRequests bookmarkRegistrationRequests = new BookmarkRegistrationRequests(accommodationId,
 			userId);
+		when(permissionInterceptor.preHandle(any(), any(), any())).thenReturn(true);
 		//when
 		ResultActions resultActions = mockMvc.perform(post("/bookmark")
 			.content(objectMapper.writeValueAsString(bookmarkRegistrationRequests))
 			.contentType(MediaType.APPLICATION_JSON)
-			.accept(MediaType.APPLICATION_JSON));
+			.accept(MediaType.APPLICATION_JSON)
+			.requestAttr(Role.USER.getValue(), userId.intValue()));
 		//then
 		resultActions.andExpect(status().isCreated())
 			.andDo(
@@ -103,12 +114,13 @@ class BookmarkControllerIntergrationTest {
 		//given
 		Long accommodationId = 2L;
 		DeleteBookmarkRequests deleteBookmarkRequests = new DeleteBookmarkRequests(accommodationId, userId);
-
+		when(permissionInterceptor.preHandle(any(), any(), any())).thenReturn(true);
 		//when
 		ResultActions resultActions = mockMvc.perform(delete("/bookmark/{accommodation-id}", accommodationId)
 			.content(objectMapper.writeValueAsString(deleteBookmarkRequests))
 			.contentType(MediaType.APPLICATION_JSON)
-			.accept(MediaType.APPLICATION_JSON));
+			.accept(MediaType.APPLICATION_JSON)
+			.requestAttr(Role.USER.getValue(), userId.intValue()));
 		//then
 		resultActions.andExpect(status().isOk())
 			.andDo(

@@ -25,7 +25,9 @@ import com.encore.petandbe.controller.accommodation.reservation.requests.Reserva
 import com.encore.petandbe.controller.accommodation.reservation.responses.DeleteReservationResponse;
 import com.encore.petandbe.controller.accommodation.reservation.responses.ReservationDetailsResponse;
 import com.encore.petandbe.controller.accommodation.reservation.responses.ReservationRetrieveResponse;
+import com.encore.petandbe.interceptor.PermissionInterceptor;
 import com.encore.petandbe.model.accommodation.filtering.category.PetCategory;
+import com.encore.petandbe.model.user.user.Role;
 import com.encore.petandbe.service.accommodation.reservation.ReservationService;
 import com.encore.petandbe.utils.validator.LocalDateTimeValidator;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -39,6 +41,9 @@ class ReservationControllerTest {
 
 	@MockBean
 	private ReservationService reservationService;
+
+	@MockBean
+	private PermissionInterceptor permissionInterceptor;
 
 	@Autowired
 	private ObjectMapper objectMapper;
@@ -66,12 +71,14 @@ class ReservationControllerTest {
 
 		when(reservationService.registerReservation(any(ReservationRegistrationRequest.class))).thenReturn(
 			reservationDetailsResponse);
+		when(permissionInterceptor.preHandle(any(), any(), any())).thenReturn(true);
 		//when
 		ResultActions resultActions = mockMvc.perform(
 			post("/reservation")
 				.content(objectMapper.writeValueAsString(reservationRegistrationRequest))
 				.contentType(MediaType.APPLICATION_JSON)
-				.accept(MediaType.APPLICATION_JSON));
+				.accept(MediaType.APPLICATION_JSON)
+				.requestAttr(Role.USER.getValue(), userId.intValue()));
 		//then
 		resultActions.andExpect(status().isCreated())
 			.andDo(document("reservation-register",
@@ -105,6 +112,7 @@ class ReservationControllerTest {
 			LocalDateTimeValidator.of().convertStringToLocalDateTime(checkOutDate), petCategory, weight);
 
 		when(reservationService.findByReservationId(anyLong())).thenReturn(reservationRetrieveResponse);
+		when(permissionInterceptor.preHandle(any(), any(), any())).thenReturn(true);
 		//when
 		ResultActions resultActions = mockMvc.perform(get("/reservation/{reservation-id}", reservationId)
 			.accept(MediaType.APPLICATION_JSON));
@@ -142,12 +150,14 @@ class ReservationControllerTest {
 
 		when(reservationService.updateReservation(anyLong(), any(ReservationUpdatingRequest.class))).thenReturn(
 			reservationDetailsResponse);
+		when(permissionInterceptor.preHandle(any(), any(), any())).thenReturn(true);
 		//when
 		ResultActions resultActions = mockMvc.perform(
 			put("/reservation/{reservation-id}", reservationId)
 				.content(objectMapper.writeValueAsString(reservationUpdatingRequest))
 				.contentType(MediaType.APPLICATION_JSON)
-				.accept(MediaType.APPLICATION_JSON));
+				.accept(MediaType.APPLICATION_JSON)
+				.requestAttr(Role.USER.getValue(), userId.intValue()));
 		//then
 		resultActions.andExpect(status().isOk())
 			.andDo(document("reservation-update",
@@ -155,7 +165,6 @@ class ReservationControllerTest {
 					parameterWithName("reservation-id").description("수정할 예약 id")
 				),
 				requestFields(
-					fieldWithPath("roomId").type(JsonFieldType.NUMBER).description("예약한 Room 아이디"),
 					fieldWithPath("userId").type(JsonFieldType.NUMBER).description("숙박 시설을 예약한 유저 아이디"),
 					fieldWithPath("checkInDate").type(JsonFieldType.STRING).description("변경 할 체크인 날짜 및 시간"),
 					fieldWithPath("checkOutDate").type(JsonFieldType.STRING).description("변경 할 체크아웃 날짜 및 시간"),
@@ -184,12 +193,14 @@ class ReservationControllerTest {
 
 		when(reservationService.deleteReservation(any(DeleteReservationRequest.class))).thenReturn(
 			deleteReservationResponse);
+		when(permissionInterceptor.preHandle(any(), any(), any())).thenReturn(true);
 		//when
 		ResultActions resultActions = mockMvc.perform(
 			delete("/reservation/{reservation-id}", reservationId)
 				.content(objectMapper.writeValueAsString(deleteReservationRequest))
 				.contentType(MediaType.APPLICATION_JSON)
-				.accept(MediaType.APPLICATION_JSON));
+				.accept(MediaType.APPLICATION_JSON)
+				.requestAttr(Role.USER.getValue(), userId.intValue()));
 		//then
 		resultActions.andExpect(status().isOk())
 			.andDo(document("reservation-delete",

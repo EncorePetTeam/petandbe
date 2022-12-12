@@ -28,6 +28,8 @@ import org.springframework.util.MultiValueMap;
 import com.encore.petandbe.controller.accommodation.review.requests.ReviewListGetByUserIdRequests;
 import com.encore.petandbe.controller.accommodation.review.responses.ReviewListGetByUserIdResponse;
 import com.encore.petandbe.controller.accommodation.review.responses.ReviewWithAccommodationResponse;
+import com.encore.petandbe.interceptor.PermissionInterceptor;
+import com.encore.petandbe.model.user.user.Role;
 import com.encore.petandbe.service.accommodation.review.ReviewGetListService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -40,6 +42,9 @@ class ReviewGetListControllerTest {
 
 	@MockBean
 	private ReviewGetListService reviewGetListService;
+
+	@MockBean
+	private PermissionInterceptor permissionInterceptor;
 
 	@Autowired
 	private ObjectMapper objectMapper;
@@ -71,11 +76,14 @@ class ReviewGetListControllerTest {
 
 		when(reviewGetListService.getReviewListByUserId(any(ReviewListGetByUserIdRequests.class))).thenReturn(
 			reviewListGetByUserIdResponse);
+		when(permissionInterceptor.preHandle(any(), any(), any())).thenReturn(true);
 		//when
 		ResultActions resultActions = mockMvc.perform(RestDocumentationRequestBuilders
 			.get("/review-list")
 			.params(param)
-			.accept(MediaType.APPLICATION_JSON));
+			.accept(MediaType.APPLICATION_JSON)
+			.requestAttr(Role.USER.getValue(), 1)
+		);
 		//then
 		resultActions.andExpect(status().isOk())
 			.andDo(document("get-review-list-by-userid",

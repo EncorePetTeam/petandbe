@@ -26,7 +26,7 @@ class BusinessAuthenticityImplTest {
 		String openDate = "20160519";
 
 		HostRegistrationRequest hostRegistrationRequest = new HostRegistrationRequest(registrationNumber, hostName,
-			openDate, null);
+			openDate);
 
 		boolean result = businessAuthenticity.checkAuthenticity(hostRegistrationRequest);
 
@@ -42,7 +42,7 @@ class BusinessAuthenticityImplTest {
 		String openDate = "19980428";
 
 		HostRegistrationRequest hostRegistrationRequest = new HostRegistrationRequest(registrationNumber, hostName,
-			openDate, null);
+			openDate);
 
 		boolean result = businessAuthenticity.checkAuthenticity(hostRegistrationRequest);
 

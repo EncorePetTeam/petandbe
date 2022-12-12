@@ -28,6 +28,7 @@ import org.springframework.util.MultiValueMap;
 import com.encore.petandbe.controller.accommodation.filtering.requests.FilteringAccommodationRequests;
 import com.encore.petandbe.controller.accommodation.filtering.responses.FilteringAccommodationListResponse;
 import com.encore.petandbe.controller.accommodation.filtering.responses.FilteringAccommodationResponse;
+import com.encore.petandbe.interceptor.PermissionInterceptor;
 import com.encore.petandbe.service.accommodation.filtering.FilteringService;
 
 @WebMvcTest(controllers = FilteringController.class)
@@ -39,6 +40,9 @@ class FilteringControllerTest {
 
 	@MockBean
 	private FilteringService filteringService;
+
+	@MockBean
+	private PermissionInterceptor permissionInterceptor;
 
 	@Test
 	@DisplayName("Filtering accommodation controller - success")
@@ -76,6 +80,7 @@ class FilteringControllerTest {
 
 		when(filteringService.filteringAccommodation(any(FilteringAccommodationRequests.class))).thenReturn(
 			filteringAccommodationListResponse);
+		when(permissionInterceptor.preHandle(any(), any(), any())).thenReturn(true);
 		//when
 		ResultActions resultActions = mockMvc.perform(RestDocumentationRequestBuilders
 			.get("/filtering/accommodation")
@@ -134,6 +139,7 @@ class FilteringControllerTest {
 
 		when(filteringService.filteringAccommodation(any(FilteringAccommodationRequests.class))).thenReturn(
 			filteringAccommodationListResponse);
+		when(permissionInterceptor.preHandle(any(), any(), any())).thenReturn(true);
 		//when
 		ResultActions resultActions = mockMvc.perform(RestDocumentationRequestBuilders
 			.get("/filtering/accommodation")

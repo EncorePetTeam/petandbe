@@ -22,7 +22,9 @@ import org.springframework.test.web.servlet.ResultActions;
 import com.encore.petandbe.controller.accommodation.accommodation.requests.AccommodationRegistrationRequest;
 import com.encore.petandbe.controller.accommodation.accommodation.requests.AccommodationUpdatingRequest;
 import com.encore.petandbe.controller.accommodation.accommodation.responses.AccommodationRetrievalResponse;
+import com.encore.petandbe.interceptor.PermissionInterceptor;
 import com.encore.petandbe.model.accommodation.accommodation.AccommodationType;
+import com.encore.petandbe.model.user.user.Role;
 import com.encore.petandbe.service.accommodation.accomodation.AccommodationService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -35,6 +37,9 @@ class AccommodationControllerTest {
 
 	@MockBean
 	private AccommodationService accommodationService;
+
+	@MockBean
+	private PermissionInterceptor permissionInterceptor;
 
 	@Autowired
 	private ObjectMapper objectMapper;
@@ -55,23 +60,24 @@ class AccommodationControllerTest {
 	@DisplayName("Register Accommodation Controller - Success")
 	void registerAccommodationTestSuccess() throws Exception {
 		//given
-		AccommodationRegistrationRequest request = new AccommodationRegistrationRequest(addressCode, userId,
+		AccommodationRegistrationRequest request = new AccommodationRegistrationRequest(addressCode,
 			accommodationName, workingHours, weekendWorkingHours, location, lotNumber, addressDetail, accommodationType,
 			detailInfo);
-		when(accommodationService.createAccommodation(request)).thenReturn(userId);
+		when(accommodationService.createAccommodation(request, userId)).thenReturn(userId);
+		when(permissionInterceptor.preHandle(any(), any(), any())).thenReturn(true);
 		//when
 		ResultActions resultActions = mockMvc.perform(
 			post("/accommodation")
 				.content(objectMapper.writeValueAsString(request))
 				.contentType(MediaType.APPLICATION_JSON)
-				.accept(MediaType.APPLICATION_JSON));
+				.accept(MediaType.APPLICATION_JSON)
+				.requestAttr(Role.USER.getValue(), userId.intValue()));
 		//then
 		resultActions.andExpect(status().isCreated())
 			.andDo(print())
 			.andDo(document("accommodation-register",
 				requestFields(
 					fieldWithPath("addressCode").type(JsonFieldType.STRING).description("숙박시설의 지역 코드"),
-					fieldWithPath("userId").type(JsonFieldType.NUMBER).description("숙박 시설 호스트의 유저 아이디"),
 					fieldWithPath("accommodationName").type(JsonFieldType.STRING).description("숙박 시설 이름"),
 					fieldWithPath("workingHours").type(JsonFieldType.STRING).description("평일 숙박 시설 영업 시간"),
 					fieldWithPath("weekendWorkingHours").type(JsonFieldType.STRING).description("주말 숙박 시설 영업 시간"),
@@ -98,6 +104,7 @@ class AccommodationControllerTest {
 			averageRate, detailInfo);
 
 		when(accommodationService.findAccommodationById(accommodationId)).thenReturn(response);
+		when(permissionInterceptor.preHandle(any(), any(), any())).thenReturn(true);
 		//when
 		ResultActions resultActions = mockMvc.perform(get("/accommodation/{accommodation-id}", accommodationId)
 			.accept(MediaType.APPLICATION_JSON));
@@ -131,11 +138,13 @@ class AccommodationControllerTest {
 			accommodationName, workingHours, weekendWorkingHours, location, lotNumber, addressDetail, accommodationType,
 			detailInfo);
 		when(accommodationService.updateAccommodation(request, accommodationId)).thenReturn(accommodationId);
+		when(permissionInterceptor.preHandle(any(), any(), any())).thenReturn(true);
 		//when
 		ResultActions resultActions = mockMvc.perform(put("/accommodation/{accommodation-id}", accommodationId)
 			.content(objectMapper.writeValueAsString(request))
 			.contentType(MediaType.APPLICATION_JSON)
-			.accept(MediaType.APPLICATION_JSON));
+			.accept(MediaType.APPLICATION_JSON)
+			.requestAttr(Role.USER.getValue(), userId.intValue()));
 		//then
 		resultActions.andExpect(status().isOk())
 			.andDo(print())
@@ -166,9 +175,11 @@ class AccommodationControllerTest {
 	void deleteAccommodationTestSuccess() throws Exception {
 		//given
 		when(accommodationService.deleteAccommodationByStatus(accommodationId)).thenReturn(accommodationId);
+		when(permissionInterceptor.preHandle(any(), any(), any())).thenReturn(true);
 		//when
 		ResultActions resultActions = mockMvc.perform(delete("/accommodation/{accommodation-id}", accommodationId)
-			.accept(MediaType.APPLICATION_JSON));
+			.accept(MediaType.APPLICATION_JSON)
+			.requestAttr(Role.USER.getValue(), userId.intValue()));
 		//then
 		resultActions.andExpect(status().isOk())
 			.andDo(print())

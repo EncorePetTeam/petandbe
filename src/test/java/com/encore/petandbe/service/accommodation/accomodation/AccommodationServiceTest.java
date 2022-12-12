@@ -45,10 +45,10 @@ class AccommodationServiceTest {
 	void createAccommodationTestSuccess() {
 		//given
 		AccommodationRegistrationRequest request = new AccommodationRegistrationRequest(
-			addressCode, userId, accommodationName, workingHours, weekendWorkingHours, location, lotNumber,
+			addressCode, accommodationName, workingHours, weekendWorkingHours, location, lotNumber,
 			addressDetail, accommodationType, detailInfo);
 		//when
-		Long accommodationId = accommodationService.createAccommodation(request);
+		Long accommodationId = accommodationService.createAccommodation(request, userId);
 		Optional<Accommodation> accommodation = accommodationRepository.findById(accommodationId);
 		//then
 		assertThat(accommodation).isNotNull();
@@ -108,10 +108,10 @@ class AccommodationServiceTest {
 		//given
 		String testWorkingHours = "00002300";
 		AccommodationRegistrationRequest request = new AccommodationRegistrationRequest(
-			addressCode, userId, accommodationName, testWorkingHours, weekendWorkingHours, location, lotNumber,
+			addressCode, accommodationName, testWorkingHours, weekendWorkingHours, location, lotNumber,
 			addressDetail, accommodationType, detailInfo);
 		//when
-		Long accommodationId = accommodationService.createAccommodation(request);
+		Long accommodationId = accommodationService.createAccommodation(request, userId);
 		//then
 		assertThat(accommodationRepository.findById(accommodationId)).isPresent();
 	}
@@ -122,10 +122,10 @@ class AccommodationServiceTest {
 		//given
 		String testWorkingHours = "03002400";
 		AccommodationRegistrationRequest request = new AccommodationRegistrationRequest(
-			addressCode, userId, accommodationName, testWorkingHours, weekendWorkingHours, location, lotNumber,
+			addressCode, accommodationName, testWorkingHours, weekendWorkingHours, location, lotNumber,
 			addressDetail, accommodationType, detailInfo);
 		//then //when
-		assertThrows(WrongTimeException.class, () -> accommodationService.createAccommodation(request));
+		assertThrows(WrongTimeException.class, () -> accommodationService.createAccommodation(request, userId));
 	}
 
 	@Test
@@ -134,10 +134,10 @@ class AccommodationServiceTest {
 		//given
 		String testWorkingHours = "03002361";
 		AccommodationRegistrationRequest request = new AccommodationRegistrationRequest(
-			addressCode, userId, accommodationName, testWorkingHours, weekendWorkingHours, location, lotNumber,
+			addressCode, accommodationName, testWorkingHours, weekendWorkingHours, location, lotNumber,
 			addressDetail, accommodationType, detailInfo);
 		//then //when
-		assertThrows(WrongTimeException.class, () -> accommodationService.createAccommodation(request));
+		assertThrows(WrongTimeException.class, () -> accommodationService.createAccommodation(request, userId));
 	}
 
 	@Test
@@ -146,10 +146,10 @@ class AccommodationServiceTest {
 		//given
 		String testWorkingHours = "0000a000";
 		AccommodationRegistrationRequest request = new AccommodationRegistrationRequest(
-			addressCode, userId, accommodationName, testWorkingHours, weekendWorkingHours, location, lotNumber,
+			addressCode, accommodationName, testWorkingHours, weekendWorkingHours, location, lotNumber,
 			addressDetail, accommodationType, detailInfo);
 		//when //then
-		assertThrows(WrongTimeException.class, () -> accommodationService.createAccommodation(request));
+		assertThrows(WrongTimeException.class, () -> accommodationService.createAccommodation(request, userId));
 	}
 
 	@Test
@@ -158,10 +158,10 @@ class AccommodationServiceTest {
 		//given
 		String time = "000012000";
 		AccommodationRegistrationRequest request = new AccommodationRegistrationRequest(
-			addressCode, userId, accommodationName, time, weekendWorkingHours, location, lotNumber,
+			addressCode, accommodationName, time, weekendWorkingHours, location, lotNumber,
 			addressDetail, accommodationType, detailInfo);
 		//when//then
-		assertThrows(WrongTimeException.class, () -> accommodationService.createAccommodation(request));
+		assertThrows(WrongTimeException.class, () -> accommodationService.createAccommodation(request, userId));
 	}
 
 	@Test
@@ -170,9 +170,9 @@ class AccommodationServiceTest {
 		//given
 		String time = "13000100";
 		AccommodationRegistrationRequest request = new AccommodationRegistrationRequest(
-			addressCode, userId, accommodationName, time, weekendWorkingHours, location, lotNumber,
+			addressCode, accommodationName, time, weekendWorkingHours, location, lotNumber,
 			addressDetail, accommodationType, detailInfo);
 		//when //then
-		assertThrows(WrongTimeException.class, () -> accommodationService.createAccommodation(request));
+		assertThrows(WrongTimeException.class, () -> accommodationService.createAccommodation(request, userId));
 	}
 }

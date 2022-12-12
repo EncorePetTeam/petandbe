@@ -94,9 +94,8 @@ class ReviewServiceSpringBootTest {
 		Long userId = 3L;
 		Long reviewId = 1L;
 
-		DeleteReviewRequests deleteReviewRequests = new DeleteReviewRequests(reviewId, userId);
 		//when
-		DeleteReviewResponse deleteReviewResponse = reviewService.deleteReview(reviewId, deleteReviewRequests);
+		DeleteReviewResponse deleteReviewResponse = reviewService.deleteReview(reviewId, userId);
 
 		assertEquals(true, deleteReviewResponse.getState());
 		assertEquals(reviewId, deleteReviewResponse.getReviewId());

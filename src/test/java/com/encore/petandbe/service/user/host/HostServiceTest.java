@@ -51,10 +51,10 @@ class HostServiceTest {
 		Long userId = 1L;
 
 		HostRegistrationRequest hostRegistrationRequest = new HostRegistrationRequest(registrationNumber, hostName,
-			openDate, userId);
+			openDate);
 
 		//when
-		Long result = hostService.createHost(hostRegistrationRequest);
+		Long result = hostService.createHost(hostRegistrationRequest, userId);
 		//then
 		assertEquals(1L, result);
 	}
@@ -69,12 +69,12 @@ class HostServiceTest {
 		Long userId = 2L;
 
 		HostRegistrationRequest hostRegistrationRequest = new HostRegistrationRequest(registrationNumber, hostName,
-			openDate, userId);
+			openDate);
 
 		//when
 		Assertions.assertThrows(WrongRequestException.class, () -> {
 			//then
-			hostService.createHost(hostRegistrationRequest);
+			hostService.createHost(hostRegistrationRequest, userId);
 		});
 	}
 
@@ -88,12 +88,12 @@ class HostServiceTest {
 		Long userId = 170L;
 
 		HostRegistrationRequest hostRegistrationRequest = new HostRegistrationRequest(registrationNumber, hostName,
-			openDate, userId);
+			openDate);
 
 		//when
 		Assertions.assertThrows(NonExistResourceException.class, () -> {
 			//then
-			hostService.createHost(hostRegistrationRequest);
+			hostService.createHost(hostRegistrationRequest, userId);
 		});
 	}
 }

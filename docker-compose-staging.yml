@@ -41,6 +41,8 @@ services:
       - "3306"
     env_file:
       - common.env
+    volumes:
+      - "./mysql:/var/lib/mysql"
     networks:
       backend:
         aliases:

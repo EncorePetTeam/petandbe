@@ -38,7 +38,8 @@ public class ReviewMapper {
 	}
 
 	public ReviewDetailsResponse entityToResponse(Review review) {
-		return new ReviewDetailsResponse(review.getId(), review.getUser().getId(), review.getRate(),
+		return new ReviewDetailsResponse(review.getId(), review.getReservation().getRoom().getRoomName(),
+			review.getUser().getId(), review.getRate(),
 			review.getContent(), review.getReservation().getId());
 	}
 

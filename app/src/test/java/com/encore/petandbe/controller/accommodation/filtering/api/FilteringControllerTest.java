@@ -3,6 +3,7 @@ package com.encore.petandbe.controller.accommodation.filtering.api;
 import static com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
@@ -18,7 +19,6 @@ import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDoc
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
@@ -29,6 +29,7 @@ import com.encore.petandbe.controller.accommodation.filtering.requests.Filtering
 import com.encore.petandbe.controller.accommodation.filtering.responses.FilteringAccommodationListResponse;
 import com.encore.petandbe.controller.accommodation.filtering.responses.FilteringAccommodationResponse;
 import com.encore.petandbe.interceptor.PermissionInterceptor;
+import com.encore.petandbe.model.user.user.Role;
 import com.encore.petandbe.service.accommodation.filtering.FilteringService;
 
 @WebMvcTest(controllers = FilteringController.class)
@@ -44,13 +45,17 @@ class FilteringControllerTest {
 	@MockBean
 	private PermissionInterceptor permissionInterceptor;
 
+	private Long userId = 1L;
+
 	@Test
 	@DisplayName("Filtering accommodation controller - success")
 	void filteringAccommodationSuccess() throws Exception {
 		//given
 		Long accommodationId = 1L;
 		String responseAccommodationName = "정정일 애견호텔 & 유치원";
-		String responseAddress = "서울특별시 중구 동호로 249";
+		String addressCode = "서울특별시 중구";
+		String location = "동호로";
+		String lotNumber = "249";
 		double avgRate = 4.8;
 
 		MultiValueMap<String, String> info = new LinkedMultiValueMap<>();
@@ -67,25 +72,24 @@ class FilteringControllerTest {
 		for (int i = 0; i < 10; i++) {
 			Long id = accommodationId + i;
 			String accommodationName = responseAccommodationName + i;
-			String address = responseAddress + i;
+			String address = addressCode + i;
 			double rate = avgRate - (i / 10);
 
 			FilteringAccommodationResponse filteringAccommodationResponse = new FilteringAccommodationResponse(id,
-				accommodationName, address, rate);
+				accommodationName, address, location, lotNumber, rate, false);
 			filteringAccommodationResponses.add(filteringAccommodationResponse);
 		}
 
 		FilteringAccommodationListResponse filteringAccommodationListResponse = new FilteringAccommodationListResponse(
 			filteringAccommodationResponses);
 
-		when(filteringService.filteringAccommodation(any(FilteringAccommodationRequests.class))).thenReturn(
+		when(filteringService.filteringAccommodation(anyLong(), any(FilteringAccommodationRequests.class))).thenReturn(
 			filteringAccommodationListResponse);
 		when(permissionInterceptor.preHandle(any(), any(), any())).thenReturn(true);
 		//when
-		ResultActions resultActions = mockMvc.perform(RestDocumentationRequestBuilders
-			.get("/filtering/accommodation")
+		ResultActions resultActions = mockMvc.perform(get("/filtering/accommodation")
 			.params(info)
-			.accept(MediaType.APPLICATION_JSON));
+			.accept(MediaType.APPLICATION_JSON).requestAttr(Role.USER.getValue(), 1));
 		//then
 		resultActions.andExpect(status().isOk())
 			.andDo(document("filtering-accommodation",
@@ -104,8 +108,14 @@ class FilteringControllerTest {
 						.description("숙소 Id"),
 					fieldWithPath("filteringAccommodationList[].accommodationName").type(JsonFieldType.STRING)
 						.description("숙소 이름"),
-					fieldWithPath("filteringAccommodationList[].address").type(JsonFieldType.STRING)
-						.description("숙소 주소"),
+					fieldWithPath("filteringAccommodationList[].addressCode").type(JsonFieldType.STRING)
+						.description("숙소 주소 코드"),
+					fieldWithPath("filteringAccommodationList[].location").type(JsonFieldType.STRING)
+						.description("숙소 주소 - 동"),
+					fieldWithPath("filteringAccommodationList[].lotNumber").type(JsonFieldType.STRING)
+						.description("숙소 주소 - 지번"),
+					fieldWithPath("filteringAccommodationList[].bookmarked").type(JsonFieldType.BOOLEAN)
+						.description("북마크 여부 false - X true - O"),
 					fieldWithPath("filteringAccommodationList[].avgRate").type(JsonFieldType.NUMBER)
 						.description("숙소 평점")
 				)
@@ -118,7 +128,9 @@ class FilteringControllerTest {
 		//given
 		Long accommodationId = 1L;
 		String responseAccommodationName = "정정일 애견호텔 & 유치원";
-		String responseAddress = "서울특별시 중구 동호로 249";
+		String addressCode = "서울특별시 중구";
+		String location = "동호로";
+		String lotNumber = "249";
 		double avgRate = 4.8;
 
 		List<FilteringAccommodationResponse> filteringAccommodationResponses = new ArrayList<>();
@@ -126,24 +138,23 @@ class FilteringControllerTest {
 		for (int i = 0; i < 10; i++) {
 			Long id = accommodationId + i;
 			String accommodationName = responseAccommodationName + i;
-			String address = responseAddress + i;
+			String address = addressCode + i;
 			double rate = avgRate - (i / 10);
 
 			FilteringAccommodationResponse filteringAccommodationResponse = new FilteringAccommodationResponse(id,
-				accommodationName, address, rate);
+				accommodationName, address, location, lotNumber, rate, false);
 			filteringAccommodationResponses.add(filteringAccommodationResponse);
 		}
 
 		FilteringAccommodationListResponse filteringAccommodationListResponse = new FilteringAccommodationListResponse(
 			filteringAccommodationResponses);
 
-		when(filteringService.filteringAccommodation(any(FilteringAccommodationRequests.class))).thenReturn(
+		when(filteringService.filteringAccommodation(anyLong(), any(FilteringAccommodationRequests.class))).thenReturn(
 			filteringAccommodationListResponse);
 		when(permissionInterceptor.preHandle(any(), any(), any())).thenReturn(true);
 		//when
-		ResultActions resultActions = mockMvc.perform(RestDocumentationRequestBuilders
-			.get("/filtering/accommodation")
-			.accept(MediaType.APPLICATION_JSON));
+		ResultActions resultActions = mockMvc.perform(get("/filtering/accommodation")
+			.accept(MediaType.APPLICATION_JSON).requestAttr(Role.USER.getValue(), 1));
 		//then
 		resultActions.andExpect(status().isOk())
 			.andDo(document("no-filtering-accommodation",
@@ -153,8 +164,14 @@ class FilteringControllerTest {
 						.description("숙소 Id"),
 					fieldWithPath("filteringAccommodationList[].accommodationName").type(JsonFieldType.STRING)
 						.description("숙소 이름"),
-					fieldWithPath("filteringAccommodationList[].address").type(JsonFieldType.STRING)
-						.description("숙소 주소"),
+					fieldWithPath("filteringAccommodationList[].addressCode").type(JsonFieldType.STRING)
+						.description("숙소 주소 코드"),
+					fieldWithPath("filteringAccommodationList[].location").type(JsonFieldType.STRING)
+						.description("숙소 주소 - 동"),
+					fieldWithPath("filteringAccommodationList[].lotNumber").type(JsonFieldType.STRING)
+						.description("숙소 주소 - 지번"),
+					fieldWithPath("filteringAccommodationList[].bookmarked").type(JsonFieldType.BOOLEAN)
+						.description("북마크 여부 false - X true - O"),
 					fieldWithPath("filteringAccommodationList[].avgRate").type(JsonFieldType.NUMBER)
 						.description("숙소 평점")
 				)

@@ -77,10 +77,13 @@ public class Accommodation extends BaseEntity {
 	@Column
 	private Double averageRate;
 
+	@Column(nullable = false, columnDefinition = "int default 0")
+	private Integer reviewCount;
+
 	@Column
 	private String detailInfo;
 
-	@Column(columnDefinition = "int default 0")
+	@Column(nullable = false, columnDefinition = "int default 0")
 	private Integer bookmarkCount;
 
 	@Column(nullable = false, columnDefinition = "bit(1) default 0", length = 1)
@@ -90,11 +93,11 @@ public class Accommodation extends BaseEntity {
 		this.averageRate = newAvgRate;
 	}
 
-	protected Accommodation(Long id, Address address, User user, String accommodationName, LocalTime workingStart,
+	public Accommodation(Long id, Address address, User user, String accommodationName, LocalTime workingStart,
 		LocalTime workingEnd, LocalTime weekendWorkingStart, LocalTime weekendWorkingEnd, String location,
 		String lotNumber,
-		String addressDetail, AccommodationType accommodationType, Double averageRate, String detailInfo,
-		Integer bookmarkCount, Boolean state) {
+		String addressDetail, AccommodationType accommodationType, Double averageRate, Integer reviewCount,
+		String detailInfo, Integer bookmarkCount, Boolean state) {
 		this.id = id;
 		this.address = address;
 		this.user = user;
@@ -108,6 +111,7 @@ public class Accommodation extends BaseEntity {
 		this.addressDetail = addressDetail;
 		this.accommodationType = accommodationType;
 		this.averageRate = averageRate;
+		this.reviewCount = reviewCount;
 		this.detailInfo = detailInfo;
 		this.bookmarkCount = bookmarkCount;
 		this.state = state;
@@ -174,5 +178,13 @@ public class Accommodation extends BaseEntity {
 	public int hashCode() {
 		return Objects.hash(id, accommodationName, workingStart, workingEnd, weekendWorkingStart, weekendWorkingEnd,
 			location, lotNumber, addressDetail, accommodationType, averageRate, detailInfo, bookmarkCount, state);
+	}
+
+	public void increaseReviewCount() {
+		this.reviewCount++;
+	}
+
+	public void decreaseReviewCount() {
+		this.reviewCount--;
 	}
 }

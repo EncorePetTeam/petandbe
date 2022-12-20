@@ -55,6 +55,7 @@ class AccommodationControllerTest {
 	private final String location = "상수동";
 	private final AccommodationType accommodationType = AccommodationType.HOTEL;
 	private final String detailInfo = "상세정보를 쓰는 공간입니다.";
+	private final Integer reviewCount = 1249;
 
 	@Test
 	@DisplayName("Register Accommodation Controller - Success")
@@ -101,7 +102,7 @@ class AccommodationControllerTest {
 		Double averageRate = 4.2;
 		AccommodationRetrievalResponse response = new AccommodationRetrievalResponse(addressCode, accommodationName,
 			userNickname, workingHours, weekendWorkingHours, location, lotNumber, addressDetail, accommodationType,
-			averageRate, detailInfo);
+			averageRate, reviewCount, detailInfo);
 
 		when(accommodationService.findAccommodationById(accommodationId)).thenReturn(response);
 		when(permissionInterceptor.preHandle(any(), any(), any())).thenReturn(true);
@@ -124,6 +125,7 @@ class AccommodationControllerTest {
 					fieldWithPath("addressDetail").type(JsonFieldType.STRING).description("숙박 시설 상세 주소"),
 					fieldWithPath("accommodationType").type(JsonFieldType.STRING).description("숙박 시설 유형"),
 					fieldWithPath("averageRate").type(JsonFieldType.NUMBER).description("숙박 시설 평점"),
+					fieldWithPath("reviewCount").type(JsonFieldType.NUMBER).description("숙박 시설 평점 갯수"),
 					fieldWithPath("detailInfo").type(JsonFieldType.STRING).description("숙박 시설 상세 정보")
 				)
 			));

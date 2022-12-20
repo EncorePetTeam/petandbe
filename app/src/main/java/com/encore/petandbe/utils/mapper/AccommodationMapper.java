@@ -19,7 +19,7 @@ public class AccommodationMapper {
 		return AccommodationRetrievalResponse.builder()
 			.addressCode(accommodation.getAddress().getAddressCode())
 			.accommodationName(accommodation.getAccommodationName())
-			.userNickname(accommodation.getAccommodationName())
+			.userNickname(accommodation.getUser().getNickname())
 			.workingHours(
 				TimeValidator.convertLocalTimeToString(accommodation.getWorkingStart(), accommodation.getWorkingEnd()))
 			.weekendWorkingHours(TimeValidator.convertLocalTimeToString(accommodation.getWeekendWorkingStart(),
@@ -61,6 +61,8 @@ public class AccommodationMapper {
 			.weekendWorkingEnd(TimeValidator.parseEndTime(request.getWeekendWorkingHours()))
 			.location(request.getLocation())
 			.lotNumber(request.getLotNumber())
+			.reviewCount(0)
+			.bookmarkCount(0)
 			.addressDetail(request.getAddressDetail())
 			.accommodationType(request.getAccommodationType())
 			.detailInfo(request.getDetailInfo())

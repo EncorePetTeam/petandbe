@@ -40,8 +40,7 @@ public class ReservationService {
 	@Transactional
 	public ReservationDetailsResponse registerReservation(
 		ReservationRegistrationRequest reservationRegistrationRequest) {
-		User user = userRepository.findById(reservationRegistrationRequest.getUserId())
-			.orElseThrow(() -> new NonExistResourceException("User could not be found"));
+		User user = checkUserExistAndGetUser(reservationRegistrationRequest.getUserId());
 
 		Room room = roomRepository.findById(reservationRegistrationRequest.getRoomId())
 			.orElseThrow(() -> new NonExistResourceException("Room could not be found"));
@@ -59,8 +58,7 @@ public class ReservationService {
 	}
 
 	public ReservationRetrieveResponse findByReservationId(Long reservationId) {
-		Reservation reservation = reservationRepository.findById(reservationId)
-			.orElseThrow(() -> new NonExistResourceException("Reservation could not be found"));
+		Reservation reservation = checkReservationAndGetReservation(reservationId);
 
 		return reservationRetrieveRepository.getReservationRetrieveResponseByReservationId(reservation.getId());
 	}
@@ -68,11 +66,9 @@ public class ReservationService {
 	@Transactional
 	public ReservationDetailsResponse updateReservation(Long reservationId,
 		ReservationUpdatingRequest reservationUpdatingRequest) {
-		User user = userRepository.findById(reservationUpdatingRequest.getUserId())
-			.orElseThrow(() -> new NonExistResourceException("User could not be found"));
+		User user = checkUserExistAndGetUser(reservationUpdatingRequest.getUserId());
 
-		Reservation reservation = reservationRepository.findById(reservationId)
-			.orElseThrow(() -> new NonExistResourceException("Reservation could not be found"));
+		Reservation reservation = checkReservationAndGetReservation(reservationId);
 
 		checkUserIsMatch(user, reservation.getUser());
 
@@ -91,11 +87,9 @@ public class ReservationService {
 
 	@Transactional
 	public DeleteReservationResponse deleteReservation(DeleteReservationRequest deleteReservationRequest) {
-		User user = userRepository.findById(deleteReservationRequest.getUserId())
-			.orElseThrow(() -> new NonExistResourceException("User could not be found"));
+		User user = checkUserExistAndGetUser(deleteReservationRequest.getUserId());
 
-		Reservation reservation = reservationRepository.findById(deleteReservationRequest.getReservationId())
-			.orElseThrow(() -> new NonExistResourceException("Reservation could not be found"));
+		Reservation reservation = checkReservationAndGetReservation(deleteReservationRequest.getReservationId());
 
 		checkUserIsMatch(user, reservation.getUser());
 
@@ -108,5 +102,15 @@ public class ReservationService {
 		if (!expect.equals(result)) {
 			throw new WrongRequestException("user inconsistency");
 		}
+	}
+
+	private User checkUserExistAndGetUser(Long userId) {
+		return userRepository.findById(userId)
+			.orElseThrow(() -> new NonExistResourceException("User could not be found"));
+	}
+
+	private Reservation checkReservationAndGetReservation(Long reservationId) {
+		return reservationRepository.findById(reservationId)
+			.orElseThrow(() -> new NonExistResourceException("Reservation could not be found"));
 	}
 }

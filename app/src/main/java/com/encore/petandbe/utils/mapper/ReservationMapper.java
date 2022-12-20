@@ -7,7 +7,7 @@ import com.encore.petandbe.controller.accommodation.reservation.responses.Reserv
 import com.encore.petandbe.model.accommodation.reservation.Reservation;
 import com.encore.petandbe.model.accommodation.room.Room;
 import com.encore.petandbe.model.user.user.User;
-import com.encore.petandbe.service.accommodation.reservation.dto.ReservationUpdatingDTO;
+import com.encore.petandbe.service.accommodation.reservation.dto.ReservationUpdatingdto;
 import com.encore.petandbe.utils.validator.LocalDateTimeValidator;
 
 import lombok.AccessLevel;
@@ -34,8 +34,7 @@ public class ReservationMapper {
 				.convertStringToLocalDateTime(reservationRegistrationRequest.getCheckInDate()))
 			.checkOutDate(LocalDateTimeValidator.of()
 				.convertStringToLocalDateTime(reservationRegistrationRequest.getCheckOutDate()))
-			.petCategory(reservationRegistrationRequest.getPetCategory())
-			.weight(reservationRegistrationRequest.getWeight())
+			.amount(reservationRegistrationRequest.getAmount())
 			.build();
 	}
 
@@ -44,19 +43,18 @@ public class ReservationMapper {
 			reservation.getRoom().getId(),
 			LocalDateTimeValidator.of().convertLocalDateTimeToString(reservation.getCheckInDate()),
 			LocalDateTimeValidator.of().convertLocalDateTimeToString(reservation.getCheckOutDate()),
-			reservation.getPetCategory(), reservation.getWeight());
+			reservation.getAmount());
 	}
 
 	public DeleteReservationResponse convertEntityToDeleteResponse(Reservation reservation) {
 		return new DeleteReservationResponse(reservation.getId(), reservation.getState());
 	}
 
-	public ReservationUpdatingDTO convertUpdateRequestToDto(ReservationUpdatingRequest reservationUpdatingRequest) {
-		return new ReservationUpdatingDTO(
+	public ReservationUpdatingdto convertUpdateRequestToDto(ReservationUpdatingRequest reservationUpdatingRequest) {
+		return new ReservationUpdatingdto(
 			LocalDateTimeValidator.of().convertStringToLocalDateTime(reservationUpdatingRequest.getCheckInDate()),
 			LocalDateTimeValidator.of()
 				.convertStringToLocalDateTime(reservationUpdatingRequest.getCheckOutDate()),
-			reservationUpdatingRequest.getPetCategory(),
-			reservationUpdatingRequest.getWeight());
+			reservationUpdatingRequest.getAmount());
 	}
 }

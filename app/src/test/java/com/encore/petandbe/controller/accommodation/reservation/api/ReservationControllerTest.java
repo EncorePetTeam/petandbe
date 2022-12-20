@@ -58,16 +58,17 @@ class ReservationControllerTest {
 	private final String weight = "4.7";
 	private final String accommodationName = "정정일 애견 호텔";
 	private final String roomName = "스위트 스위트 슈퍼 스위트 룸";
+	private final Integer amount = 130000;
 
 	@Test
 	@DisplayName("Register reservation - success")
 	void registerReservation() throws Exception {
 		//given
 		ReservationRegistrationRequest reservationRegistrationRequest = new ReservationRegistrationRequest(userId,
-			roomId, checkInDate, checkOutDate, petCategory, weight);
+			roomId, checkInDate, checkOutDate, amount);
 
 		ReservationDetailsResponse reservationDetailsResponse = new ReservationDetailsResponse(reservationId, userId,
-			roomId, checkInDate, checkOutDate, petCategory, weight);
+			roomId, checkInDate, checkOutDate, amount);
 
 		when(reservationService.registerReservation(any(ReservationRegistrationRequest.class))).thenReturn(
 			reservationDetailsResponse);
@@ -87,8 +88,7 @@ class ReservationControllerTest {
 					fieldWithPath("userId").type(JsonFieldType.NUMBER).description("숙박 시설을 예약한 유저 아이디"),
 					fieldWithPath("checkInDate").type(JsonFieldType.STRING).description("체크인 날짜 및 시간"),
 					fieldWithPath("checkOutDate").type(JsonFieldType.STRING).description("체크아웃 날짜 및 시간"),
-					fieldWithPath("petCategory").type(JsonFieldType.STRING).description("동반할 반려동물 종"),
-					fieldWithPath("weight").type(JsonFieldType.STRING).description("동반할 반려동물 무게")
+					fieldWithPath("amount").type(JsonFieldType.NUMBER).description("금액")
 				),
 				responseFields(
 					fieldWithPath("reservationId").type(JsonFieldType.NUMBER).description("생성된 예약 아이디(pk)"),
@@ -96,8 +96,7 @@ class ReservationControllerTest {
 					fieldWithPath("userId").type(JsonFieldType.NUMBER).description("숙박 시설을 예약한 유저 아이디"),
 					fieldWithPath("checkInDate").type(JsonFieldType.STRING).description("체크인 날짜 및 시간"),
 					fieldWithPath("checkOutDate").type(JsonFieldType.STRING).description("체크아웃 날짜 및 시간"),
-					fieldWithPath("petCategory").type(JsonFieldType.STRING).description("동반할 반려동물 종"),
-					fieldWithPath("weight").type(JsonFieldType.STRING).description("동반할 반려동물 무게")
+					fieldWithPath("amount").type(JsonFieldType.NUMBER).description("금액")
 				)
 			)).andDo(print());
 	}
@@ -109,7 +108,7 @@ class ReservationControllerTest {
 		ReservationRetrieveResponse reservationRetrieveResponse = new ReservationRetrieveResponse(reservationId, userId,
 			roomId, accommodationId, accommodationName, roomName,
 			LocalDateTimeValidator.of().convertStringToLocalDateTime(checkInDate),
-			LocalDateTimeValidator.of().convertStringToLocalDateTime(checkOutDate), petCategory, weight);
+			LocalDateTimeValidator.of().convertStringToLocalDateTime(checkOutDate), amount);
 
 		when(reservationService.findByReservationId(anyLong())).thenReturn(reservationRetrieveResponse);
 		when(permissionInterceptor.preHandle(any(), any(), any())).thenReturn(true);
@@ -132,8 +131,7 @@ class ReservationControllerTest {
 					fieldWithPath("roomName").type(JsonFieldType.STRING).description("예약한 Room 이름"),
 					fieldWithPath("checkInDate").type(JsonFieldType.STRING).description("체크인 날짜 및 시간"),
 					fieldWithPath("checkOutDate").type(JsonFieldType.STRING).description("체크아웃 날짜 및 시간"),
-					fieldWithPath("petCategory").type(JsonFieldType.STRING).description("동반할 반려동물 종"),
-					fieldWithPath("weight").type(JsonFieldType.STRING).description("동반할 반려동물 무게")
+					fieldWithPath("amount").type(JsonFieldType.NUMBER).description("금액")
 				)
 			));
 	}
@@ -143,10 +141,10 @@ class ReservationControllerTest {
 	void updateReservation() throws Exception {
 		//given
 		ReservationUpdatingRequest reservationUpdatingRequest = new ReservationUpdatingRequest(userId,
-			checkInDate, checkOutDate, petCategory, weight);
+			checkInDate, checkOutDate, amount);
 
 		ReservationDetailsResponse reservationDetailsResponse = new ReservationDetailsResponse(reservationId, userId,
-			roomId, checkInDate, checkOutDate, petCategory, weight);
+			roomId, checkInDate, checkOutDate, amount);
 
 		when(reservationService.updateReservation(anyLong(), any(ReservationUpdatingRequest.class))).thenReturn(
 			reservationDetailsResponse);
@@ -168,8 +166,7 @@ class ReservationControllerTest {
 					fieldWithPath("userId").type(JsonFieldType.NUMBER).description("숙박 시설을 예약한 유저 아이디"),
 					fieldWithPath("checkInDate").type(JsonFieldType.STRING).description("변경 할 체크인 날짜 및 시간"),
 					fieldWithPath("checkOutDate").type(JsonFieldType.STRING).description("변경 할 체크아웃 날짜 및 시간"),
-					fieldWithPath("petCategory").type(JsonFieldType.STRING).description("변경 할 동반할 반려동물 종"),
-					fieldWithPath("weight").type(JsonFieldType.STRING).description("변경 할 동반할 반려동물 무게")
+					fieldWithPath("amount").type(JsonFieldType.NUMBER).description("변경 할 금액")
 				),
 				responseFields(
 					fieldWithPath("reservationId").type(JsonFieldType.NUMBER).description("변경된 예약 아이디(pk)"),
@@ -177,8 +174,7 @@ class ReservationControllerTest {
 					fieldWithPath("userId").type(JsonFieldType.NUMBER).description("숙박 시설을 예약한 유저 아이디"),
 					fieldWithPath("checkInDate").type(JsonFieldType.STRING).description("변경 된 체크인 날짜 및 시간"),
 					fieldWithPath("checkOutDate").type(JsonFieldType.STRING).description("변경 된 체크아웃 날짜 및 시간"),
-					fieldWithPath("petCategory").type(JsonFieldType.STRING).description("변경 된 동반할 반려동물 종"),
-					fieldWithPath("weight").type(JsonFieldType.STRING).description("변경 된 동반할 반려동물 무게")
+					fieldWithPath("amount").type(JsonFieldType.NUMBER).description("변경 된 금액")
 				)
 			)).andDo(print());
 	}

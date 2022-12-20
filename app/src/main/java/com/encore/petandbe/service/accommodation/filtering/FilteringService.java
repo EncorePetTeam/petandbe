@@ -6,6 +6,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Page;
@@ -16,12 +17,18 @@ import org.springframework.stereotype.Service;
 import com.encore.petandbe.controller.accommodation.filtering.requests.FilteringAccommodationRequests;
 import com.encore.petandbe.controller.accommodation.filtering.responses.FilteringAccommodationListResponse;
 import com.encore.petandbe.controller.accommodation.filtering.responses.FilteringAccommodationResponse;
+import com.encore.petandbe.exception.NonExistResourceException;
 import com.encore.petandbe.model.accommodation.accommodation.Accommodation;
 import com.encore.petandbe.model.accommodation.accommodation.QAccommodation;
+import com.encore.petandbe.model.accommodation.bookmark.Bookmark;
 import com.encore.petandbe.model.accommodation.filtering.category.SortCategory;
 import com.encore.petandbe.model.accommodation.room.QRoom;
+import com.encore.petandbe.model.user.user.User;
 import com.encore.petandbe.repository.AccommodationRepository;
+import com.encore.petandbe.repository.BookmarkRepository;
 import com.encore.petandbe.repository.RoomRepository;
+import com.encore.petandbe.repository.UserRepository;
+import com.encore.petandbe.utils.mapper.BookmarkMapper;
 import com.querydsl.core.BooleanBuilder;
 
 @Service
@@ -29,17 +36,21 @@ public class FilteringService {
 
 	private final AccommodationRepository accommodationRepository;
 	private final RoomRepository roomRepository;
+	private final BookmarkRepository bookmarkRepository;
+	private final UserRepository userRepository;
 	private BooleanBuilder booleanBuilder;
 	private List<Long> accommodationIdList;
 	private static final QAccommodation qAccommodation = QAccommodation.accommodation;
 
-	public FilteringService(AccommodationRepository accommodationRepository,
-		RoomRepository roomRepository) {
+	public FilteringService(AccommodationRepository accommodationRepository, RoomRepository roomRepository,
+		BookmarkRepository bookmarkRepository, UserRepository userRepository) {
 		this.accommodationRepository = accommodationRepository;
 		this.roomRepository = roomRepository;
+		this.bookmarkRepository = bookmarkRepository;
+		this.userRepository = userRepository;
 	}
 
-	public FilteringAccommodationListResponse filteringAccommodation(
+	public FilteringAccommodationListResponse filteringAccommodation(Long userId,
 		FilteringAccommodationRequests filteringAccommodationRequests) {
 
 		accommodationIdList = null;
@@ -62,17 +73,33 @@ public class FilteringService {
 
 		Page<Accommodation> result = accommodationRepository.findAll(booleanBuilder, pageRequest);
 
-		List<FilteringAccommodationResponse> resultList = getFilteringAccommodationResponses(
-			result);
+		List<FilteringAccommodationResponse> resultList = getFilteringAccommodationResponses(userId, result);
 
 		return new FilteringAccommodationListResponse(resultList);
 	}
 
-	private List<FilteringAccommodationResponse> getFilteringAccommodationResponses(Page<Accommodation> result) {
-		return result.stream()
-			.map(e -> new FilteringAccommodationResponse(e.getId(), e.getAccommodationName(),
-				e.getAddress().getAddressCode(), e.getAverageRate()))
-			.collect(Collectors.toList());
+	private List<FilteringAccommodationResponse> getFilteringAccommodationResponses(Long userId,
+		Page<Accommodation> result) {
+		if (userId == null) {
+			return result.stream()
+				.map(e -> new FilteringAccommodationResponse(e.getId(), e.getAccommodationName(),
+					e.getAddress().getAddressCode(), e.getLocation(), e.getLotNumber(), e.getAverageRate(), false))
+				.collect(Collectors.toList());
+		} else {
+			User user = userRepository.findById(userId)
+				.orElseThrow(() -> new NonExistResourceException("User does not exist"));
+
+			return result.stream().map(e -> {
+				Optional<Bookmark> bookmark = bookmarkRepository.findById(
+					BookmarkMapper.of().requestToBookmarkId(user, e));
+				boolean isBookmarked = bookmark.isPresent();
+				if (isBookmarked)
+					isBookmarked = !bookmark.get().getState();
+				return new FilteringAccommodationResponse(e.getId(), e.getAccommodationName(),
+					e.getAddress().getAddressCode(), e.getLocation(), e.getLotNumber(), e.getAverageRate(),
+					isBookmarked);
+			}).collect(Collectors.toList());
+		}
 	}
 
 	private void filterByAccommodationIdListIfPetCategoryOrWeightRequirementsExist() {

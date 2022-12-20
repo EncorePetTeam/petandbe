@@ -37,9 +37,10 @@ class ReservationGetListServiceTest {
 
 	private final Long userId = 5L;
 	private final int pageNum = 1;
-	private final int amount = 7;
+	private final int itemAmount = 7;
 	private final LocalDateTime checkInDate = LocalDateTime.parse("2022-05-21T14:00:00");
 	private final LocalDateTime checkOutDate = LocalDateTime.parse("2022-05-23T16:00:00");
+	private final Integer amount = 100000;
 
 	@Test
 	@DisplayName("Get Reservation List Page - Success")
@@ -48,22 +49,22 @@ class ReservationGetListServiceTest {
 		User user = User.builder().id(userId).build();
 
 		List<ReservationWithRoomResponse> reservationWithRoomResponseList = new ArrayList<>();
-		for (int i = 0; i < amount; i++) {
+		for (int i = 0; i < itemAmount; i++) {
 			reservationWithRoomResponseList.add(new ReservationWithRoomResponse((long)i, (long)i,
-				checkInDate, checkOutDate));
+				checkInDate, checkOutDate, amount));
 
-		ReservationListGetByUserIdRequests reservationListGetByUserIdRequests =
-			new ReservationListGetByUserIdRequests(userId, pageNum, amount);
+			ReservationListGetByUserIdRequests reservationListGetByUserIdRequests =
+				new ReservationListGetByUserIdRequests(userId, pageNum, itemAmount);
 
-		Page<ReservationWithRoomResponse> reservationWithRoomResponses = new PageImpl<>(
-			reservationWithRoomResponseList,
-			PageRequest.of(pageNum - 1, amount), reservationWithRoomResponseList.size());
-		//when
-		ReservationListGetByUserIdResponse reservationListByUserId =
-			reservationGetListService.getReservationListByUserId(reservationListGetByUserIdRequests);
-		//then
-		assertEquals(pageNum, reservationListByUserId.getSelectPage());
-		assertEquals(amount, reservationListByUserId.getReservationWithRoomResponseList().size());
+			Page<ReservationWithRoomResponse> reservationWithRoomResponses = new PageImpl<>(
+				reservationWithRoomResponseList,
+				PageRequest.of(pageNum - 1, itemAmount), reservationWithRoomResponseList.size());
+			//when
+			ReservationListGetByUserIdResponse reservationListByUserId =
+				reservationGetListService.getReservationListByUserId(reservationListGetByUserIdRequests);
+			//then
+			assertEquals(pageNum, reservationListByUserId.getSelectPage());
+			assertEquals(itemAmount, reservationListByUserId.getReservationWithRoomResponseList().size());
 		}
 	}
 }

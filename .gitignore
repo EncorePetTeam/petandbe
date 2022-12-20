@@ -63,9 +63,6 @@ gradle-app.setting
 # Java heap dump
 *.hprof
 
-# yaml files
-**/src/main/resources/application-*.yml
-
 # mac
 **/.DS_Store
 
@@ -73,3 +70,11 @@ gradle-app.setting
 **/mysql
 
 # End of https://www.toptal.com/developers/gitignore/api/java,intellij,gradle
+
+# git secret
+.gitsecret/keys/random_seed
+!*.secret
+common.env
+app/src/main/resources/application-common.yml
+app/src/main/resources/application-secret.yml
+app/src/main/resources/application-security.yml

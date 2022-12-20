@@ -9,21 +9,30 @@
 - [docker](https://docs.docker.com/get-docker/)
 - [docker-compose](https://docs.docker.com/compose/install/)
 
-## Installation
+## How to run
 
-### 1. Build image
+### 1. Reveal secret files
+
+`git secret reveal` 명령어를 사용하기 위해서는 먼저 GPG 키가 git secret에 추가된 상태여야 합니다.  
+관련 문서는 노션에 `ops/git secret` 문서로 정리해두었으니 참고 바랍니다.
+
+```bash
+git secret reveal
+```
+
+### 2. Build image
 
 ```bash
 docker-compose -f docker-compose.yml build
 ```
 
-### 2. Run docker-compose
+### 3. Run docker-compose
 
 ```bash
 docker-compose -f docker-compose.yml up -d
 ```
 
-### 3. Status Check
+### 4. Status Check
 
 ```bash
 # Check nginx health status.

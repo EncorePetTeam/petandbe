@@ -42,8 +42,7 @@ public class ReservationController {
 		ReservationRegistrationRequest reservationRegistration = new ReservationRegistrationRequest(
 			Long.valueOf(userId),
 			reservationRegistrationRequest.getRoomId(), reservationRegistrationRequest.getCheckInDate(),
-			reservationRegistrationRequest.getCheckOutDate(), reservationRegistrationRequest.getPetCategory(),
-			reservationRegistrationRequest.getWeight());
+			reservationRegistrationRequest.getCheckOutDate(), reservationRegistrationRequest.getAmount());
 
 		return ResponseEntity.status(HttpStatus.CREATED)
 			.body(reservationService.registerReservation(reservationRegistration));
@@ -65,8 +64,7 @@ public class ReservationController {
 
 		ReservationUpdatingRequest updateRequest = new ReservationUpdatingRequest(Long.valueOf(userId),
 			reservationUpdatingRequest.getCheckInDate(),
-			reservationUpdatingRequest.getCheckOutDate(), reservationUpdatingRequest.getPetCategory(),
-			reservationUpdatingRequest.getWeight());
+			reservationUpdatingRequest.getCheckOutDate(), reservationUpdatingRequest.getAmount());
 
 		return ResponseEntity.ok()
 			.body(reservationService.updateReservation(reservationId, updateRequest));

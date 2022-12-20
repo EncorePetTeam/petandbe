@@ -1,6 +1,7 @@
 package com.encore.petandbe.controller.accommodation.review.api;
 
 import static com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper.*;
+import static org.mockito.Mockito.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
@@ -8,7 +9,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import static org.mockito.Mockito.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -49,7 +49,7 @@ class ReviewControllerIntegrationTest {
 		when(permissionInterceptor.preHandle(any(), any(), any())).thenReturn(true);
 		//when
 		ResultActions resultActions = mockMvc.perform(RestDocumentationRequestBuilders
-			.get("/review-list")
+			.get("/review-list/user")
 			.params(param)
 			.accept(MediaType.APPLICATION_JSON)
 			.requestAttr(Role.USER.getValue(), 5));
@@ -90,7 +90,7 @@ class ReviewControllerIntegrationTest {
 		when(permissionInterceptor.preHandle(any(), any(), any())).thenReturn(true);
 		//when
 		ResultActions resultActions = mockMvc.perform(RestDocumentationRequestBuilders
-			.get("/review-list")
+			.get("/review-list/user")
 			.params(param)
 			.accept(MediaType.APPLICATION_JSON)
 			.requestAttr(Role.USER.getValue(), 5));

@@ -18,11 +18,12 @@ public class AccommodationRetrievalResponse {
 	private String addressDetail;
 	private AccommodationType accommodationType;
 	private Double averageRate;
+	private Integer reviewCount;
 	private String detailInfo;
 
-	public AccommodationRetrievalResponse(String addressCode, String accommodationName, String userNickname, String workingHours,
-		String weekendWorkingHours, String location, String lotNumber, String addressDetail,
-		AccommodationType accommodationType, Double averageRate, String detailInfo) {
+	public AccommodationRetrievalResponse(String addressCode, String accommodationName, String userNickname,
+		String workingHours, String weekendWorkingHours, String location, String lotNumber, String addressDetail,
+		AccommodationType accommodationType, Double averageRate, Integer reviewCount, String detailInfo) {
 		this.addressCode = addressCode;
 		this.accommodationName = accommodationName;
 		this.userNickname = userNickname;
@@ -33,6 +34,7 @@ public class AccommodationRetrievalResponse {
 		this.addressDetail = addressDetail;
 		this.accommodationType = accommodationType;
 		this.averageRate = averageRate;
+		this.reviewCount = reviewCount;
 		this.detailInfo = detailInfo;
 	}
 }

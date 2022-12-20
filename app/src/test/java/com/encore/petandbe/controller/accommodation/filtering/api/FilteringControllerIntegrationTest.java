@@ -6,11 +6,6 @@ import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import java.sql.Connection;
-
-import javax.sql.DataSource;
-
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -18,9 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.MediaType;
-import org.springframework.jdbc.datasource.init.ScriptUtils;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.MockMvc;
@@ -75,8 +68,14 @@ class FilteringControllerIntegrationTest {
 						.description("숙소 Id"),
 					fieldWithPath("filteringAccommodationList[].accommodationName").type(JsonFieldType.STRING)
 						.description("숙소 이름"),
-					fieldWithPath("filteringAccommodationList[].address").type(JsonFieldType.STRING)
-						.description("숙소 주소"),
+					fieldWithPath("filteringAccommodationList[].addressCode").type(JsonFieldType.STRING)
+						.description("숙소 주소 코드"),
+					fieldWithPath("filteringAccommodationList[].location").type(JsonFieldType.STRING)
+						.description("숙소 주소 - 동"),
+					fieldWithPath("filteringAccommodationList[].lotNumber").type(JsonFieldType.STRING)
+						.description("숙소 주소 - 지번"),
+					fieldWithPath("filteringAccommodationList[].bookmarked").type(JsonFieldType.BOOLEAN)
+						.description("북마크 여부 false - X true - O"),
 					fieldWithPath("filteringAccommodationList[].avgRate").type(JsonFieldType.NUMBER)
 						.description("숙소 평점")
 				)
@@ -100,8 +99,14 @@ class FilteringControllerIntegrationTest {
 						.description("숙소 Id"),
 					fieldWithPath("filteringAccommodationList[].accommodationName").type(JsonFieldType.STRING)
 						.description("숙소 이름"),
-					fieldWithPath("filteringAccommodationList[].address").type(JsonFieldType.STRING)
-						.description("숙소 주소"),
+					fieldWithPath("filteringAccommodationList[].addressCode").type(JsonFieldType.STRING)
+						.description("숙소 주소 코드"),
+					fieldWithPath("filteringAccommodationList[].location").type(JsonFieldType.STRING)
+						.description("숙소 주소 - 동"),
+					fieldWithPath("filteringAccommodationList[].lotNumber").type(JsonFieldType.STRING)
+						.description("숙소 주소 - 지번"),
+					fieldWithPath("filteringAccommodationList[].bookmarked").type(JsonFieldType.BOOLEAN)
+						.description("북마크 여부 false - X true - O"),
 					fieldWithPath("filteringAccommodationList[].avgRate").type(JsonFieldType.NUMBER)
 						.description("숙소 평점")
 				)

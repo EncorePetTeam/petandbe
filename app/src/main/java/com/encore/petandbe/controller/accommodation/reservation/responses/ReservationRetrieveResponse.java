@@ -2,7 +2,6 @@ package com.encore.petandbe.controller.accommodation.reservation.responses;
 
 import java.time.LocalDateTime;
 
-import com.encore.petandbe.model.accommodation.filtering.category.PetCategory;
 import com.encore.petandbe.utils.validator.LocalDateTimeValidator;
 
 import lombok.Getter;
@@ -18,13 +17,11 @@ public class ReservationRetrieveResponse {
 	private String roomName;
 	private String checkInDate;
 	private String checkOutDate;
-	private PetCategory petCategory;
-	private String weight;
+	private Integer amount;
 
 	public ReservationRetrieveResponse(Long reservationId, Long userId, Long roomId, Long accommodationId,
 		String accommodationName, String roomName, LocalDateTime checkInDate, LocalDateTime checkOutDate,
-		PetCategory petCategory,
-		String weight) {
+		Integer amount) {
 		this.reservationId = reservationId;
 		this.userId = userId;
 		this.roomId = roomId;
@@ -33,7 +30,6 @@ public class ReservationRetrieveResponse {
 		this.roomName = roomName;
 		this.checkInDate = LocalDateTimeValidator.of().convertLocalDateTimeToString(checkInDate);
 		this.checkOutDate = LocalDateTimeValidator.of().convertLocalDateTimeToString(checkOutDate);
-		this.petCategory = petCategory;
-		this.weight = weight;
+		this.amount = amount;
 	}
 }

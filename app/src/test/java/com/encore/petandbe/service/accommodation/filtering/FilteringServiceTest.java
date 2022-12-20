@@ -2,18 +2,10 @@ package com.encore.petandbe.service.accommodation.filtering;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.sql.Connection;
-
-import javax.sql.DataSource;
-
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.jdbc.datasource.init.ScriptUtils;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.encore.petandbe.controller.accommodation.filtering.requests.FilteringAccommodationRequests;
@@ -27,6 +19,8 @@ class FilteringServiceTest {
 	@Autowired
 	private FilteringService filteringService;
 
+	private Long userId = 1L;
+
 	@Test
 	@DisplayName("filtering without filter - success")
 	void filteringWithoutFilterSuccess() {
@@ -37,6 +31,7 @@ class FilteringServiceTest {
 			null, null, null, null, page);
 		//when
 		FilteringAccommodationListResponse filteringAccommodationListResponse = filteringService.filteringAccommodation(
+			userId,
 			filteringAccommodationRequests);
 		//then
 		assertEquals(4L,
@@ -65,6 +60,7 @@ class FilteringServiceTest {
 			checkIn, checkOut, petCategory, weight, sortCategory, page);
 		//when
 		FilteringAccommodationListResponse filteringAccommodationListResponse = filteringService.filteringAccommodation(
+			userId,
 			filteringAccommodationRequests);
 
 		//then
@@ -88,6 +84,7 @@ class FilteringServiceTest {
 			checkIn, checkOut, petCategory, weight, sortCategory, page);
 		//when
 		FilteringAccommodationListResponse filteringAccommodationListResponse = filteringService.filteringAccommodation(
+			userId,
 			filteringAccommodationRequests);
 
 		//then
@@ -111,6 +108,7 @@ class FilteringServiceTest {
 			checkIn, checkOut, petCategory, weight, sortCategory, page);
 		//when
 		FilteringAccommodationListResponse filteringAccommodationListResponse = filteringService.filteringAccommodation(
+			userId,
 			filteringAccommodationRequests);
 
 		//then

@@ -43,13 +43,14 @@ class ReservationServiceTest {
 	private String checkOutDate = "2023-07-13 14:00:00";
 	private PetCategory petCategory = PetCategory.DOG;
 	private String weight = "4.8";
+	private Integer amount = 100000;
 
 	@Test
 	@DisplayName("Register reservation - success")
 	void registerReservationSuccess() {
 		//given
 		ReservationRegistrationRequest reservationRegistrationRequest = new ReservationRegistrationRequest(userId,
-			roomId, checkInDate, checkOutDate, petCategory, weight);
+			roomId, checkInDate, checkOutDate, amount);
 		//when
 		ReservationDetailsResponse reservationDetailsResponse = reservationService.registerReservation(
 			reservationRegistrationRequest);
@@ -64,7 +65,7 @@ class ReservationServiceTest {
 	void registerReservationWrongTimeFail() {
 		//given
 		ReservationRegistrationRequest reservationRegistrationRequest = new ReservationRegistrationRequest(userId,
-			roomId, "2022-07-11 13:00:00", "2022-12-11 13:55:00", petCategory, weight);
+			roomId, "2022-07-11 13:00:00", "2022-12-11 13:55:00", amount);
 		//when //then
 		assertThrows(WrongTimeException.class, () -> reservationService.registerReservation(
 			reservationRegistrationRequest));
@@ -75,7 +76,7 @@ class ReservationServiceTest {
 	void registerReservationCheckInDateIsAfterThenCheckOutFail() {
 		//given
 		ReservationRegistrationRequest reservationRegistrationRequest = new ReservationRegistrationRequest(userId,
-			roomId, "2022-12-11 13:00:00", "2022-07-11 13:55:00", petCategory, weight);
+			roomId, "2022-12-11 13:00:00", "2022-07-11 13:55:00", amount);
 		//when //then
 		assertThrows(WrongTimeException.class, () -> reservationService.registerReservation(
 			reservationRegistrationRequest));
@@ -86,7 +87,7 @@ class ReservationServiceTest {
 	void registerReservationWrongTimeFormatFail() {
 		//given
 		ReservationRegistrationRequest reservationRegistrationRequest = new ReservationRegistrationRequest(userId,
-			roomId, "2022-1214", "2022-07:55:00", petCategory, weight);
+			roomId, "2022-1214", "2022-07:55:00", amount);
 		//when //then
 		assertThrows(WrongTimeException.class, () -> reservationService.registerReservation(
 			reservationRegistrationRequest));
@@ -99,7 +100,7 @@ class ReservationServiceTest {
 		Long roomId = roomRepository.count() + 1;
 
 		ReservationRegistrationRequest reservationRegistrationRequest = new ReservationRegistrationRequest(userId,
-			roomId, checkInDate, checkOutDate, petCategory, weight);
+			roomId, checkInDate, checkOutDate, amount);
 		//when //then
 		assertThrows(NonExistResourceException.class, () -> reservationService.registerReservation(
 			reservationRegistrationRequest));
@@ -132,7 +133,7 @@ class ReservationServiceTest {
 		//given
 		Long reservationId = 11L;
 		ReservationUpdatingRequest reservationUpdatingRequest = new ReservationUpdatingRequest(userId, checkInDate,
-			checkOutDate, petCategory, weight);
+			checkOutDate, amount);
 		//when
 		ReservationDetailsResponse reservationDetailsResponse = reservationService.updateReservation(reservationId,
 			reservationUpdatingRequest);
@@ -146,7 +147,7 @@ class ReservationServiceTest {
 		//given
 		Long reservationId = 4L;
 		ReservationUpdatingRequest reservationUpdatingRequest = new ReservationUpdatingRequest(userId, checkInDate,
-			checkOutDate, petCategory, weight);
+			checkOutDate, amount);
 		//when //then
 		assertThrows(WrongRequestException.class,
 			() -> reservationService.updateReservation(reservationId, reservationUpdatingRequest));
@@ -158,7 +159,7 @@ class ReservationServiceTest {
 		//given
 		Long reservationId = 3L;
 		ReservationUpdatingRequest reservationUpdatingRequest = new ReservationUpdatingRequest(userId, checkInDate,
-			checkOutDate, petCategory, weight);
+			checkOutDate, amount);
 		//when //then
 		assertThrows(WrongRequestException.class,
 			() -> reservationService.updateReservation(reservationId, reservationUpdatingRequest));
@@ -170,7 +171,7 @@ class ReservationServiceTest {
 		//given
 		Long reservationId = reservationRepository.count() + 1;
 		ReservationUpdatingRequest reservationUpdatingRequest = new ReservationUpdatingRequest(userId, checkInDate,
-			checkOutDate, petCategory, weight);
+			checkOutDate, amount);
 		//when //then
 		assertThrows(NonExistResourceException.class,
 			() -> reservationService.updateReservation(reservationId, reservationUpdatingRequest));

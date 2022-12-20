@@ -66,7 +66,7 @@ class ReviewGetListServiceTest {
 			PageRequest.of(pageNum - 1, amount), reviewWithAccommodationResponsesList.size());
 
 		given(userRepository.findById(userId)).willReturn(Optional.ofNullable(user));
-		given(reviewListSearchRepository.getReviewListPage(anyLong(), any(Pageable.class))).willReturn(
+		given(reviewListSearchRepository.getReviewListPageByUserId(anyLong(), any(Pageable.class))).willReturn(
 			reviewWithAccommodationResponses);
 
 		//when
@@ -98,7 +98,7 @@ class ReviewGetListServiceTest {
 			PageRequest.of(pageNum - 1, amount), reviewWithAccommodationResponsesList.size());
 
 		given(userRepository.findById(userId)).willReturn(Optional.ofNullable(user));
-		given(reviewListSearchRepository.getReviewListPage(anyLong(), any(Pageable.class))).willReturn(
+		given(reviewListSearchRepository.getReviewListPageByUserId(anyLong(), any(Pageable.class))).willReturn(
 			reviewWithAccommodationResponses);
 
 		//when

@@ -11,12 +11,14 @@ public class ReservationWithRoomResponse {
 	private final Long accommodationId;
 	private final LocalDateTime checkInDate;
 	private final LocalDateTime checkOutDate;
+	private final Integer amount;
 
 	public ReservationWithRoomResponse(Long roomId, Long accommodationId, LocalDateTime checkInDate,
-		LocalDateTime checkOutDate) {
+		LocalDateTime checkOutDate, Integer amount) {
 		this.roomId = roomId;
 		this.accommodationId = accommodationId;
 		this.checkInDate = checkInDate;
 		this.checkOutDate = checkOutDate;
+		this.amount = amount;
 	}
 }

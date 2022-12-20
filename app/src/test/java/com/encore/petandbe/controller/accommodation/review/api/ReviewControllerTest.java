@@ -91,11 +91,13 @@ class ReviewControllerTest {
 		//given
 		Long reviewId = 1L;
 		Long userId = 1L;
+		String roomName = "roomName";
 		Integer rate = 5;
 		String content = "very good";
 		Long reservationId = 25L;
 
-		ReviewDetailsResponse reviewDetailsResponse = new ReviewDetailsResponse(reviewId, userId, rate, content,
+		ReviewDetailsResponse reviewDetailsResponse = new ReviewDetailsResponse(reviewId, roomName, userId, rate,
+			content,
 			reservationId);
 
 		when(reviewService.findReviewDetails(anyLong())).thenReturn(reviewDetailsResponse);
@@ -113,6 +115,7 @@ class ReviewControllerTest {
 				),
 				responseFields(
 					fieldWithPath("reviewId").type(JsonFieldType.NUMBER).description("Review의 Id"),
+					fieldWithPath("roomName").type(JsonFieldType.STRING).description("예약 room의 이름"),
 					fieldWithPath("userId").type(JsonFieldType.NUMBER).description("Review를 작성한 User의 Id"),
 					fieldWithPath("rate").type(JsonFieldType.NUMBER).description("점수"),
 					fieldWithPath("content").type(JsonFieldType.STRING).description("리뷰 본문"),
@@ -128,11 +131,13 @@ class ReviewControllerTest {
 		Long reviewId = 1L;
 		Long userId = 1L;
 		Integer rate = 3;
+		String roomName = "roomName";
 		String content = "not bad";
 		Long reservationId = 25L;
 
 		UpdateReviewRequests updateReviewRequests = new UpdateReviewRequests(userId, rate, content);
-		ReviewDetailsResponse reviewDetailsResponse = new ReviewDetailsResponse(reviewId, userId, rate, content,
+		ReviewDetailsResponse reviewDetailsResponse = new ReviewDetailsResponse(reviewId, roomName, userId, rate,
+			content,
 			reservationId);
 
 		when(reviewService.updateReview(anyLong(), any(UpdateReviewRequests.class))).thenReturn(reviewDetailsResponse);
@@ -157,6 +162,7 @@ class ReviewControllerTest {
 				),
 				responseFields(
 					fieldWithPath("reviewId").type(JsonFieldType.NUMBER).description("수정한 리뷰의 Id"),
+					fieldWithPath("roomName").type(JsonFieldType.STRING).description("예약 room의 이름"),
 					fieldWithPath("userId").type(JsonFieldType.NUMBER).description("User의 token id"),
 					fieldWithPath("rate").type(JsonFieldType.NUMBER).description("수정한 점수 rate"),
 					fieldWithPath("content").type(JsonFieldType.STRING).description("수정한 리뷰의 내용"),

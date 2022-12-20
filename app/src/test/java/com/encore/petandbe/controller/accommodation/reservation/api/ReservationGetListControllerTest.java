@@ -1,8 +1,8 @@
 package com.encore.petandbe.controller.accommodation.reservation.api;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper.*;
 import static org.mockito.Mockito.*;
-import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.*;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
@@ -19,7 +19,6 @@ import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDoc
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
@@ -30,8 +29,8 @@ import com.encore.petandbe.controller.accommodation.reservation.requests.Reserva
 import com.encore.petandbe.controller.accommodation.reservation.responses.ReservationListGetByUserIdResponse;
 import com.encore.petandbe.controller.accommodation.reservation.responses.ReservationWithRoomResponse;
 import com.encore.petandbe.interceptor.PermissionInterceptor;
+import com.encore.petandbe.model.user.user.Role;
 import com.encore.petandbe.service.accommodation.reservation.ReservationGetListService;
-import com.fasterxml.jackson.databind.node.JsonNodeType;
 
 @WebMvcTest(controllers = ReservationGetListController.class)
 @AutoConfigureRestDocs
@@ -54,19 +53,21 @@ class ReservationGetListControllerTest {
 		int selectPage = 3;
 		int amountItem = 10;
 
+		Long userId = 1L;
+
 		LocalDateTime checkInDate = LocalDateTime.parse("2022-11-17T11:00:00");
 		LocalDateTime checkOutDate = LocalDateTime.parse("2022-11-19T16:00:00");
+		Integer amount = 100000;
 
 		List<ReservationWithRoomResponse> reservationWithRoomResponseList = new ArrayList<>();
 		for (int i = 0; i < 10; i++) {
 			reservationWithRoomResponseList.add(
-				new ReservationWithRoomResponse((long)i, (long)i, checkInDate, checkOutDate));
+				new ReservationWithRoomResponse((long)i, (long)i, checkInDate, checkOutDate, amount));
 		}
 
 		MultiValueMap<String, String> param = new LinkedMultiValueMap<>();
-		param.add("userId", "1");
 		param.add("pageNum", "7");
-		param.add("amount", "20");
+		param.add("itemAmount", "20");
 
 		ReservationListGetByUserIdResponse reservationListGetByUserIdResponse
 			= new ReservationListGetByUserIdResponse(endPage, selectPage, amountItem, reservationWithRoomResponseList);
@@ -76,21 +77,20 @@ class ReservationGetListControllerTest {
 			reservationListGetByUserIdResponse);
 		when(permissionInterceptor.preHandle(any(), any(), any())).thenReturn(true);
 		//when
-		ResultActions resultActions = mockMvc.perform(RestDocumentationRequestBuilders
-			.get("/reservation-list")
+		ResultActions resultActions = mockMvc.perform(get("/reservation-list")
 			.params(param)
-			.accept(MediaType.APPLICATION_JSON));
+			.accept(MediaType.APPLICATION_JSON)
+			.requestAttr(Role.USER.getValue(), userId.intValue()));
 		//then
 		resultActions.andExpect(status().isOk())
 			.andDo(document("get-reservation-list-by-userid",
 				requestParameters(
-					parameterWithName("userId").description("user 아이디"),
 					parameterWithName("pageNum").description("페이지 번호"),
-					parameterWithName("amount").description("요청할 데이터 개수")
+					parameterWithName("itemAmount").description("요청할 데이터 개수")
 				),
 				responseFields(
 					fieldWithPath("endPage").type(JsonFieldType.NUMBER).description("페이지네이션의 끝번호"),
-					fieldWithPath("selectPage").type(JsonNodeType.NUMBER).description("현재 조회하는 페이지"),
+					fieldWithPath("selectPage").type(JsonFieldType.NUMBER).description("현재 조회하는 페이지"),
 					fieldWithPath("amountItem").type(JsonFieldType.NUMBER).description("데이터 개수"),
 					fieldWithPath("reservationWithRoomResponseList").type(JsonFieldType.ARRAY)
 						.description("예약 조회 결과 List"),
@@ -101,7 +101,9 @@ class ReservationGetListControllerTest {
 					fieldWithPath("reservationWithRoomResponseList[].checkInDate").type(JsonFieldType.STRING)
 						.description("체크인 날짜 시간"),
 					fieldWithPath("reservationWithRoomResponseList[].checkOutDate").type(JsonFieldType.STRING)
-						.description("체크아웃 날짜 시간")
+						.description("체크아웃 날짜 시간"),
+					fieldWithPath("reservationWithRoomResponseList[].amount").type(JsonFieldType.NUMBER)
+						.description("예약 금액")
 				))).andDo(print());
 	}
 }

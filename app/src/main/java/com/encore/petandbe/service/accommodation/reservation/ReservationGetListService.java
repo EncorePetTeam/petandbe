@@ -40,7 +40,7 @@ public class ReservationGetListService {
 	private static PageRequest convertPageRequest(
 		ReservationListGetByUserIdRequests reservationListGetByUserIdRequests) {
 		return PageRequest.of(reservationListGetByUserIdRequests.getPageNum() - 1,
-			reservationListGetByUserIdRequests.getAmount());
+			reservationListGetByUserIdRequests.getItemAmount());
 	}
 
 }

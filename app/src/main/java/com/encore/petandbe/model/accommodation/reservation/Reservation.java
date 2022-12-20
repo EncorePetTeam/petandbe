@@ -2,24 +2,25 @@ package com.encore.petandbe.model.accommodation.reservation;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Where;
+
 import com.encore.petandbe.model.BaseEntity;
-import com.encore.petandbe.model.accommodation.filtering.category.PetCategory;
 import com.encore.petandbe.model.accommodation.room.Room;
 import com.encore.petandbe.model.user.user.User;
-import com.encore.petandbe.service.accommodation.reservation.dto.ReservationUpdatingDTO;
+import com.encore.petandbe.service.accommodation.reservation.dto.ReservationUpdatingdto;
+
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -53,11 +54,7 @@ public class Reservation extends BaseEntity {
 	private LocalDateTime checkOutDate;
 
 	@Column(nullable = false)
-	@Enumerated(EnumType.STRING)
-	private PetCategory petCategory;
-
-	@Column(nullable = false, columnDefinition = "decimal")
-	private String weight;
+	private Integer amount;
 
 	@Column(nullable = false, columnDefinition = "bit(1) default 0", length = 1)
 	private Boolean state;
@@ -67,14 +64,14 @@ public class Reservation extends BaseEntity {
 	}
 
 	public Reservation(Long id, Room room, User user, LocalDateTime checkInDate, LocalDateTime checkOutDate,
-		PetCategory petCategory, String weight, Boolean state) {
+		Integer amount,
+		Boolean state) {
 		this.id = id;
 		this.room = room;
 		this.user = user;
 		this.checkInDate = checkInDate;
 		this.checkOutDate = checkOutDate;
-		this.petCategory = petCategory;
-		this.weight = weight;
+		this.amount = amount;
 		this.state = state;
 	}
 
@@ -82,12 +79,9 @@ public class Reservation extends BaseEntity {
 	public String toString() {
 		return "Reservation{" +
 			"id=" + id +
-			", room=" + room +
-			", user=" + user +
 			", checkInDate=" + checkInDate +
 			", checkOutDate=" + checkOutDate +
-			", petCategory=" + petCategory +
-			", weight='" + weight + '\'' +
+			", amount=" + amount +
 			", state=" + state +
 			'}';
 	}
@@ -96,24 +90,23 @@ public class Reservation extends BaseEntity {
 	public boolean equals(Object o) {
 		if (this == o)
 			return true;
-		if (!(o instanceof Reservation))
+		if (o == null || getClass() != o.getClass())
 			return false;
 		Reservation that = (Reservation)o;
 		return Objects.equals(id, that.id) && Objects.equals(room, that.room)
 			&& Objects.equals(user, that.user) && Objects.equals(checkInDate, that.checkInDate)
-			&& Objects.equals(checkOutDate, that.checkOutDate) && petCategory == that.petCategory
-			&& Objects.equals(weight, that.weight) && Objects.equals(state, that.state);
+			&& Objects.equals(checkOutDate, that.checkOutDate) && Objects.equals(amount, that.amount)
+			&& Objects.equals(state, that.state);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, room, user, checkInDate, checkOutDate, petCategory, weight, state);
+		return Objects.hash(id, checkInDate, checkOutDate, amount, state);
 	}
 
-	public void updateReservation(ReservationUpdatingDTO reservationUpdatingDTO) {
-		this.checkInDate = reservationUpdatingDTO.getCheckInDate();
-		this.checkOutDate = reservationUpdatingDTO.getCheckOutDate();
-		this.petCategory = reservationUpdatingDTO.getPetCategory();
-		this.weight = reservationUpdatingDTO.getWeight();
+	public void updateReservation(ReservationUpdatingdto reservationUpdatingdto) {
+		this.checkInDate = reservationUpdatingdto.getCheckInDate();
+		this.checkOutDate = reservationUpdatingdto.getCheckOutDate();
+		this.amount = reservationUpdatingdto.getAmount();
 	}
 }

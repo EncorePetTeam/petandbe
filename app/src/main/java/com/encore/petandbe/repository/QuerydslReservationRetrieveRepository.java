@@ -27,7 +27,7 @@ public class QuerydslReservationRetrieveRepository extends QuerydslRepositorySup
 		return from(qReservation)
 			.select(Projections.constructor(ReservationRetrieveResponse.class, qReservation.id, qReservation.user.id,
 				qRoom.id, qAccommodation.id, qAccommodation.accommodationName, qRoom.roomName, qReservation.checkInDate,
-				qReservation.checkOutDate, qReservation.petCategory, qReservation.weight))
+				qReservation.checkOutDate, qReservation.amount))
 			.leftJoin(qRoom)
 			.fetchJoin()
 			.on(qRoom.id.eq(qReservation.room.id))

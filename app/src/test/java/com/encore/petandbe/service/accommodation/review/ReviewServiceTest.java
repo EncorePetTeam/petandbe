@@ -25,7 +25,6 @@ import com.encore.petandbe.controller.accommodation.review.responses.ReviewDetai
 import com.encore.petandbe.exception.NonExistResourceException;
 import com.encore.petandbe.exception.WrongRequestException;
 import com.encore.petandbe.model.accommodation.accommodation.Accommodation;
-import com.encore.petandbe.model.accommodation.filtering.category.PetCategory;
 import com.encore.petandbe.model.accommodation.reservation.Reservation;
 import com.encore.petandbe.model.accommodation.review.Review;
 import com.encore.petandbe.model.accommodation.room.Room;
@@ -61,12 +60,13 @@ class ReviewServiceTest {
 		Integer rate = 5;
 		String content = "very good";
 		Long reservationId = 1L;
+		Integer amount = 100000;
 
 		RegistReviewRequests registReviewRequests = new RegistReviewRequests(userId, rate, content, reservationId);
 
 		User user = User.builder().id(userId).build();
 
-		Accommodation accommodation = Accommodation.builder().id(1L).build();
+		Accommodation accommodation = Accommodation.builder().id(1L).reviewCount(1).bookmarkCount(1).build();
 
 		Reservation reservation = Reservation.builder()
 			.id(reservationId)
@@ -74,9 +74,7 @@ class ReviewServiceTest {
 			.checkInDate(LocalDateTime.parse("2022-11-23T16:00:00"))
 			.checkOutDate(LocalDateTime.parse("2022-11-24T17:00:00"))
 			.state(false)
-			.petCategory(
-				PetCategory.DOG)
-			.weight("5")
+			.amount(amount)
 			.room(Room.builder().id(1L).accommodation(accommodation).build())
 			.build();
 
@@ -117,12 +115,13 @@ class ReviewServiceTest {
 		Long userId = 1L;
 		Integer rate = 5;
 		Long reservationId = 1L;
+		Integer amount = 100000;
 
 		RegistReviewRequests registReviewRequests = new RegistReviewRequests(userId, rate, null, reservationId);
 
 		User user = User.builder().id(userId).build();
 
-		Accommodation accommodation = Accommodation.builder().id(1L).build();
+		Accommodation accommodation = Accommodation.builder().id(1L).reviewCount(1).bookmarkCount(1).build();
 
 		Reservation reservation = Reservation.builder()
 			.id(reservationId)
@@ -130,9 +129,7 @@ class ReviewServiceTest {
 			.checkInDate(LocalDateTime.parse("2022-11-17T11:00:00"))
 			.checkOutDate(LocalDateTime.parse("2022-11-19T16:00:00"))
 			.state(false)
-			.petCategory(
-				PetCategory.DOG)
-			.weight("5")
+			.amount(amount)
 			.room(Room.builder().id(1L).accommodation(accommodation).build())
 			.build();
 
@@ -237,7 +234,9 @@ class ReviewServiceTest {
 		Long reservationId = 1L;
 		Long reviewId = 25L;
 
-		Reservation reservation = Reservation.builder().id(reservationId).build();
+		Room room = Room.builder().id(1L).roomName("roomName").build();
+
+		Reservation reservation = Reservation.builder().id(reservationId).room(room).build();
 
 		Review review = Review.builder()
 			.id(reviewId)
@@ -300,7 +299,7 @@ class ReviewServiceTest {
 		String content = "very good";
 		Long reviewId = 25L;
 
-		Accommodation accommodation = Accommodation.builder().id(23L).build();
+		Accommodation accommodation = Accommodation.builder().id(23L).reviewCount(1).bookmarkCount(1).build();
 		Room room = Room.builder().id(23L).accommodation(accommodation).build();
 		Reservation reservation = Reservation.builder().id(27L).room(room).build();
 

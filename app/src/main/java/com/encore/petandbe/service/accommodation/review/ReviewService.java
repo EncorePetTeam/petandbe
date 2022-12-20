@@ -55,7 +55,11 @@ public class ReviewService {
 		Review savedReview = reviewRepository.save(
 			ReviewMapper.of().registerReviewRequestsToEntity(registReviewRequests, user, reservation));
 
-		updateAccommodationRate(reservation.getRoom().getAccommodation());
+		Accommodation accommodation = reservation.getRoom().getAccommodation();
+
+		updateAccommodationRate(accommodation);
+
+		accommodation.increaseReviewCount();
 
 		return ReviewMapper.of().registerEntityToResponse(savedReview);
 	}
@@ -100,7 +104,11 @@ public class ReviewService {
 
 		review.deleteReview();
 
-		updateAccommodationRate(review.getReservation().getRoom().getAccommodation());
+		Accommodation accommodation = review.getReservation().getRoom().getAccommodation();
+
+		updateAccommodationRate(accommodation);
+
+		accommodation.decreaseReviewCount();
 
 		return ReviewMapper.of().deletedEntityToResponse(review);
 	}

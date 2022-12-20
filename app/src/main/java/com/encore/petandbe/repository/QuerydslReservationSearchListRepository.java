@@ -23,7 +23,9 @@ public class QuerydslReservationSearchListRepository extends QuerydslRepositoryS
 	private final QAccommodation qAccommodation = QAccommodation.accommodation;
 	private final QRoom qRoom = QRoom.room;
 
-	public QuerydslReservationSearchListRepository() { super(Reservation.class);}
+	public QuerydslReservationSearchListRepository() {
+		super(Reservation.class);
+	}
 
 	@Override
 	public Page<ReservationWithRoomResponse> getReservationListPage(Long userId, Pageable pageable) {
@@ -35,7 +37,7 @@ public class QuerydslReservationSearchListRepository extends QuerydslRepositoryS
 		return new PageImpl<>(reservationWithRoomResponseList, pageable, reservationAmount);
 	}
 
-	private Long countReservationAmountByUser(Long userId){
+	private Long countReservationAmountByUser(Long userId) {
 		return from(qReservation)
 			.select(qReservation.count())
 			.where(qReservation.user.id.eq(userId))
@@ -43,19 +45,19 @@ public class QuerydslReservationSearchListRepository extends QuerydslRepositoryS
 	}
 
 	private List<ReservationWithRoomResponse> getReservationWithRoomResponseList(Long userId,
-		Pageable pageable){
+		Pageable pageable) {
 		return from(qReservation)
 			.select(Projections.constructor(ReservationWithRoomResponse.class,
 				qAccommodation.id,
 				qRoom.id,
-				qReservation.checkInDate, qReservation.checkOutDate))
+				qReservation.checkInDate, qReservation.checkOutDate, qReservation.amount))
 			.leftJoin(qRoom)
 			.fetchJoin()
 			.on(qRoom.id.eq(qReservation.room.id))
 			.leftJoin(qAccommodation)
 			.fetchJoin()
 			.on(qAccommodation.id.eq(qRoom.accommodation.id))
-			.where(qReservation.user.id.eq(userId))
+			.where(qReservation.user.id.eq(userId).and(qReservation.state.isFalse()))
 			.offset(pageable.getOffset())
 			.limit(pageable.getPageSize())
 			.orderBy(qReservation.id.desc()).fetch();

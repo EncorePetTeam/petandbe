@@ -9,14 +9,21 @@ public class FilteringAccommodationResponse {
 
 	private Long accommodationId;
 	private String accommodationName;
-	private String address;
+	private String addressCode;
+	private String location;
+	private String lotNumber;
 	private double avgRate;
+	private boolean isBookmarked;
 
-	public FilteringAccommodationResponse(Long accommodationId, String accommodationName, String address,
-		double avgRate) {
+	public FilteringAccommodationResponse(Long accommodationId, String accommodationName, String addressCode,
+		String location,
+		String lotNumber, double avgRate, boolean isBookmarked) {
 		this.accommodationId = accommodationId;
 		this.accommodationName = accommodationName;
-		this.address = address;
+		this.addressCode = addressCode;
+		this.location = location;
+		this.lotNumber = lotNumber;
 		this.avgRate = avgRate;
+		this.isBookmarked = isBookmarked;
 	}
 }

@@ -2,6 +2,8 @@ package com.encore.petandbe.utils.mapper;
 
 import org.springframework.data.domain.Page;
 
+import com.encore.petandbe.controller.accommodation.review.responses.ReviewDetailsResponse;
+import com.encore.petandbe.controller.accommodation.review.responses.ReviewListGetByAccommodationIdResponse;
 import com.encore.petandbe.controller.accommodation.review.responses.ReviewListGetByUserIdResponse;
 import com.encore.petandbe.controller.accommodation.review.responses.ReviewWithAccommodationResponse;
 
@@ -22,6 +24,11 @@ public class ReviewGetListMapper {
 
 	public ReviewListGetByUserIdResponse reviewListToResponse(Page<ReviewWithAccommodationResponse> reviewPage) {
 		return new ReviewListGetByUserIdResponse(reviewPage.getTotalPages(), reviewPage.getNumber() + 1,
+			reviewPage.getNumberOfElements(), reviewPage.getContent());
+	}
+
+	public ReviewListGetByAccommodationIdResponse reviewListToDetailsResponse(Page<ReviewDetailsResponse> reviewPage) {
+		return new ReviewListGetByAccommodationIdResponse(reviewPage.getTotalPages(), reviewPage.getNumber() + 1,
 			reviewPage.getNumberOfElements(), reviewPage.getContent());
 	}
 }

@@ -56,3 +56,17 @@ INSERT INTO bookmark(user_id, accommodation_id, state)
 VALUES (5, 1, false),
        (5, 2, false),
        (5, 3, true);
+
+INSERT INTO image_file(url)
+VALUES ('testurl1'),
+       ('testurl2'),
+       ('testurl3'),
+       ('testurl4'),
+       ('testurl5');
+
+INSERT INTO file(accommodation_id, room_id, image_file_id)
+VALUES (1, null, 1),
+       (1, null, 2),
+       (1, null, 3),
+       (1, null, 4),
+       (1, null, 5);

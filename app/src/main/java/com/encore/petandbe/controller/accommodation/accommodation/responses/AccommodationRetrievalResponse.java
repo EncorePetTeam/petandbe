@@ -1,5 +1,7 @@
 package com.encore.petandbe.controller.accommodation.accommodation.responses;
 
+import java.util.List;
+
 import com.encore.petandbe.model.accommodation.accommodation.AccommodationType;
 
 import lombok.Builder;
@@ -20,10 +22,12 @@ public class AccommodationRetrievalResponse {
 	private Double averageRate;
 	private Integer reviewCount;
 	private String detailInfo;
+	private List<String> imageFileUrlList;
 
 	public AccommodationRetrievalResponse(String addressCode, String accommodationName, String userNickname,
 		String workingHours, String weekendWorkingHours, String location, String lotNumber, String addressDetail,
-		AccommodationType accommodationType, Double averageRate, Integer reviewCount, String detailInfo) {
+		AccommodationType accommodationType, Double averageRate, Integer reviewCount, String detailInfo,
+		List<String> imageFileUrlList) {
 		this.addressCode = addressCode;
 		this.accommodationName = accommodationName;
 		this.userNickname = userNickname;
@@ -36,5 +40,6 @@ public class AccommodationRetrievalResponse {
 		this.averageRate = averageRate;
 		this.reviewCount = reviewCount;
 		this.detailInfo = detailInfo;
+		this.imageFileUrlList = imageFileUrlList;
 	}
 }

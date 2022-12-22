@@ -60,6 +60,9 @@ dependencies {
     testImplementation 'com.epages:restdocs-api-spec-mockmvc:0.16.2'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+
+    implementation 'com.amazonaws:aws-java-sdk-s3:1.12.368'
+    implementation 'commons-fileupload:commons-fileupload:1.4'
 }
 
 tasks.named('test') {

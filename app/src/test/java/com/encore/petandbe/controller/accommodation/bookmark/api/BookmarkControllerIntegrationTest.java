@@ -31,7 +31,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @AutoConfigureRestDocs
 @AutoConfigureMockMvc
 @Transactional
-class BookmarkControllerIntergrationTest {
+class BookmarkControllerIntegrationTest {
 
 	@Autowired
 	private MockMvc mockMvc;

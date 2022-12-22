@@ -8,6 +8,9 @@ import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,18 +64,22 @@ class AccommodationControllerTest {
 	@DisplayName("Register Accommodation Controller - Success")
 	void registerAccommodationTestSuccess() throws Exception {
 		//given
+		List<String> imageUrlList = new ArrayList<>();
+		imageUrlList.add("test-image-url");
+
 		AccommodationRegistrationRequest request = new AccommodationRegistrationRequest(addressCode,
 			accommodationName, workingHours, weekendWorkingHours, location, lotNumber, addressDetail, accommodationType,
-			detailInfo);
+			detailInfo, imageUrlList);
+
 		when(accommodationService.createAccommodation(request, userId)).thenReturn(userId);
 		when(permissionInterceptor.preHandle(any(), any(), any())).thenReturn(true);
 		//when
-		ResultActions resultActions = mockMvc.perform(
-			post("/accommodation")
-				.content(objectMapper.writeValueAsString(request))
-				.contentType(MediaType.APPLICATION_JSON)
-				.accept(MediaType.APPLICATION_JSON)
-				.requestAttr(Role.USER.getValue(), userId.intValue()));
+		ResultActions resultActions = mockMvc.perform(post("/accommodation")
+			.content(objectMapper.writeValueAsString(request))
+			.contentType(MediaType.APPLICATION_JSON)
+			.accept(MediaType.APPLICATION_JSON)
+			.requestAttr(Role.USER.getValue(), userId.intValue()));
+
 		//then
 		resultActions.andExpect(status().isCreated())
 			.andDo(print())
@@ -86,7 +93,8 @@ class AccommodationControllerTest {
 					fieldWithPath("lotNumber").type(JsonFieldType.STRING).description("숙박 시설 지번"),
 					fieldWithPath("addressDetail").type(JsonFieldType.STRING).description("숙박 시설 상세 주소"),
 					fieldWithPath("accommodationType").type(JsonFieldType.STRING).description("숙박 시설 유형"),
-					fieldWithPath("detailInfo").type(JsonFieldType.STRING).description("숙박 시설 상세 정보")
+					fieldWithPath("detailInfo").type(JsonFieldType.STRING).description("숙박 시설 상세 정보"),
+					fieldWithPath("imageUrlList").type(JsonFieldType.ARRAY).description("숙박 시설 이미지 링크")
 				),
 				responseFields(
 					fieldWithPath("accommodationId").type(JsonFieldType.NUMBER).description("생성된 숙박 시설 아이디(pk)")
@@ -100,9 +108,14 @@ class AccommodationControllerTest {
 		//given
 		String userNickname = "gnsrl";
 		Double averageRate = 4.2;
+		String url = "21nfkandakwqkdqw21";
+
+		List<String> imageFileUrlList = new ArrayList<>();
+		imageFileUrlList.add(url);
+
 		AccommodationRetrievalResponse response = new AccommodationRetrievalResponse(addressCode, accommodationName,
 			userNickname, workingHours, weekendWorkingHours, location, lotNumber, addressDetail, accommodationType,
-			averageRate, reviewCount, detailInfo);
+			averageRate, reviewCount, detailInfo, imageFileUrlList);
 
 		when(accommodationService.findAccommodationById(accommodationId)).thenReturn(response);
 		when(permissionInterceptor.preHandle(any(), any(), any())).thenReturn(true);
@@ -126,7 +139,8 @@ class AccommodationControllerTest {
 					fieldWithPath("accommodationType").type(JsonFieldType.STRING).description("숙박 시설 유형"),
 					fieldWithPath("averageRate").type(JsonFieldType.NUMBER).description("숙박 시설 평점"),
 					fieldWithPath("reviewCount").type(JsonFieldType.NUMBER).description("숙박 시설 평점 갯수"),
-					fieldWithPath("detailInfo").type(JsonFieldType.STRING).description("숙박 시설 상세 정보")
+					fieldWithPath("detailInfo").type(JsonFieldType.STRING).description("숙박 시설 상세 정보"),
+					fieldWithPath("imageFileUrlList").type(JsonFieldType.ARRAY).description("숙박 업소 이미지 파일 Url")
 				)
 			));
 	}

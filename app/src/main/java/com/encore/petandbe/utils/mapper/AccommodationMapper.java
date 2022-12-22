@@ -1,5 +1,7 @@
 package com.encore.petandbe.utils.mapper;
 
+import java.util.List;
+
 import com.encore.petandbe.controller.accommodation.accommodation.requests.AccommodationRegistrationRequest;
 import com.encore.petandbe.controller.accommodation.accommodation.requests.AccommodationUpdatingRequest;
 import com.encore.petandbe.controller.accommodation.accommodation.responses.AccommodationRetrievalResponse;
@@ -15,7 +17,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class AccommodationMapper {
 
-	public static AccommodationRetrievalResponse convertAccommodationToRetrievalResponse(Accommodation accommodation) {
+	public static AccommodationRetrievalResponse convertAccommodationToRetrievalResponse(Accommodation accommodation,
+		List<String> imageFileUrlList) {
 		return AccommodationRetrievalResponse.builder()
 			.addressCode(accommodation.getAddress().getAddressCode())
 			.accommodationName(accommodation.getAccommodationName())
@@ -29,6 +32,7 @@ public class AccommodationMapper {
 			.addressDetail(accommodation.getAddressDetail())
 			.accommodationType(accommodation.getAccommodationType())
 			.detailInfo(accommodation.getDetailInfo())
+			.imageFileUrlList(imageFileUrlList)
 			.build();
 	}
 

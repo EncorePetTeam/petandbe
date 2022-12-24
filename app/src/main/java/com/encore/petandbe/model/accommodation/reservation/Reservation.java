@@ -19,7 +19,7 @@ import org.hibernate.annotations.Where;
 import com.encore.petandbe.model.BaseEntity;
 import com.encore.petandbe.model.accommodation.room.Room;
 import com.encore.petandbe.model.user.user.User;
-import com.encore.petandbe.service.accommodation.reservation.dto.ReservationUpdatingdto;
+import com.encore.petandbe.service.accommodation.reservation.dto.ReservationUpdatingDTO;
 
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -104,7 +104,7 @@ public class Reservation extends BaseEntity {
 		return Objects.hash(id, checkInDate, checkOutDate, amount, state);
 	}
 
-	public void updateReservation(ReservationUpdatingdto reservationUpdatingdto) {
+	public void updateReservation(ReservationUpdatingDTO reservationUpdatingdto) {
 		this.checkInDate = reservationUpdatingdto.getCheckInDate();
 		this.checkOutDate = reservationUpdatingdto.getCheckOutDate();
 		this.amount = reservationUpdatingdto.getAmount();

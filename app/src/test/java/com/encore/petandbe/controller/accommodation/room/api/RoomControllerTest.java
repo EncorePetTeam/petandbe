@@ -8,6 +8,11 @@ import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import com.encore.petandbe.controller.accommodation.room.responses.RoomInfoResponse;
+import com.encore.petandbe.controller.accommodation.room.responses.RoomRetrievalInfo;
+import com.encore.petandbe.model.user.user.Role;
+import com.encore.petandbe.repository.AccommodationRepository;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
@@ -26,6 +31,10 @@ import com.encore.petandbe.model.accommodation.filtering.category.PetCategory;
 import com.encore.petandbe.service.accommodation.room.RoomService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 @WebMvcTest(controllers = RoomController.class)
 @AutoConfigureRestDocs
 class RoomControllerTest {
@@ -35,6 +44,9 @@ class RoomControllerTest {
 
 	@MockBean
 	private RoomService roomService;
+
+	@MockBean
+	private AccommodationRepository accommodationRepository;
 
 	@MockBean
 	private PermissionInterceptor permissionInterceptor;
@@ -163,4 +175,41 @@ class RoomControllerTest {
 	 				fieldWithPath("detailInfo").type(JsonFieldType.STRING).description("룸의 상세 설명")
 				)));
 	}
+
+    @Test
+	@DisplayName("Get Room information by accommodationId - success")
+    void retrieveRoomInfo() throws Exception {
+
+		//given
+		RoomRetrievalInfo roomRetrievalInfo = new RoomRetrievalInfo(roomId, roomName, amount, petCategory, weight, detailInfo);
+
+		List<RoomRetrievalInfo> roomRetrievalInfos = new ArrayList<>();
+		roomRetrievalInfos.add(roomRetrievalInfo);
+
+		RoomInfoResponse roomInfoResponse = new RoomInfoResponse(accommodationId, roomRetrievalInfos);
+
+		when(roomService.findRoomInfoByAccommodationId(accommodationId)).thenReturn(roomInfoResponse);
+		when(permissionInterceptor.preHandle(any(), any(), any())).thenReturn(true);
+		//when
+		ResultActions resultActions = mockMvc.perform(get("/room/infos/{accommodation-id}", accommodationId)
+				.accept(MediaType.APPLICATION_JSON));
+		//then
+		resultActions.andExpect(status().isOk())
+				.andDo(
+						document("room-infos",
+						pathParameters(
+								parameterWithName("accommodation-id").description("찾고싶은 룸들의 숙박시설 아이디")
+						),
+						responseFields(
+								fieldWithPath("accommodationId").type(JsonFieldType.NUMBER).description("룸과 연관된 숙박시설 아이디"),
+								fieldWithPath("roomRetrievalInfos").type(JsonFieldType.ARRAY).description("룸 정보 리스트"),
+								fieldWithPath("roomRetrievalInfos[].roomId").type(JsonFieldType.NUMBER).description("룸 Id들"),
+								fieldWithPath("roomRetrievalInfos[].roomName").type(JsonFieldType.STRING).description("룸 이름들"),
+								fieldWithPath("roomRetrievalInfos[].amount").type(JsonFieldType.NUMBER).description("룸 가격들"),
+								fieldWithPath("roomRetrievalInfos[].petCategory").type(JsonFieldType.STRING).description("룸을 대여하는 펫의 타입"),
+								fieldWithPath("roomRetrievalInfos[].weight").type(JsonFieldType.STRING).description("룸을 대여하는 펫의 무게 제한"),
+								fieldWithPath("roomRetrievalInfos[].detailInfo").type(JsonFieldType.STRING).description("룸의 상세 설명")
+						)
+				)).andDo(print());
+    }
 }

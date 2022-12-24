@@ -8,6 +8,8 @@ import com.encore.petandbe.model.accommodation.accommodation.Accommodation;
 import com.encore.petandbe.model.accommodation.room.Room;
 import com.encore.petandbe.service.accommodation.room.dto.RoomUpdateDTO;
 
+import java.util.List;
+
 public class RoomMapper {
 
 	private static RoomMapper roomMapper = null;
@@ -39,7 +41,7 @@ public class RoomMapper {
 			.build();
 	}
 
-	public static RoomRetrievalResponse convertRoomToRetrievalResponse(Room room){
+	public static RoomRetrievalResponse convertRoomToRetrievalResponse(Room room, List<String> imageFileUrlList){
 		return RoomRetrievalResponse.builder()
 			.accommodationId(room.getAccommodation().getId())
 			.roomName(room.getRoomName())
@@ -47,10 +49,11 @@ public class RoomMapper {
 			.petCategory(room.getPetCategory())
 			.weight(room.getWeight())
 			.detailInfo(room.getDetailInfo())
+			.imageFileUrlList(imageFileUrlList)
 			.build();
 	}
 
-	public static RoomRetrievalInfo convertRoomToRetrievalInfo(Room room){
+	public static RoomRetrievalInfo convertRoomToRetrievalInfo(Room room,List<String> imageFileUrlList){
 		return RoomRetrievalInfo.builder()
 				.roomId(room.getId())
 				.roomName(room.getRoomName())
@@ -58,6 +61,7 @@ public class RoomMapper {
 				.petCategory(room.getPetCategory())
 				.weight(room.getWeight())
 				.detailInfo(room.getDetailInfo())
+				.imageFileUrlList(imageFileUrlList)
 				.build();
 	}
 

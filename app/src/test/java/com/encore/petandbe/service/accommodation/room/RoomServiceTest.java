@@ -1,8 +1,9 @@
 package com.encore.petandbe.service.accommodation.room;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.assertj.core.api.Assertions.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import com.encore.petandbe.controller.accommodation.room.responses.RoomInfoResponse;
@@ -28,26 +29,21 @@ class RoomServiceTest {
 
 	@Autowired
 	private RoomRepository roomRepository;
-
 	private final Long accommodationId = 1L;
-
 	private final String roomName = "해피해피";
-
 	private final Integer amount = 50000;
-
 	private final PetCategory petCategory = PetCategory.DOG;
-
 	private final String weight = "10";
-
 	private final String detailInfo = "물기 금지";
+	private final List<String> imageFileUrlList = new ArrayList<>();
 
 	@Test
 	@DisplayName("Create Room Service - Success")
 	void createRoom() {
 		//given
 		RoomRegistrationRequest request = new RoomRegistrationRequest(
-			accommodationId, roomName, amount, petCategory, weight, detailInfo
-		);
+			accommodationId, roomName, amount, petCategory, weight, detailInfo,
+				imageFileUrlList);
 		//when
 		Long roomId = roomService.createRoom(request);
 		Optional<Room> room = roomRepository.findById(roomId);
@@ -98,7 +94,7 @@ class RoomServiceTest {
 	}
 
     @Test
-	@DisplayName("Find Rooms test - Success")
+	@DisplayName("Find Rooms Information By accommodationId test - Success")
     void findRoomInfoByAccommodationId() {
 		//given//when
 		RoomInfoResponse roomInfoResponse = roomService.findRoomInfoByAccommodationId(1L);

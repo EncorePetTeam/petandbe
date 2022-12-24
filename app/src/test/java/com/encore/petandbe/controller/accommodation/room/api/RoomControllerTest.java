@@ -10,7 +10,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.encore.petandbe.controller.accommodation.room.responses.RoomInfoResponse;
 import com.encore.petandbe.controller.accommodation.room.responses.RoomRetrievalInfo;
-import com.encore.petandbe.model.user.user.Role;
 import com.encore.petandbe.repository.AccommodationRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -32,7 +31,6 @@ import com.encore.petandbe.service.accommodation.room.RoomService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 @WebMvcTest(controllers = RoomController.class)
@@ -61,12 +59,18 @@ class RoomControllerTest {
 	String detailInfo = "안녕하세요";
 	PetCategory petCategory = PetCategory.CAT;
 	Long roomId = 1L;
+	List<String> imageFileUrlList = new ArrayList<>();
+	String imageUrl = "test-image-url";
 
 	@Test
+	@DisplayName("Register Room controller - Success")
 	void registerRoomSuccess() throws Exception {
 		//given
+		imageFileUrlList.add(imageUrl);
+
 		RoomRegistrationRequest roomRegistrationRequest = new RoomRegistrationRequest(accommodationId, roomName, amount,
-			petCategory, weight, detailInfo);
+			petCategory, weight, detailInfo, imageFileUrlList);
+
 		when(roomService.createRoom(roomRegistrationRequest)).thenReturn(roomId);
 		when(permissionInterceptor.preHandle(any(), any(), any())).thenReturn(true);
 		//when
@@ -85,7 +89,8 @@ class RoomControllerTest {
 						fieldWithPath("amount").type(JsonFieldType.NUMBER).description("룸 대여료"),
 						fieldWithPath("weight").type(JsonFieldType.STRING).description("룸을 대여하는 펫의 무게 제한"),
 						fieldWithPath("petCategory").type(JsonFieldType.STRING).description("룸을 대여하는 펫의 타입"),
-						fieldWithPath("detailInfo").type(JsonFieldType.STRING).description("룸의 상세 설명")
+						fieldWithPath("detailInfo").type(JsonFieldType.STRING).description("룸의 상세 설명"),
+						fieldWithPath("imageUrlList").type(JsonFieldType.ARRAY).description("룸 이미지 링크")
 					),
 					responseFields(
 						fieldWithPath("roomId").type(JsonFieldType.NUMBER).description("생성된 룸 아이디")
@@ -151,8 +156,10 @@ class RoomControllerTest {
 	@Test
 	void retrieveRoomSuccess() throws Exception {
 		//given
+		imageFileUrlList.add(imageUrl);
+
 		RoomRetrievalResponse roomRetrievalResponse = new RoomRetrievalResponse(accommodationId, roomName, amount,
-			petCategory, weight, detailInfo);
+			petCategory, weight, detailInfo, imageFileUrlList);
 
 		when(roomService.findRoomById(roomId)).thenReturn(roomRetrievalResponse);
 		when(permissionInterceptor.preHandle(any(), any(), any())).thenReturn(true);
@@ -172,16 +179,18 @@ class RoomControllerTest {
 					fieldWithPath("amount").type(JsonFieldType.NUMBER).description("룸 대여료"),
 					fieldWithPath("weight").type(JsonFieldType.STRING).description("룸을 대여하는 펫의 무게 제한"),
 					fieldWithPath("petCategory").type(JsonFieldType.STRING).description("룸을 대여하는 펫의 타입"),
-	 				fieldWithPath("detailInfo").type(JsonFieldType.STRING).description("룸의 상세 설명")
+	 				fieldWithPath("detailInfo").type(JsonFieldType.STRING).description("룸의 상세 설명"),
+					fieldWithPath("imageFileUrlList").type(JsonFieldType.ARRAY).description("숙박 업소 이미지 파일 Url")
 				)));
 	}
 
     @Test
 	@DisplayName("Get Room information by accommodationId - success")
     void retrieveRoomInfo() throws Exception {
-
 		//given
-		RoomRetrievalInfo roomRetrievalInfo = new RoomRetrievalInfo(roomId, roomName, amount, petCategory, weight, detailInfo);
+		imageFileUrlList.add(imageUrl);
+
+		RoomRetrievalInfo roomRetrievalInfo = new RoomRetrievalInfo(roomId, roomName, amount, petCategory, weight, detailInfo, imageFileUrlList);
 
 		List<RoomRetrievalInfo> roomRetrievalInfos = new ArrayList<>();
 		roomRetrievalInfos.add(roomRetrievalInfo);
@@ -208,8 +217,8 @@ class RoomControllerTest {
 								fieldWithPath("roomRetrievalInfos[].amount").type(JsonFieldType.NUMBER).description("룸 가격들"),
 								fieldWithPath("roomRetrievalInfos[].petCategory").type(JsonFieldType.STRING).description("룸을 대여하는 펫의 타입"),
 								fieldWithPath("roomRetrievalInfos[].weight").type(JsonFieldType.STRING).description("룸을 대여하는 펫의 무게 제한"),
-								fieldWithPath("roomRetrievalInfos[].detailInfo").type(JsonFieldType.STRING).description("룸의 상세 설명")
-						)
-				)).andDo(print());
+								fieldWithPath("roomRetrievalInfos[].detailInfo").type(JsonFieldType.STRING).description("룸의 상세 설명"),
+								fieldWithPath("roomRetrievalInfos[].imageFileUrlList").type(JsonFieldType.ARRAY).description("룸의 이미지 리스트")
+				))).andDo(print());
     }
 }

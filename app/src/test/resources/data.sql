@@ -65,8 +65,8 @@ VALUES ('testurl1'),
        ('testurl5');
 
 INSERT INTO file(accommodation_id, room_id, image_file_id)
-VALUES (1, null, 1),
-       (1, null, 2),
-       (1, null, 3),
-       (1, null, 4),
-       (1, null, 5);
+VALUES (1, 1, 1),
+       (1, 1, 2),
+       (1, 1, 3),
+       (1, 1, 4),
+       (1, 1, 5);

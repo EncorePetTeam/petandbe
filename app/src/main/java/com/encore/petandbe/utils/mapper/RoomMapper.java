@@ -53,7 +53,7 @@ public class RoomMapper {
 			.build();
 	}
 
-	public static RoomRetrievalInfo convertRoomToRetrievalInfo(Room room){
+	public static RoomRetrievalInfo convertRoomToRetrievalInfo(Room room,List<String> imageFileUrlList){
 		return RoomRetrievalInfo.builder()
 				.roomId(room.getId())
 				.roomName(room.getRoomName())
@@ -61,6 +61,7 @@ public class RoomMapper {
 				.petCategory(room.getPetCategory())
 				.weight(room.getWeight())
 				.detailInfo(room.getDetailInfo())
+				.imageFileUrlList(imageFileUrlList)
 				.build();
 	}
 

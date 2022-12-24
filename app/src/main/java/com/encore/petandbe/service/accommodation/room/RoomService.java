@@ -92,12 +92,16 @@ public class RoomService {
 
 	public RoomInfoResponse findRoomInfoByAccommodationId(Long accommodationId){
 
-		List<Room>  rooms = roomRepository.findByAccommodationId(accommodationId);
+		List<Room> rooms = roomRepository.findByAccommodationId(accommodationId);
 
 		List<RoomRetrievalInfo> roomRetrievalInfos = new ArrayList<>();
 
 		for (Room room : rooms){
-			roomRetrievalInfos.add(RoomMapper.convertRoomToRetrievalInfo(room));
+			List<File> files = fileRepository.findByRoomId(room.getId());
+			List<Long> imageFileIdList = files.stream().map(e-> e.getImageFile().getId()).collect(Collectors.toList());
+			List<ImageFile> imageFiles = imageFileRepository.findByIdIn(imageFileIdList);
+			List<String> imageFileUrlList = imageFiles.stream().map(ImageFile::getUrl).collect(Collectors.toList());
+			roomRetrievalInfos.add(RoomMapper.convertRoomToRetrievalInfo(room, imageFileUrlList));
 		}
 
 		return new RoomInfoResponse(accommodationId, roomRetrievalInfos);

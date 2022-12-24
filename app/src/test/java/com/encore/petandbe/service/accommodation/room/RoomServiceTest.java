@@ -94,7 +94,7 @@ class RoomServiceTest {
 	}
 
     @Test
-	@DisplayName("Find Rooms test - Success")
+	@DisplayName("Find Rooms Information By accommodationId test - Success")
     void findRoomInfoByAccommodationId() {
 		//given//when
 		RoomInfoResponse roomInfoResponse = roomService.findRoomInfoByAccommodationId(1L);

@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.*;
 
 import java.util.Optional;
 
+import com.encore.petandbe.controller.accommodation.room.responses.RoomInfoResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -95,4 +96,13 @@ class RoomServiceTest {
 		//then
 		assertThat(room).isNotNull();
 	}
+
+    @Test
+	@DisplayName("Find Rooms test - Success")
+    void findRoomInfoByAccommodationId() {
+		//given//when
+		RoomInfoResponse roomInfoResponse = roomService.findRoomInfoByAccommodationId(1L);
+		//then
+		assertThat(roomInfoResponse).isNotNull();
+    }
 }

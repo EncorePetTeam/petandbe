@@ -7,7 +7,7 @@ import com.encore.petandbe.controller.accommodation.reservation.responses.Reserv
 import com.encore.petandbe.model.accommodation.reservation.Reservation;
 import com.encore.petandbe.model.accommodation.room.Room;
 import com.encore.petandbe.model.user.user.User;
-import com.encore.petandbe.service.accommodation.reservation.dto.ReservationUpdatingdto;
+import com.encore.petandbe.service.accommodation.reservation.dto.ReservationUpdatingDTO;
 import com.encore.petandbe.utils.validator.LocalDateTimeValidator;
 
 import lombok.AccessLevel;
@@ -50,8 +50,8 @@ public class ReservationMapper {
 		return new DeleteReservationResponse(reservation.getId(), reservation.getState());
 	}
 
-	public ReservationUpdatingdto convertUpdateRequestToDto(ReservationUpdatingRequest reservationUpdatingRequest) {
-		return new ReservationUpdatingdto(
+	public ReservationUpdatingDTO convertUpdateRequestToDto(ReservationUpdatingRequest reservationUpdatingRequest) {
+		return new ReservationUpdatingDTO(
 			LocalDateTimeValidator.of().convertStringToLocalDateTime(reservationUpdatingRequest.getCheckInDate()),
 			LocalDateTimeValidator.of()
 				.convertStringToLocalDateTime(reservationUpdatingRequest.getCheckOutDate()),

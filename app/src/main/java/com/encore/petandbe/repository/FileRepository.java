@@ -8,4 +8,6 @@ import com.encore.petandbe.model.accommodation.image.file.File;
 
 public interface FileRepository extends JpaRepository<File, Long> {
 	List<File> findByAccommodationId(Long accommodationId);
+
+	List<File> findByRoomId(Long roomId);
 }

@@ -2,6 +2,7 @@ package com.encore.petandbe.utils.mapper;
 
 import com.encore.petandbe.controller.accommodation.room.requests.RoomRegistrationRequest;
 import com.encore.petandbe.controller.accommodation.room.requests.RoomUpdateRequest;
+import com.encore.petandbe.controller.accommodation.room.responses.RoomRetrievalInfo;
 import com.encore.petandbe.controller.accommodation.room.responses.RoomRetrievalResponse;
 import com.encore.petandbe.model.accommodation.accommodation.Accommodation;
 import com.encore.petandbe.model.accommodation.room.Room;
@@ -48,5 +49,18 @@ public class RoomMapper {
 			.detailInfo(room.getDetailInfo())
 			.build();
 	}
+
+	public static RoomRetrievalInfo convertRoomToRetrievalInfo(Room room){
+		return RoomRetrievalInfo.builder()
+				.roomId(room.getId())
+				.roomName(room.getRoomName())
+				.amount(room.getAmount())
+				.petCategory(room.getPetCategory())
+				.weight(room.getWeight())
+				.detailInfo(room.getDetailInfo())
+				.build();
+	}
+
+
 }
 

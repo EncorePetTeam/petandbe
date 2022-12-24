@@ -1,5 +1,7 @@
 package com.encore.petandbe.service.accommodation.room;
 
+import com.encore.petandbe.controller.accommodation.room.responses.RoomInfoResponse;
+import com.encore.petandbe.controller.accommodation.room.responses.RoomRetrievalInfo;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,6 +14,9 @@ import com.encore.petandbe.model.accommodation.room.Room;
 import com.encore.petandbe.repository.AccommodationRepository;
 import com.encore.petandbe.repository.RoomRepository;
 import com.encore.petandbe.utils.mapper.RoomMapper;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @Transactional
@@ -58,6 +63,19 @@ public class RoomService {
 			.orElseThrow(()-> new NonExistResourceException("Room could not be found"));
 
 		return RoomMapper.convertRoomToRetrievalResponse(room);
+	}
+
+	public RoomInfoResponse findRoomInfoByAccommodationId(Long accommodationId){
+
+		List<Room>  rooms = roomRepository.findByAccommodationId(accommodationId);
+
+		List<RoomRetrievalInfo> roomRetrievalInfos = new ArrayList<>();
+
+		for (Room room : rooms){
+			roomRetrievalInfos.add(RoomMapper.convertRoomToRetrievalInfo(room));
+		}
+
+		return new RoomInfoResponse(accommodationId, roomRetrievalInfos);
 	}
 
 }

@@ -1,6 +1,7 @@
 package com.encore.petandbe.controller.accommodation.room.api;
 
 import com.encore.petandbe.config.Permission;
+import com.encore.petandbe.controller.accommodation.room.responses.RoomInfoResponse;
 import com.encore.petandbe.model.user.user.Role;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,8 @@ import com.encore.petandbe.controller.accommodation.room.requests.RoomUpdateRequ
 import com.encore.petandbe.controller.accommodation.room.responses.RoomIdResponse;
 import com.encore.petandbe.controller.accommodation.room.responses.RoomRetrievalResponse;
 import com.encore.petandbe.service.accommodation.room.RoomService;
+
+import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("room")
@@ -38,7 +41,7 @@ public class RoomController {
 	@PutMapping("{room-id}")
 	@Permission(role = Role.USER)
 	public ResponseEntity<RoomIdResponse> updateRoom(@PathVariable("room-id") Long roomId,
-		@RequestBody RoomUpdateRequest request) {
+													 @RequestBody RoomUpdateRequest request) {
 		return ResponseEntity.ok().body(new RoomIdResponse(roomService.updateRoom(request, roomId)));
 	}
 
@@ -51,5 +54,11 @@ public class RoomController {
 	@GetMapping("{room-id}")
 	public ResponseEntity<RoomRetrievalResponse> retrieveRoom(@PathVariable("room-id") Long roomId) {
 		return ResponseEntity.ok().body(roomService.findRoomById(roomId));
+	}
+
+	@GetMapping("infos/{accommodation-id}")
+	@Permission(role = Role.USER)
+	public ResponseEntity<RoomInfoResponse> retrieveRoomInfo(@PathVariable("accommodation-id") Long accommodationId){
+		return ResponseEntity.ok().body(roomService.findRoomInfoByAccommodationId(accommodationId));
 	}
 }

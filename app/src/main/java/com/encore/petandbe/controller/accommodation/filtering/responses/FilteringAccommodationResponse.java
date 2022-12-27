@@ -14,10 +14,10 @@ public class FilteringAccommodationResponse {
 	private String lotNumber;
 	private double avgRate;
 	private boolean isBookmarked;
+	private String imageUrl;
 
 	public FilteringAccommodationResponse(Long accommodationId, String accommodationName, String addressCode,
-		String location,
-		String lotNumber, double avgRate, boolean isBookmarked) {
+		String location, String lotNumber, double avgRate, boolean isBookmarked, String imageUrl) {
 		this.accommodationId = accommodationId;
 		this.accommodationName = accommodationName;
 		this.addressCode = addressCode;
@@ -25,5 +25,6 @@ public class FilteringAccommodationResponse {
 		this.lotNumber = lotNumber;
 		this.avgRate = avgRate;
 		this.isBookmarked = isBookmarked;
+		this.imageUrl = imageUrl;
 	}
 }

@@ -23,7 +23,7 @@ public class ImageFile {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(nullable = false, length = 150)
+	@Column(nullable = false)
 	private String url;
 
 	public ImageFile(Long id, String url) {

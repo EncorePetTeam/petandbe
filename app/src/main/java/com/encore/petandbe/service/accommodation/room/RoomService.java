@@ -81,11 +81,7 @@ public class RoomService {
 
 		List<File> files = fileRepository.findByRoomId(roomId);
 
-		List<Long> imageFileIdList = files.stream().map(e-> e.getImageFile().getId()).collect(Collectors.toList());
-
-		List<ImageFile> imageFiles = imageFileRepository.findByIdIn(imageFileIdList);
-
-		List<String> imageFileUrlList = imageFiles.stream().map(ImageFile::getUrl).collect(Collectors.toList());
+		List<String> imageFileUrlList = extractImageFileUrlsFromFiles(files);
 
 		return RoomMapper.convertRoomToRetrievalResponse(room, imageFileUrlList);
 	}
@@ -98,13 +94,21 @@ public class RoomService {
 
 		for (Room room : rooms){
 			List<File> files = fileRepository.findByRoomId(room.getId());
-			List<Long> imageFileIdList = files.stream().map(e-> e.getImageFile().getId()).collect(Collectors.toList());
-			List<ImageFile> imageFiles = imageFileRepository.findByIdIn(imageFileIdList);
-			List<String> imageFileUrlList = imageFiles.stream().map(ImageFile::getUrl).collect(Collectors.toList());
+
+			List<String> imageFileUrlList = extractImageFileUrlsFromFiles(files);
+
 			roomRetrievalInfos.add(RoomMapper.convertRoomToRetrievalInfo(room, imageFileUrlList));
 		}
 
 		return new RoomInfoResponse(accommodationId, roomRetrievalInfos);
+	}
+
+	private List<String> extractImageFileUrlsFromFiles(List<File> files) {
+		List<Long> imageFileIdList = files.stream().map(e-> e.getImageFile().getId()).collect(Collectors.toList());
+
+		List<ImageFile> imageFiles = imageFileRepository.findByIdIn(imageFileIdList);
+
+		return imageFiles.stream().map(ImageFile::getUrl).collect(Collectors.toList());
 	}
 
 }

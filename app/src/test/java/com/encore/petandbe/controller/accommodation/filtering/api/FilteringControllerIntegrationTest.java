@@ -77,7 +77,9 @@ class FilteringControllerIntegrationTest {
 					fieldWithPath("filteringAccommodationList[].bookmarked").type(JsonFieldType.BOOLEAN)
 						.description("북마크 여부 false - X true - O"),
 					fieldWithPath("filteringAccommodationList[].avgRate").type(JsonFieldType.NUMBER)
-						.description("숙소 평점")
+						.description("숙소 평점"),
+					fieldWithPath("filteringAccommodationList[].imageUrl").type(JsonFieldType.STRING)
+						.description("이미지 Url")
 				)
 			)).andDo(print());
 	}
@@ -108,7 +110,9 @@ class FilteringControllerIntegrationTest {
 					fieldWithPath("filteringAccommodationList[].bookmarked").type(JsonFieldType.BOOLEAN)
 						.description("북마크 여부 false - X true - O"),
 					fieldWithPath("filteringAccommodationList[].avgRate").type(JsonFieldType.NUMBER)
-						.description("숙소 평점")
+						.description("숙소 평점"),
+					fieldWithPath("filteringAccommodationList[].imageUrl").type(JsonFieldType.STRING)
+						.description("이미지 Url")
 				)
 			)).andDo(print());
 	}

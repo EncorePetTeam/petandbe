@@ -22,10 +22,14 @@ import com.encore.petandbe.model.accommodation.accommodation.Accommodation;
 import com.encore.petandbe.model.accommodation.accommodation.QAccommodation;
 import com.encore.petandbe.model.accommodation.bookmark.Bookmark;
 import com.encore.petandbe.model.accommodation.filtering.category.SortCategory;
+import com.encore.petandbe.model.accommodation.image.file.File;
+import com.encore.petandbe.model.accommodation.image.file.ImageFile;
 import com.encore.petandbe.model.accommodation.room.QRoom;
 import com.encore.petandbe.model.user.user.User;
 import com.encore.petandbe.repository.AccommodationRepository;
 import com.encore.petandbe.repository.BookmarkRepository;
+import com.encore.petandbe.repository.FileRepository;
+import com.encore.petandbe.repository.ImageFileRepository;
 import com.encore.petandbe.repository.RoomRepository;
 import com.encore.petandbe.repository.UserRepository;
 import com.encore.petandbe.utils.mapper.BookmarkMapper;
@@ -38,16 +42,21 @@ public class FilteringService {
 	private final RoomRepository roomRepository;
 	private final BookmarkRepository bookmarkRepository;
 	private final UserRepository userRepository;
+	private final FileRepository fileRepository;
+	private final ImageFileRepository imageFileRepository;
 	private BooleanBuilder booleanBuilder;
 	private List<Long> accommodationIdList;
 	private static final QAccommodation qAccommodation = QAccommodation.accommodation;
 
 	public FilteringService(AccommodationRepository accommodationRepository, RoomRepository roomRepository,
-		BookmarkRepository bookmarkRepository, UserRepository userRepository) {
+		BookmarkRepository bookmarkRepository, UserRepository userRepository, FileRepository fileRepository,
+		ImageFileRepository imageFileRepository) {
 		this.accommodationRepository = accommodationRepository;
 		this.roomRepository = roomRepository;
 		this.bookmarkRepository = bookmarkRepository;
 		this.userRepository = userRepository;
+		this.fileRepository = fileRepository;
+		this.imageFileRepository = imageFileRepository;
 	}
 
 	public FilteringAccommodationListResponse filteringAccommodation(Long userId,
@@ -82,8 +91,13 @@ public class FilteringService {
 		Page<Accommodation> result) {
 		if (userId == null) {
 			return result.stream()
-				.map(e -> new FilteringAccommodationResponse(e.getId(), e.getAccommodationName(),
-					e.getAddress().getAddressCode(), e.getLocation(), e.getLotNumber(), e.getAverageRate(), false))
+				.map(e -> {
+					String imageFileUrl = getImageFileUrl(e);
+
+					return new FilteringAccommodationResponse(e.getId(), e.getAccommodationName(),
+						e.getAddress().getAddressCode(), e.getLocation(), e.getLotNumber(), e.getAverageRate(), false,
+						imageFileUrl);
+				})
 				.collect(Collectors.toList());
 		} else {
 			User user = userRepository.findById(userId)
@@ -95,11 +109,22 @@ public class FilteringService {
 				boolean isBookmarked = bookmark.isPresent();
 				if (isBookmarked)
 					isBookmarked = !bookmark.get().getState();
+
+				String imageFileUrl = getImageFileUrl(e);
+
 				return new FilteringAccommodationResponse(e.getId(), e.getAccommodationName(),
 					e.getAddress().getAddressCode(), e.getLocation(), e.getLotNumber(), e.getAverageRate(),
-					isBookmarked);
+					isBookmarked, imageFileUrl);
 			}).collect(Collectors.toList());
 		}
+	}
+
+	private String getImageFileUrl(Accommodation accommodation) {
+		List<File> files = fileRepository.findByAccommodationId(accommodation.getId());
+
+		ImageFile imageFile = imageFileRepository.findById(files.get(0).getImageFile().getId())
+			.orElseThrow(() -> new NonExistResourceException("ImageFile does not exist"));
+		return imageFile.getUrl();
 	}
 
 	private void filterByAccommodationIdListIfPetCategoryOrWeightRequirementsExist() {

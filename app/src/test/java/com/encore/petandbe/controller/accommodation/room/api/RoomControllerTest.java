@@ -10,7 +10,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.encore.petandbe.controller.accommodation.room.responses.RoomInfoResponse;
 import com.encore.petandbe.controller.accommodation.room.responses.RoomRetrievalInfo;
-import com.encore.petandbe.repository.AccommodationRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,9 +41,6 @@ class RoomControllerTest {
 
 	@MockBean
 	private RoomService roomService;
-
-	@MockBean
-	private AccommodationRepository accommodationRepository;
 
 	@MockBean
 	private PermissionInterceptor permissionInterceptor;
@@ -204,6 +200,7 @@ class RoomControllerTest {
 				.accept(MediaType.APPLICATION_JSON));
 		//then
 		resultActions.andExpect(status().isOk())
+				.andDo(print())
 				.andDo(
 						document("room-infos",
 						pathParameters(
@@ -219,6 +216,6 @@ class RoomControllerTest {
 								fieldWithPath("roomRetrievalInfos[].weight").type(JsonFieldType.STRING).description("룸을 대여하는 펫의 무게 제한"),
 								fieldWithPath("roomRetrievalInfos[].detailInfo").type(JsonFieldType.STRING).description("룸의 상세 설명"),
 								fieldWithPath("roomRetrievalInfos[].imageFileUrlList").type(JsonFieldType.ARRAY).description("룸의 이미지 리스트")
-				))).andDo(print());
+				)));
     }
 }

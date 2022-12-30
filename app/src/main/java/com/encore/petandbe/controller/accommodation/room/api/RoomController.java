@@ -20,8 +20,6 @@ import com.encore.petandbe.controller.accommodation.room.responses.RoomIdRespons
 import com.encore.petandbe.controller.accommodation.room.responses.RoomRetrievalResponse;
 import com.encore.petandbe.service.accommodation.room.RoomService;
 
-import javax.servlet.http.HttpServletRequest;
-
 @RestController
 @RequestMapping("room")
 public class RoomController {
@@ -57,7 +55,6 @@ public class RoomController {
 	}
 
 	@GetMapping("infos/{accommodation-id}")
-	@Permission(role = Role.USER)
 	public ResponseEntity<RoomInfoResponse> retrieveRoomInfo(@PathVariable("accommodation-id") Long accommodationId){
 		return ResponseEntity.ok().body(roomService.findRoomInfoByAccommodationId(accommodationId));
 	}

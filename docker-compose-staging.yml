@@ -11,12 +11,14 @@ services:
       - "8080"
     env_file:
       - common.env
+      - staging.env
     networks:
       backend:
         aliases:
           - app.petandbe.com
     depends_on:
       - db
+      - redis
 
   nginx:
     image: nginx:1.23.2-alpine
@@ -32,7 +34,6 @@ services:
       backend:
     depends_on:
       - app
-      - db
   
   db:
     image: mysql:8.0
@@ -47,3 +48,15 @@ services:
       backend:
         aliases:
           - db.petandbe.com
+  
+  redis:
+    image: redis:7.0.7
+    restart: always
+    expose:
+      - 6379
+    volumes:
+      - "./redis-data:/data"
+    networks:
+      backend:
+        aliases:
+          - redis.petandbe.com

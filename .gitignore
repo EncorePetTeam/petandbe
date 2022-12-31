@@ -78,3 +78,5 @@ common.env
 app/src/main/resources/application-common.yml
 app/src/main/resources/application-secret.yml
 app/src/main/resources/application-security.yml
+production.env
+staging.env

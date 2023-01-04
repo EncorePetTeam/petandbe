@@ -106,7 +106,7 @@ public class QuerydslReviewListSearchRepository extends QuerydslRepositorySuppor
 			.leftJoin(qRoom)
 			.fetchJoin()
 			.on(qRoom.id.eq(qReservation.room.id))
-			.where(qRoom.accommodation.id.eq(accommodationId), eqRoomId(roomId), qReview.state.isFalse())
+			.where(eqAccommodationId(accommodationId), eqRoomId(roomId), qReview.state.isFalse())
 			.offset(pageable.getOffset())
 			.limit(pageable.getPageSize())
 			.orderBy(qReview.id.desc()).fetch();
@@ -121,11 +121,15 @@ public class QuerydslReviewListSearchRepository extends QuerydslRepositorySuppor
 			.leftJoin(qRoom)
 			.fetchJoin()
 			.on(qRoom.id.eq(qReservation.room.id))
-			.where(qRoom.accommodation.id.eq(accommodationId), eqRoomId(roomId), qReview.state.isFalse())
+			.where(eqAccommodationId(accommodationId), eqRoomId(roomId), qReview.state.isFalse())
 			.fetchOne();
 	}
 
 	public BooleanExpression eqRoomId(Long roomId) {
 		return roomId != null ? qRoom.id.eq(roomId) : null;
+	}
+
+	public BooleanExpression eqAccommodationId(Long accommodationId) {
+		return accommodationId != null ? qRoom.accommodation.id.eq(accommodationId) : null;
 	}
 }

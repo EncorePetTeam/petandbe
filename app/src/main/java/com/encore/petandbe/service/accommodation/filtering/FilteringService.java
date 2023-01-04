@@ -25,6 +25,7 @@ import com.encore.petandbe.model.accommodation.filtering.category.SortCategory;
 import com.encore.petandbe.model.accommodation.image.file.File;
 import com.encore.petandbe.model.accommodation.image.file.ImageFile;
 import com.encore.petandbe.model.accommodation.room.QRoom;
+import com.encore.petandbe.model.accommodation.room.Room;
 import com.encore.petandbe.model.user.user.User;
 import com.encore.petandbe.repository.AccommodationRepository;
 import com.encore.petandbe.repository.BookmarkRepository;
@@ -94,9 +95,11 @@ public class FilteringService {
 				.map(e -> {
 					String imageFileUrl = getImageFileUrl(e);
 
+					Integer roomLowerAmount = getRoomLowerAmount(e);
+
 					return new FilteringAccommodationResponse(e.getId(), e.getAccommodationName(),
 						e.getAddress().getAddressCode(), e.getLocation(), e.getLotNumber(), e.getAverageRate(), false,
-						imageFileUrl);
+						imageFileUrl, roomLowerAmount);
 				})
 				.collect(Collectors.toList());
 		} else {
@@ -112,11 +115,19 @@ public class FilteringService {
 
 				String imageFileUrl = getImageFileUrl(e);
 
+				Integer roomLowerAmount = getRoomLowerAmount(e);
+
 				return new FilteringAccommodationResponse(e.getId(), e.getAccommodationName(),
 					e.getAddress().getAddressCode(), e.getLocation(), e.getLotNumber(), e.getAverageRate(),
-					isBookmarked, imageFileUrl);
+					isBookmarked, imageFileUrl, roomLowerAmount);
 			}).collect(Collectors.toList());
 		}
+	}
+
+	private Integer getRoomLowerAmount(Accommodation e) {
+		List<Room> rooms = roomRepository.findByAccommodationIdOrderByAmount(e.getId());
+
+		return rooms.get(0).getAmount();
 	}
 
 	private String getImageFileUrl(Accommodation accommodation) {

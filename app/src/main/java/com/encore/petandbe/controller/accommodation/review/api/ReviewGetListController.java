@@ -5,7 +5,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -39,12 +38,10 @@ public class ReviewGetListController {
 		return ResponseEntity.ok().body(reviewGetListService.getReviewListByUserId(reviewListGetByUserIdRequest));
 	}
 
-	@GetMapping("/{accommodation-id}")
+	@GetMapping
 	public ResponseEntity<ReviewListGetByAccommodationIdResponse> getReviewListByAccommodationId(
-		@PathVariable("accommodation-id") Long accommodationId, @ModelAttribute
-	ReviewListGetByAccommodationIdRequests reviewListGetByAccommodationIdRequests) {
+		@ModelAttribute ReviewListGetByAccommodationIdRequests reviewListGetByAccommodationIdRequests) {
 		return ResponseEntity.ok()
-			.body(reviewGetListService.getReviewListByAccommodationId(accommodationId,
-				reviewListGetByAccommodationIdRequests));
+			.body(reviewGetListService.getReviewListByAccommodationId(reviewListGetByAccommodationIdRequests));
 	}
 }

@@ -29,10 +29,11 @@ public class ReviewGetListIntergrationTest {
 	void getReviewListByAccommodationId() throws Exception {
 		//given
 		ReviewListGetByAccommodationIdRequests reviewListGetByAccommodationIdRequests = new ReviewListGetByAccommodationIdRequests(
+			1L,
 			null, pageNum, amount);
 		//when
 		ResponseEntity<ReviewListGetByAccommodationIdResponse> response = reviewGetListController.getReviewListByAccommodationId(
-			accommodationId, reviewListGetByAccommodationIdRequests);
+			reviewListGetByAccommodationIdRequests);
 		//then
 		assertNotNull(response.getBody().getReviewDetailsResponseList());
 	}
@@ -42,10 +43,11 @@ public class ReviewGetListIntergrationTest {
 	void getReviewListByAccommodationIdWithRoomId() throws Exception {
 		//given
 		ReviewListGetByAccommodationIdRequests reviewListGetByAccommodationIdRequests = new ReviewListGetByAccommodationIdRequests(
+			null,
 			roomId, pageNum, amount);
 		//when
 		ResponseEntity<ReviewListGetByAccommodationIdResponse> response = reviewGetListController.getReviewListByAccommodationId(
-			accommodationId, reviewListGetByAccommodationIdRequests);
+			reviewListGetByAccommodationIdRequests);
 		//then
 		assertNotNull(response.getBody().getReviewDetailsResponseList());
 	}

@@ -11,7 +11,6 @@ import com.encore.petandbe.controller.accommodation.review.responses.ReviewListG
 import com.encore.petandbe.controller.accommodation.review.responses.ReviewListGetByUserIdResponse;
 import com.encore.petandbe.controller.accommodation.review.responses.ReviewWithAccommodationResponse;
 import com.encore.petandbe.exception.NonExistResourceException;
-import com.encore.petandbe.model.accommodation.accommodation.Accommodation;
 import com.encore.petandbe.model.user.user.User;
 import com.encore.petandbe.repository.AccommodationRepository;
 import com.encore.petandbe.repository.ReviewListSearchRepository;
@@ -48,13 +47,10 @@ public class ReviewGetListService {
 		return PageRequest.of(pageNum - 1, amount);
 	}
 
-	public ReviewListGetByAccommodationIdResponse getReviewListByAccommodationId(Long accommodationId,
+	public ReviewListGetByAccommodationIdResponse getReviewListByAccommodationId(
 		ReviewListGetByAccommodationIdRequests reviewListGetByAccommodationIdRequests) {
-		Accommodation accommodation = accommodationRepository.findById(accommodationId)
-			.orElseThrow(() -> new NonExistResourceException("Accommodation does not exist"));
-
 		Page<ReviewDetailsResponse> reviewDetailsResponses = reviewListSearchRepository.getReviewListPageByAccommodationId(
-			accommodation.getId(),
+			reviewListGetByAccommodationIdRequests.getAccommodationId(),
 			reviewListGetByAccommodationIdRequests.getRoomId(), convertPageRequest(
 				reviewListGetByAccommodationIdRequests.getPageNum(),
 				reviewListGetByAccommodationIdRequests.getAmount()));

@@ -15,9 +15,10 @@ public class FilteringAccommodationResponse {
 	private double avgRate;
 	private boolean isBookmarked;
 	private String imageUrl;
+	private Integer roomAmount;
 
 	public FilteringAccommodationResponse(Long accommodationId, String accommodationName, String addressCode,
-		String location, String lotNumber, double avgRate, boolean isBookmarked, String imageUrl) {
+		String location, String lotNumber, double avgRate, boolean isBookmarked, String imageUrl, Integer roomAmount) {
 		this.accommodationId = accommodationId;
 		this.accommodationName = accommodationName;
 		this.addressCode = addressCode;
@@ -26,5 +27,6 @@ public class FilteringAccommodationResponse {
 		this.avgRate = avgRate;
 		this.isBookmarked = isBookmarked;
 		this.imageUrl = imageUrl;
+		this.roomAmount = roomAmount;
 	}
 }

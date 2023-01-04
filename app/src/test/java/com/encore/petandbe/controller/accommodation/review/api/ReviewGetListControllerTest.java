@@ -129,6 +129,7 @@ class ReviewGetListControllerTest {
 		MultiValueMap<String, String> param = new LinkedMultiValueMap<>();
 		param.add("pageNum", "3");
 		param.add("amount", "10");
+		param.add("accommodationId", "1");
 
 		List<ReviewDetailsResponse> reviewDetailsResponseList = new ArrayList<>();
 		for (int i = 0; i < 5; i++) {
@@ -139,11 +140,11 @@ class ReviewGetListControllerTest {
 		ReviewListGetByAccommodationIdResponse reviewListGetByAccommodationIdResponse = new ReviewListGetByAccommodationIdResponse(
 			endPage, selectPage, amountItem, reviewDetailsResponseList);
 
-		when(reviewGetListService.getReviewListByAccommodationId(anyLong(),
+		when(reviewGetListService.getReviewListByAccommodationId(
 			any(ReviewListGetByAccommodationIdRequests.class))).thenReturn(reviewListGetByAccommodationIdResponse);
 		when(permissionInterceptor.preHandle(any(), any(), any())).thenReturn(true);
 
-		ResultActions resultActions = mockMvc.perform(get("/review-list/{accommodation-id}", accommodationId)
+		ResultActions resultActions = mockMvc.perform(get("/review-list", accommodationId)
 			.params(param)
 			.accept(MediaType.APPLICATION_JSON)
 			.requestAttr(Role.USER.getValue(), 1)
@@ -152,12 +153,10 @@ class ReviewGetListControllerTest {
 		//then
 		resultActions.andExpect(status().isOk())
 			.andDo(document("get-review-list-by-accommodation-id",
-				pathParameters(
-					parameterWithName("accommodation-id").description("숙박업소의 ID")
-				),
 				requestParameters(
 					parameterWithName("pageNum").description("페이지 번호"),
-					parameterWithName("amount").description("요청할 데이터 개수")
+					parameterWithName("amount").description("요청할 데이터 개수"),
+					parameterWithName("accommodationId").description("숙박업소의 ID")
 				),
 				responseFields(
 					fieldWithPath("endPage").type(JsonFieldType.NUMBER).description("페이지네이션의 끝번호"),
@@ -207,11 +206,11 @@ class ReviewGetListControllerTest {
 		ReviewListGetByAccommodationIdResponse reviewListGetByAccommodationIdResponse = new ReviewListGetByAccommodationIdResponse(
 			endPage, selectPage, amountItem, reviewDetailsResponseList);
 
-		when(reviewGetListService.getReviewListByAccommodationId(anyLong(),
+		when(reviewGetListService.getReviewListByAccommodationId(
 			any(ReviewListGetByAccommodationIdRequests.class))).thenReturn(reviewListGetByAccommodationIdResponse);
 		when(permissionInterceptor.preHandle(any(), any(), any())).thenReturn(true);
 
-		ResultActions resultActions = mockMvc.perform(get("/review-list/{accommodation-id}", accommodationId)
+		ResultActions resultActions = mockMvc.perform(get("/review-list", accommodationId)
 			.params(param)
 			.accept(MediaType.APPLICATION_JSON)
 			.requestAttr(Role.USER.getValue(), 1)
@@ -220,9 +219,6 @@ class ReviewGetListControllerTest {
 		//then
 		resultActions.andExpect(status().isOk())
 			.andDo(document("get-review-list-by-accommodation-id",
-				pathParameters(
-					parameterWithName("accommodation-id").description("숙박업소의 ID")
-				),
 				requestParameters(
 					parameterWithName("pageNum").description("페이지 번호"),
 					parameterWithName("roomId").description("리뷰 목록 조회할 Room Id"),

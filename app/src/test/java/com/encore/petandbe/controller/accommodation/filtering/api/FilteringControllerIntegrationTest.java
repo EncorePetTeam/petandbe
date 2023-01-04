@@ -79,7 +79,9 @@ class FilteringControllerIntegrationTest {
 					fieldWithPath("filteringAccommodationList[].avgRate").type(JsonFieldType.NUMBER)
 						.description("숙소 평점"),
 					fieldWithPath("filteringAccommodationList[].imageUrl").type(JsonFieldType.STRING)
-						.description("이미지 Url")
+						.description("이미지 Url"),
+					fieldWithPath("filteringAccommodationList[].roomAmount").type(JsonFieldType.NUMBER)
+						.description("방 가격")
 				)
 			)).andDo(print());
 	}
@@ -112,7 +114,9 @@ class FilteringControllerIntegrationTest {
 					fieldWithPath("filteringAccommodationList[].avgRate").type(JsonFieldType.NUMBER)
 						.description("숙소 평점"),
 					fieldWithPath("filteringAccommodationList[].imageUrl").type(JsonFieldType.STRING)
-						.description("이미지 Url")
+						.description("이미지 Url"),
+					fieldWithPath("filteringAccommodationList[].roomAmount").type(JsonFieldType.NUMBER)
+						.description("방 가격")
 				)
 			)).andDo(print());
 	}

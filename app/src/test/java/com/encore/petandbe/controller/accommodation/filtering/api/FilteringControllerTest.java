@@ -77,7 +77,7 @@ class FilteringControllerTest {
 			double rate = avgRate - (i / 10);
 
 			FilteringAccommodationResponse filteringAccommodationResponse = new FilteringAccommodationResponse(id,
-				accommodationName, address, location, lotNumber, rate, false, imageUrl);
+				accommodationName, address, location, lotNumber, rate, false, imageUrl, 25000);
 			filteringAccommodationResponses.add(filteringAccommodationResponse);
 		}
 
@@ -120,7 +120,9 @@ class FilteringControllerTest {
 					fieldWithPath("filteringAccommodationList[].avgRate").type(JsonFieldType.NUMBER)
 						.description("숙소 평점"),
 					fieldWithPath("filteringAccommodationList[].imageUrl").type(JsonFieldType.STRING)
-						.description("이미지 Url")
+						.description("이미지 Url"),
+					fieldWithPath("filteringAccommodationList[].roomAmount").type(JsonFieldType.NUMBER)
+						.description("방 가격")
 				)
 			)).andDo(print());
 	}
@@ -145,7 +147,7 @@ class FilteringControllerTest {
 			double rate = avgRate - (i / 10);
 
 			FilteringAccommodationResponse filteringAccommodationResponse = new FilteringAccommodationResponse(id,
-				accommodationName, address, location, lotNumber, rate, false, imageUrl);
+				accommodationName, address, location, lotNumber, rate, false, imageUrl, 25000);
 			filteringAccommodationResponses.add(filteringAccommodationResponse);
 		}
 
@@ -178,7 +180,9 @@ class FilteringControllerTest {
 					fieldWithPath("filteringAccommodationList[].avgRate").type(JsonFieldType.NUMBER)
 						.description("숙소 평점"),
 					fieldWithPath("filteringAccommodationList[].imageUrl").type(JsonFieldType.STRING)
-						.description("이미지 Url")
+						.description("이미지 Url"),
+					fieldWithPath("filteringAccommodationList[].roomAmount").type(JsonFieldType.NUMBER)
+						.description("방 가격")
 				)
 			)).andDo(print());
 	}

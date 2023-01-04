@@ -1,8 +1,8 @@
 package com.encore.petandbe.exception;
 
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.mockito.Mockito.*;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -50,7 +50,7 @@ class GlobalExceptionHandlerTest {
 		when(permissionInterceptor.preHandle(any(), any(), any())).thenReturn(true);
 		//when
 		ResultActions resultActions = mockMvc.perform(RestDocumentationRequestBuilders
-			.get("/review-list")
+			.get("/review-list/user")
 			.params(param)
 			.accept(MediaType.APPLICATION_JSON)
 			.requestAttr(Role.USER.getValue(), 125426847));

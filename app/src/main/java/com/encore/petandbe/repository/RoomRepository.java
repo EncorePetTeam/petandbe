@@ -14,4 +14,6 @@ public interface RoomRepository extends JpaRepository<Room, Long>, QuerydslPredi
 	List<Long> findByPetCategory(@Param("petCategory") String petCategory);
 
 	List<Room> findByAccommodationId(Long accommodationId);
+
+	List<Room> findByAccommodationIdOrderByAmount(Long accommodationId);
 }

@@ -60,43 +60,43 @@
 
 ### Application
 
-- <a href="https://openjdk.org/projects/jdk/11/"><img src="https://img.shields.io/badge/JAVA 11-007396?style=for-the-badge&logo=Java&logoColor=white"/></a>
-- <a href="https://gradle.org/"><img src="https://img.shields.io/badge/Gradle 7.5.1-02303A?style=for-the-badge&logo=Gradle&logoColor=white"></a>
-- <a href="https://spring.io/projects/spring-boot/"><img src="https://img.shields.io/badge/Spring Boot 2.7.0-6DB33F?style=for-the-badge&logo=Spring Boot&logoColor=white"></a>
-- <a href="https://spring.io/projects/spring-data-jpa"><img src="https://img.shields.io/badge/Spring Data Jpa-6DB33F?style=for-the-badge&logo=Spring Data Jpa&logoColor=white"></a>
-- <a href="http://querydsl.com/"><img src="https://img.shields.io/badge/Query Dsl 5.0-6DB33F?style=for-the-badge&logo=Query DSL&logoColor=white"></a>
+<a href="https://openjdk.org/projects/jdk/11/"><img src="https://img.shields.io/badge/JAVA 11-007396?style=for-the-badge&logo=Java&logoColor=white"/></a>
+ <a href="https://gradle.org/"><img src="https://img.shields.io/badge/Gradle 7.5.1-02303A?style=for-the-badge&logo=Gradle&logoColor=white"></a>
+ <a href="https://spring.io/projects/spring-boot/"><img src="https://img.shields.io/badge/Spring Boot 2.7.0-6DB33F?style=for-the-badge&logo=Spring Boot&logoColor=white"></a>
+ <a href="https://spring.io/projects/spring-data-jpa"><img src="https://img.shields.io/badge/Spring Data Jpa-6DB33F?style=for-the-badge&logo=Spring Data Jpa&logoColor=white"></a>
+ <a href="http://querydsl.com/"><img src="https://img.shields.io/badge/Query Dsl 5.0-6DB33F?style=for-the-badge&logo=Query DSL&logoColor=white"></a>
 
 ### Test
 
-- <a href="https://junit.org/junit5/"><img src="https://img.shields.io/badge/JUnit5-25A162?style=for-the-badge&logo=JUnit5&logoColor=white"></a>
-- <a href="https://site.mockito.org/"><img src="https://img.shields.io/badge/Mockito-25A162?style=for-the-badge&logo=Mockito&logoColor=white"></a>
+<a href="https://junit.org/junit5/"><img src="https://img.shields.io/badge/JUnit5-25A162?style=for-the-badge&logo=JUnit5&logoColor=white"></a>
+ <a href="https://site.mockito.org/"><img src="https://img.shields.io/badge/Mockito-25A162?style=for-the-badge&logo=Mockito&logoColor=white"></a>
 
 ### Database
 
-- <a href="https://www.mysql.com/"><img src="https://img.shields.io/badge/MySql 8-4479A1?style=for-the-badge&logo=MySQL&logoColor=white"></a>
-- <a href="https://redis.io/"><img src="https://img.shields.io/badge/Redis-DC382D?style=for-the-badge&logo=Redis&logoColor=white"></a>
+<a href="https://www.mysql.com/"><img src="https://img.shields.io/badge/MySql 8-4479A1?style=for-the-badge&logo=MySQL&logoColor=white"></a>
+ <a href="https://redis.io/"><img src="https://img.shields.io/badge/Redis-DC382D?style=for-the-badge&logo=Redis&logoColor=white"></a>
 
 ### Docs
 
-- <a href="https://swagger.io/"><img src="https://img.shields.io/badge/Swagger-85EA2D?style=for-the-badge&logo=Swagger&logoColor=black"></a>
-- <a href="https://spring.io/projects/spring-restdocs"><img src="https://img.shields.io/badge/Spring Rest Docs-6DB33F?style=for-the-badge&logo=Read The Docs&logoColor=white"></a>
+<a href="https://swagger.io/"><img src="https://img.shields.io/badge/Swagger-85EA2D?style=for-the-badge&logo=Swagger&logoColor=black"></a>
+ <a href="https://spring.io/projects/spring-restdocs"><img src="https://img.shields.io/badge/Spring Rest Docs-6DB33F?style=for-the-badge&logo=Read The Docs&logoColor=white"></a>
 
 ### Cloud
 
-- <a href="https://aws.amazon.com/ko/?nc2=h_lg"><img src="https://img.shields.io/badge/EC2-FF9900?style=for-the-badge&logo=Amazon EC2&logoColor=white"></a>
-- <a href="https://aws.amazon.com/ko/?nc2=h_lg"><img src="https://img.shields.io/badge/Route53-782A90?style=for-the-badge&logo=&logoColor=white"></a>
+<a href="https://aws.amazon.com/ko/?nc2=h_lg"><img src="https://img.shields.io/badge/EC2-FF9900?style=for-the-badge&logo=Amazon EC2&logoColor=white"></a>
+ <a href="https://aws.amazon.com/ko/?nc2=h_lg"><img src="https://img.shields.io/badge/Route53-782A90?style=for-the-badge&logo=&logoColor=white"></a>
 
 ### Infra
 
-- <a href="https://docs.docker.com/get-docker/"><img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=Docker&logoColor=white"></a>
-- <a href="https://docs.docker.com/compose/install/"><img src="https://img.shields.io/badge/Docker Compose-2496ED?style=for-the-badge&logo=Docker&logoColor=white"></a>
-- <a href="https://www.nginx.com/"><img src="https://img.shields.io/badge/NGinx-009639?style=for-the-badge&logo=Nginx&logoColor=white"></a>
+<a href="https://docs.docker.com/get-docker/"><img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=Docker&logoColor=white"></a>
+ <a href="https://docs.docker.com/compose/install/"><img src="https://img.shields.io/badge/Docker Compose-2496ED?style=for-the-badge&logo=Docker&logoColor=white"></a>
+ <a href="https://www.nginx.com/"><img src="https://img.shields.io/badge/NGinx-009639?style=for-the-badge&logo=Nginx&logoColor=white"></a>
 
 ### Communication
 
-- <a href="https://github.com/"><img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white"></a>
-- <a href="https://slack.com/intl/ko-kr/"><img src="https://img.shields.io/badge/slack-4A154B?style=for-the-badge&logo=slack&logoColor=white"></a>
-- <a href="https://www.notion.so/"><img src="https://img.shields.io/badge/notion-000000?style=for-the-badge&logo=notion&logoColor=white"></a>
+<a href="https://github.com/"><img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white"></a>
+ <a href="https://slack.com/intl/ko-kr/"><img src="https://img.shields.io/badge/slack-4A154B?style=for-the-badge&logo=slack&logoColor=white"></a>
+ <a href="https://www.notion.so/"><img src="https://img.shields.io/badge/notion-000000?style=for-the-badge&logo=notion&logoColor=white"></a>
 
 ## Git Strategy
 

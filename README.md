@@ -1,5 +1,4 @@
 # Petandbe
-
 ## Intro
 
 - 이 프로젝트는 클라이언트의 needs에 적절한 반려동물 호텔, 유치원의 정보를 제공하는 사이트 제작을 목표로 합니다.
@@ -8,6 +7,9 @@
 
 - 야놀자나 여기어때에는 반려동물과 함께 여행을 갈 수 있는 반려동물 동반 펜션은 있었지만, 반려동물만 맡길 수 있는 호텔이나 유치원 같은 카테고리는 없었다. 반려동물과 함께 생활하는 1인 가구, 혹은 집을 자주 비워야 하는 분들을 위한 서비스를 제공하기 위해 해당 플랫폼을 개발하게 되었다.
 - 또한 해외여행이나 긴 시간 여행을 떠나는 사람에게도 충분히 수요가 있다. 여행을 떠나기 위해선 우리 반려동물이 있어야 하는 장소를 찾아야 하는데, 이러한 문제를 호텔이나 편센을 예약하듯 간편하게 할 수 있도록 하는 플랫폼을 목표로 했다.
+
+## Site
+- https://petandbe.netlify.com/
 
 ## Period
 
@@ -89,7 +91,7 @@
 ### Infra
 
 <a href="https://docs.docker.com/get-docker/"><img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=Docker&logoColor=white"></a>
- <a href="https://docs.docker.com/compose/install/"><img src="https://img.shields.io/badge/Docker Compose-2496ED?style=for-the-badge&logo=Docker&logoColor=white"></a>
+ <a href="https://docs.docker.com/compose/install/"><img src="https://img.shields.io/badge/Docker_Compose-2496ED?style=for-the-badge&logo=Docker&logoColor=white"></a>
  <a href="https://www.nginx.com/"><img src="https://img.shields.io/badge/NGinx-009639?style=for-the-badge&logo=Nginx&logoColor=white"></a>
 
 ### Communication
@@ -146,7 +148,8 @@ curl -X GET http://localhost:80/nginx-healthz
 # You will receive 'Success' text and 200 status when spring app is running.
 curl -X GET http://localhost:80/healthz
 ```
-
+## Swagger
+- https://sg.petandbe.com/docs/index.html
 ## Wiki
 
 - [Git Workflow](https://fork-hound-0c2.notion.site/Git-Worflow-c2bbf00ce4574540b5706a3f15cb0771)

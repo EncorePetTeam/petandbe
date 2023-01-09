@@ -18,11 +18,11 @@
           "content" : {
             "application/json;charset=UTF-8" : {
               "schema" : {
-                "$ref" : "#/components/schemas/accommodation89857475"
+                "$ref" : "#/components/schemas/accommodation-555136115"
               },
               "examples" : {
                 "accommodation-register" : {
-                  "value" : "{\"addressCode\":\"11011\",\"accommodationName\":\"훈기호텔\",\"workingHours\":\"09001800\",\"weekendWorkingHours\":\"10001800\",\"location\":\"상수동\",\"lotNumber\":\"202-1\",\"addressDetail\":\"102호같은것\",\"accommodationType\":\"HOTEL\",\"detailInfo\":\"상세정보를 쓰는 공간입니다.\"}"
+                  "value" : "{\"addressCode\":\"11011\",\"accommodationName\":\"훈기호텔\",\"workingHours\":\"09001800\",\"weekendWorkingHours\":\"10001800\",\"location\":\"상수동\",\"lotNumber\":\"202-1\",\"addressDetail\":\"102호같은것\",\"accommodationType\":\"HOTEL\",\"detailInfo\":\"상세정보를 쓰는 공간입니다.\",\"imageUrlList\":[\"test-image-url\"]}"
                 }
               }
             }
@@ -48,36 +48,6 @@
       }
     },
     "/accommodation/{accommodation-id}" : {
-      "get" : {
-        "tags" : [ "accommodation" ],
-        "operationId" : "accommodation-retrieval",
-        "parameters" : [ {
-          "name" : "accommodation-id",
-          "in" : "path",
-          "description" : "찾고 싶은 숙박 시설 id",
-          "required" : true,
-          "schema" : {
-            "type" : "string"
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "200",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/accommodation-accommodation-id577215311"
-                },
-                "examples" : {
-                  "accommodation-retrieval" : {
-                    "value" : "{\"addressCode\":\"11011\",\"accommodationName\":\"훈기호텔\",\"userNickname\":\"gnsrl\",\"workingHours\":\"09001800\",\"weekendWorkingHours\":\"10001800\",\"location\":\"상수동\",\"lotNumber\":\"202-1\",\"addressDetail\":\"102호같은것\",\"accommodationType\":\"HOTEL\",\"averageRate\":4.2,\"detailInfo\":\"상세정보를 쓰는 공간입니다.\"}"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
       "put" : {
         "tags" : [ "accommodation" ],
         "operationId" : "accommodation-update",
@@ -326,14 +296,14 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/filtering-accommodation41270167"
+                  "$ref" : "#/components/schemas/filtering-accommodation-850484918"
                 },
                 "examples" : {
                   "filtering-accommodation" : {
-                    "value" : "{\"filteringAccommodationList\":[{\"accommodationId\":1,\"accommodationName\":\"정정일 애견호텔 & 유치원0\",\"address\":\"서울특별시 중구 동호로 2490\",\"avgRate\":4.8},{\"accommodationId\":2,\"accommodationName\":\"정정일 애견호텔 & 유치원1\",\"address\":\"서울특별시 중구 동호로 2491\",\"avgRate\":4.8},{\"accommodationId\":3,\"accommodationName\":\"정정일 애견호텔 & 유치원2\",\"address\":\"서울특별시 중구 동호로 2492\",\"avgRate\":4.8},{\"accommodationId\":4,\"accommodationName\":\"정정일 애견호텔 & 유치원3\",\"address\":\"서울특별시 중구 동호로 2493\",\"avgRate\":4.8},{\"accommodationId\":5,\"accommodationName\":\"정정일 애견호텔 & 유치원4\",\"address\":\"서울특별시 중구 동호로 2494\",\"avgRate\":4.8},{\"accommodationId\":6,\"accommodationName\":\"정정일 애견호텔 & 유치원5\",\"address\":\"서울특별시 중구 동호로 2495\",\"avgRate\":4.8},{\"accommodationId\":7,\"accommodationName\":\"정정일 애견호텔 & 유치원6\",\"address\":\"서울특별시 중구 동호로 2496\",\"avgRate\":4.8},{\"accommodationId\":8,\"accommodationName\":\"정정일 애견호텔 & 유치원7\",\"address\":\"서울특별시 중구 동호로 2497\",\"avgRate\":4.8},{\"accommodationId\":9,\"accommodationName\":\"정정일 애견호텔 & 유치원8\",\"address\":\"서울특별시 중구 동호로 2498\",\"avgRate\":4.8},{\"accommodationId\":10,\"accommodationName\":\"정정일 애견호텔 & 유치원9\",\"address\":\"서울특별시 중구 동호로 2499\",\"avgRate\":4.8}]}"
+                    "value" : "{\"filteringAccommodationList\":[{\"accommodationId\":1,\"accommodationName\":\"정정일 애견호텔 & 유치원0\",\"addressCode\":\"서울특별시 중구0\",\"location\":\"동호로\",\"lotNumber\":\"249\",\"avgRate\":4.8,\"imageUrl\":\"imageUrl\",\"roomAmount\":25000,\"bookmarked\":false},{\"accommodationId\":2,\"accommodationName\":\"정정일 애견호텔 & 유치원1\",\"addressCode\":\"서울특별시 중구1\",\"location\":\"동호로\",\"lotNumber\":\"249\",\"avgRate\":4.8,\"imageUrl\":\"imageUrl\",\"roomAmount\":25000,\"bookmarked\":false},{\"accommodationId\":3,\"accommodationName\":\"정정일 애견호텔 & 유치원2\",\"addressCode\":\"서울특별시 중구2\",\"location\":\"동호로\",\"lotNumber\":\"249\",\"avgRate\":4.8,\"imageUrl\":\"imageUrl\",\"roomAmount\":25000,\"bookmarked\":false},{\"accommodationId\":4,\"accommodationName\":\"정정일 애견호텔 & 유치원3\",\"addressCode\":\"서울특별시 중구3\",\"location\":\"동호로\",\"lotNumber\":\"249\",\"avgRate\":4.8,\"imageUrl\":\"imageUrl\",\"roomAmount\":25000,\"bookmarked\":false},{\"accommodationId\":5,\"accommodationName\":\"정정일 애견호텔 & 유치원4\",\"addressCode\":\"서울특별시 중구4\",\"location\":\"동호로\",\"lotNumber\":\"249\",\"avgRate\":4.8,\"imageUrl\":\"imageUrl\",\"roomAmount\":25000,\"bookmarked\":false},{\"accommodationId\":6,\"accommodationName\":\"정정일 애견호텔 & 유치원5\",\"addressCode\":\"서울특별시 중구5\",\"location\":\"동호로\",\"lotNumber\":\"249\",\"avgRate\":4.8,\"imageUrl\":\"imageUrl\",\"roomAmount\":25000,\"bookmarked\":false},{\"accommodationId\":7,\"accommodationName\":\"정정일 애견호텔 & 유치원6\",\"addressCode\":\"서울특별시 중구6\",\"location\":\"동호로\",\"lotNumber\":\"249\",\"avgRate\":4.8,\"imageUrl\":\"imageUrl\",\"roomAmount\":25000,\"bookmarked\":false},{\"accommodationId\":8,\"accommodationName\":\"정정일 애견호텔 & 유치원7\",\"addressCode\":\"서울특별시 중구7\",\"location\":\"동호로\",\"lotNumber\":\"249\",\"avgRate\":4.8,\"imageUrl\":\"imageUrl\",\"roomAmount\":25000,\"bookmarked\":false},{\"accommodationId\":9,\"accommodationName\":\"정정일 애견호텔 & 유치원8\",\"addressCode\":\"서울특별시 중구8\",\"location\":\"동호로\",\"lotNumber\":\"249\",\"avgRate\":4.8,\"imageUrl\":\"imageUrl\",\"roomAmount\":25000,\"bookmarked\":false},{\"accommodationId\":10,\"accommodationName\":\"정정일 애견호텔 & 유치원9\",\"addressCode\":\"서울특별시 중구9\",\"location\":\"동호로\",\"lotNumber\":\"249\",\"avgRate\":4.8,\"imageUrl\":\"imageUrl\",\"roomAmount\":25000,\"bookmarked\":false}]}"
                   },
                   "no-filtering-accommodation" : {
-                    "value" : "{\"filteringAccommodationList\":[{\"accommodationId\":1,\"accommodationName\":\"정정일 애견호텔 & 유치원0\",\"address\":\"서울특별시 중구 동호로 2490\",\"avgRate\":4.8},{\"accommodationId\":2,\"accommodationName\":\"정정일 애견호텔 & 유치원1\",\"address\":\"서울특별시 중구 동호로 2491\",\"avgRate\":4.8},{\"accommodationId\":3,\"accommodationName\":\"정정일 애견호텔 & 유치원2\",\"address\":\"서울특별시 중구 동호로 2492\",\"avgRate\":4.8},{\"accommodationId\":4,\"accommodationName\":\"정정일 애견호텔 & 유치원3\",\"address\":\"서울특별시 중구 동호로 2493\",\"avgRate\":4.8},{\"accommodationId\":5,\"accommodationName\":\"정정일 애견호텔 & 유치원4\",\"address\":\"서울특별시 중구 동호로 2494\",\"avgRate\":4.8},{\"accommodationId\":6,\"accommodationName\":\"정정일 애견호텔 & 유치원5\",\"address\":\"서울특별시 중구 동호로 2495\",\"avgRate\":4.8},{\"accommodationId\":7,\"accommodationName\":\"정정일 애견호텔 & 유치원6\",\"address\":\"서울특별시 중구 동호로 2496\",\"avgRate\":4.8},{\"accommodationId\":8,\"accommodationName\":\"정정일 애견호텔 & 유치원7\",\"address\":\"서울특별시 중구 동호로 2497\",\"avgRate\":4.8},{\"accommodationId\":9,\"accommodationName\":\"정정일 애견호텔 & 유치원8\",\"address\":\"서울특별시 중구 동호로 2498\",\"avgRate\":4.8},{\"accommodationId\":10,\"accommodationName\":\"정정일 애견호텔 & 유치원9\",\"address\":\"서울특별시 중구 동호로 2499\",\"avgRate\":4.8}]}"
+                    "value" : "{\"filteringAccommodationList\":[{\"accommodationId\":1,\"accommodationName\":\"정정일 애견호텔 & 유치원0\",\"addressCode\":\"서울특별시 중구0\",\"location\":\"동호로\",\"lotNumber\":\"249\",\"avgRate\":4.8,\"imageUrl\":\"imageUrl\",\"roomAmount\":25000,\"bookmarked\":false},{\"accommodationId\":2,\"accommodationName\":\"정정일 애견호텔 & 유치원1\",\"addressCode\":\"서울특별시 중구1\",\"location\":\"동호로\",\"lotNumber\":\"249\",\"avgRate\":4.8,\"imageUrl\":\"imageUrl\",\"roomAmount\":25000,\"bookmarked\":false},{\"accommodationId\":3,\"accommodationName\":\"정정일 애견호텔 & 유치원2\",\"addressCode\":\"서울특별시 중구2\",\"location\":\"동호로\",\"lotNumber\":\"249\",\"avgRate\":4.8,\"imageUrl\":\"imageUrl\",\"roomAmount\":25000,\"bookmarked\":false},{\"accommodationId\":4,\"accommodationName\":\"정정일 애견호텔 & 유치원3\",\"addressCode\":\"서울특별시 중구3\",\"location\":\"동호로\",\"lotNumber\":\"249\",\"avgRate\":4.8,\"imageUrl\":\"imageUrl\",\"roomAmount\":25000,\"bookmarked\":false},{\"accommodationId\":5,\"accommodationName\":\"정정일 애견호텔 & 유치원4\",\"addressCode\":\"서울특별시 중구4\",\"location\":\"동호로\",\"lotNumber\":\"249\",\"avgRate\":4.8,\"imageUrl\":\"imageUrl\",\"roomAmount\":25000,\"bookmarked\":false},{\"accommodationId\":6,\"accommodationName\":\"정정일 애견호텔 & 유치원5\",\"addressCode\":\"서울특별시 중구5\",\"location\":\"동호로\",\"lotNumber\":\"249\",\"avgRate\":4.8,\"imageUrl\":\"imageUrl\",\"roomAmount\":25000,\"bookmarked\":false},{\"accommodationId\":7,\"accommodationName\":\"정정일 애견호텔 & 유치원6\",\"addressCode\":\"서울특별시 중구6\",\"location\":\"동호로\",\"lotNumber\":\"249\",\"avgRate\":4.8,\"imageUrl\":\"imageUrl\",\"roomAmount\":25000,\"bookmarked\":false},{\"accommodationId\":8,\"accommodationName\":\"정정일 애견호텔 & 유치원7\",\"addressCode\":\"서울특별시 중구7\",\"location\":\"동호로\",\"lotNumber\":\"249\",\"avgRate\":4.8,\"imageUrl\":\"imageUrl\",\"roomAmount\":25000,\"bookmarked\":false},{\"accommodationId\":9,\"accommodationName\":\"정정일 애견호텔 & 유치원8\",\"addressCode\":\"서울특별시 중구8\",\"location\":\"동호로\",\"lotNumber\":\"249\",\"avgRate\":4.8,\"imageUrl\":\"imageUrl\",\"roomAmount\":25000,\"bookmarked\":false},{\"accommodationId\":10,\"accommodationName\":\"정정일 애견호텔 & 유치원9\",\"addressCode\":\"서울특별시 중구9\",\"location\":\"동호로\",\"lotNumber\":\"249\",\"avgRate\":4.8,\"imageUrl\":\"imageUrl\",\"roomAmount\":25000,\"bookmarked\":false}]}"
                   }
                 }
               }
@@ -379,6 +349,29 @@
         }
       }
     },
+    "/image-file" : {
+      "post" : {
+        "tags" : [ "image-file" ],
+        "operationId" : "accommodation-retrieval",
+        "responses" : {
+          "201" : {
+            "description" : "201",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/image-file928379425"
+                },
+                "examples" : {
+                  "accommodation-retrieval" : {
+                    "value" : "{\"imageUrlList\":[\"Test Image File.png\"]}"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/reservation" : {
       "post" : {
         "tags" : [ "reservation" ],
@@ -387,11 +380,11 @@
           "content" : {
             "application/json;charset=UTF-8" : {
               "schema" : {
-                "$ref" : "#/components/schemas/reservation-1027460540"
+                "$ref" : "#/components/schemas/reservation430358690"
               },
               "examples" : {
                 "reservation-register" : {
-                  "value" : "{\"userId\":2,\"roomId\":3,\"checkInDate\":\"2022-11-27 13:00:00\",\"checkOutDate\":\"2022-11-28 16:00:00\",\"petCategory\":\"DOG\",\"weight\":\"4.7\"}"
+                  "value" : "{\"userId\":2,\"roomId\":3,\"checkInDate\":\"2022-11-27 13:00:00\",\"checkOutDate\":\"2022-11-28 16:00:00\",\"amount\":130000}"
                 }
               }
             }
@@ -403,11 +396,11 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/reservation-117711797"
+                  "$ref" : "#/components/schemas/reservation1340107433"
                 },
                 "examples" : {
                   "reservation-register" : {
-                    "value" : "{\"reservationId\":1,\"userId\":2,\"roomId\":3,\"checkInDate\":\"2022-11-27 13:00:00\",\"checkOutDate\":\"2022-11-28 16:00:00\",\"petCategory\":\"DOG\",\"weight\":\"4.7\"}"
+                    "value" : "{\"reservationId\":1,\"userId\":2,\"roomId\":3,\"checkInDate\":\"2022-11-27 13:00:00\",\"checkOutDate\":\"2022-11-28 16:00:00\",\"amount\":130000}"
                   }
                 }
               }
@@ -435,11 +428,11 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/reservation-reservation-id-1492099961"
+                  "$ref" : "#/components/schemas/reservation-reservation-id-34280731"
                 },
                 "examples" : {
                   "reservation-retrieval" : {
-                    "value" : "{\"reservationId\":1,\"userId\":2,\"roomId\":3,\"accommodationId\":4,\"accommodationName\":\"정정일 애견 호텔\",\"roomName\":\"스위트 스위트 슈퍼 스위트 룸\",\"checkInDate\":\"2022-11-27 13:00:00\",\"checkOutDate\":\"2022-11-28 16:00:00\",\"petCategory\":\"DOG\",\"weight\":\"4.7\"}"
+                    "value" : "{\"reservationId\":1,\"userId\":2,\"roomId\":3,\"accommodationId\":4,\"accommodationName\":\"정정일 애견 호텔\",\"roomName\":\"스위트 스위트 슈퍼 스위트 룸\",\"checkInDate\":\"2022-11-27 13:00:00\",\"checkOutDate\":\"2022-11-28 16:00:00\",\"amount\":130000}"
                   }
                 }
               }
@@ -463,11 +456,11 @@
           "content" : {
             "application/json;charset=UTF-8" : {
               "schema" : {
-                "$ref" : "#/components/schemas/reservation-reservation-id87486007"
+                "$ref" : "#/components/schemas/reservation-reservation-id-548610754"
               },
               "examples" : {
                 "reservation-update" : {
-                  "value" : "{\"userId\":2,\"checkInDate\":\"2022-11-27 13:00:00\",\"checkOutDate\":\"2022-11-28 16:00:00\",\"petCategory\":\"DOG\",\"weight\":\"4.7\"}"
+                  "value" : "{\"userId\":2,\"checkInDate\":\"2022-11-27 13:00:00\",\"checkOutDate\":\"2022-11-28 16:00:00\",\"amount\":130000}"
                 }
               }
             }
@@ -479,11 +472,11 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/reservation-reservation-id-1789599206"
+                  "$ref" : "#/components/schemas/reservation-reservation-id-1556656819"
                 },
                 "examples" : {
                   "reservation-update" : {
-                    "value" : "{\"reservationId\":1,\"userId\":2,\"roomId\":3,\"checkInDate\":\"2022-11-27 13:00:00\",\"checkOutDate\":\"2022-11-28 16:00:00\",\"petCategory\":\"DOG\",\"weight\":\"4.7\"}"
+                    "value" : "{\"reservationId\":1,\"userId\":2,\"roomId\":3,\"checkInDate\":\"2022-11-27 13:00:00\",\"checkOutDate\":\"2022-11-28 16:00:00\",\"amount\":130000}"
                   }
                 }
               }
@@ -528,6 +521,46 @@
                 "examples" : {
                   "reservation-delete" : {
                     "value" : "{\"reservationId\":1,\"state\":true}"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/reservation-list" : {
+      "get" : {
+        "tags" : [ "reservation-list" ],
+        "operationId" : "get-reservation-list-by-userid",
+        "parameters" : [ {
+          "name" : "pageNum",
+          "in" : "query",
+          "description" : "페이지 번호",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "itemAmount",
+          "in" : "query",
+          "description" : "요청할 데이터 개수",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "200",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/reservation-list-1865335865"
+                },
+                "examples" : {
+                  "get-reservation-list-by-userid" : {
+                    "value" : "{\"endPage\":13,\"selectPage\":3,\"amountItem\":10,\"reservationWithRoomResponseList\":[{\"roomId\":0,\"accommodationId\":0,\"checkInDate\":\"2022-11-17T11:00:00\",\"checkOutDate\":\"2022-11-19T16:00:00\",\"amount\":100000},{\"roomId\":1,\"accommodationId\":1,\"checkInDate\":\"2022-11-17T11:00:00\",\"checkOutDate\":\"2022-11-19T16:00:00\",\"amount\":100000},{\"roomId\":2,\"accommodationId\":2,\"checkInDate\":\"2022-11-17T11:00:00\",\"checkOutDate\":\"2022-11-19T16:00:00\",\"amount\":100000},{\"roomId\":3,\"accommodationId\":3,\"checkInDate\":\"2022-11-17T11:00:00\",\"checkOutDate\":\"2022-11-19T16:00:00\",\"amount\":100000},{\"roomId\":4,\"accommodationId\":4,\"checkInDate\":\"2022-11-17T11:00:00\",\"checkOutDate\":\"2022-11-19T16:00:00\",\"amount\":100000},{\"roomId\":5,\"accommodationId\":5,\"checkInDate\":\"2022-11-17T11:00:00\",\"checkOutDate\":\"2022-11-19T16:00:00\",\"amount\":100000},{\"roomId\":6,\"accommodationId\":6,\"checkInDate\":\"2022-11-17T11:00:00\",\"checkOutDate\":\"2022-11-19T16:00:00\",\"amount\":100000},{\"roomId\":7,\"accommodationId\":7,\"checkInDate\":\"2022-11-17T11:00:00\",\"checkOutDate\":\"2022-11-19T16:00:00\",\"amount\":100000},{\"roomId\":8,\"accommodationId\":8,\"checkInDate\":\"2022-11-17T11:00:00\",\"checkOutDate\":\"2022-11-19T16:00:00\",\"amount\":100000},{\"roomId\":9,\"accommodationId\":9,\"checkInDate\":\"2022-11-17T11:00:00\",\"checkOutDate\":\"2022-11-19T16:00:00\",\"amount\":100000}]}"
                   }
                 }
               }
@@ -592,11 +625,11 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/review-reservation-id-464947496"
+                  "$ref" : "#/components/schemas/review-reservation-id1426793903"
                 },
                 "examples" : {
                   "review-details" : {
-                    "value" : "{\"reviewId\":1,\"userId\":1,\"rate\":5,\"content\":\"very good\",\"reservationId\":25}"
+                    "value" : "{\"reviewId\":1,\"roomName\":\"roomName\",\"userId\":1,\"rate\":5,\"content\":\"very good\",\"reservationId\":25}"
                   }
                 }
               }
@@ -638,11 +671,11 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/review-review-id1044664355"
+                  "$ref" : "#/components/schemas/review-review-id-1358561542"
                 },
                 "examples" : {
                   "update-review" : {
-                    "value" : "{\"reviewId\":1,\"userId\":1,\"rate\":3,\"content\":\"not bad\",\"reservationId\":25}"
+                    "value" : "{\"reviewId\":1,\"roomName\":\"roomName\",\"userId\":1,\"rate\":3,\"content\":\"not bad\",\"reservationId\":25}"
                   }
                 }
               }
@@ -698,6 +731,54 @@
     "/review-list" : {
       "get" : {
         "tags" : [ "review-list" ],
+        "operationId" : "get-review-list-by-accommodation-id",
+        "parameters" : [ {
+          "name" : "pageNum",
+          "in" : "query",
+          "description" : "페이지 번호",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "amount",
+          "in" : "query",
+          "description" : "요청할 데이터 개수",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "accommodationId",
+          "in" : "query",
+          "description" : "숙박업소의 ID",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "200",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/review-list1471248054"
+                },
+                "examples" : {
+                  "get-review-list-by-accommodation-id" : {
+                    "value" : "{\"endPage\":13,\"selectPage\":3,\"amountItem\":10,\"reviewDetailsResponseList\":[{\"reviewId\":0,\"roomName\":\"roomName\",\"userId\":0,\"rate\":5,\"content\":\"Very good \",\"reservationId\":0},{\"reviewId\":1,\"roomName\":\"roomName\",\"userId\":1,\"rate\":5,\"content\":\"Very good \",\"reservationId\":1},{\"reviewId\":2,\"roomName\":\"roomName\",\"userId\":2,\"rate\":5,\"content\":\"Very good \",\"reservationId\":2},{\"reviewId\":3,\"roomName\":\"roomName\",\"userId\":3,\"rate\":5,\"content\":\"Very good \",\"reservationId\":3},{\"reviewId\":4,\"roomName\":\"roomName\",\"userId\":4,\"rate\":5,\"content\":\"Very good \",\"reservationId\":4}]}"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/review-list/user" : {
+      "get" : {
+        "tags" : [ "review-list" ],
         "operationId" : "get-review-list-by-userid",
         "parameters" : [ {
           "name" : "userId",
@@ -730,7 +811,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/review-list1229325162"
+                  "$ref" : "#/components/schemas/review-list-user1229325162"
                 },
                 "examples" : {
                   "get-review-list-by-userid" : {
@@ -751,11 +832,11 @@
           "content" : {
             "application/json;charset=UTF-8" : {
               "schema" : {
-                "$ref" : "#/components/schemas/room886337867"
+                "$ref" : "#/components/schemas/room2087813513"
               },
               "examples" : {
                 "room-registration" : {
-                  "value" : "{\"accommodationId\":1,\"roomName\":\"훈기방\",\"amount\":30000,\"petCategory\":\"CAT\",\"weight\":\"10kg\",\"detailInfo\":\"안녕하세요\"}"
+                  "value" : "{\"accommodationId\":1,\"roomName\":\"훈기방\",\"amount\":30000,\"petCategory\":\"CAT\",\"weight\":\"10kg\",\"detailInfo\":\"안녕하세요\",\"imageUrlList\":[\"test-image-url\"]}"
                 }
               }
             }
@@ -799,11 +880,11 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/room886337867"
+                  "$ref" : "#/components/schemas/room-room-id-1181704238"
                 },
                 "examples" : {
                   "room-retrieval" : {
-                    "value" : "{\"accommodationId\":1,\"roomName\":\"훈기방\",\"amount\":30000,\"petCategory\":\"CAT\",\"weight\":\"10kg\",\"detailInfo\":\"안녕하세요\"}"
+                    "value" : "{\"accommodationId\":1,\"roomName\":\"훈기방\",\"amount\":30000,\"petCategory\":\"CAT\",\"weight\":\"10kg\",\"detailInfo\":\"안녕하세요\",\"imageFileUrlList\":[\"test-image-url\"]}"
                   }
                 }
               }
@@ -885,32 +966,83 @@
           }
         }
       }
+    },
+    "/room/infos/{accommodation-id}" : {
+      "get" : {
+        "tags" : [ "room" ],
+        "operationId" : "room-infos",
+        "parameters" : [ {
+          "name" : "accommodation-id",
+          "in" : "path",
+          "description" : "찾고싶은 룸들의 숙박시설 아이디",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "200",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/room-infos-accommodation-id52984974"
+                },
+                "examples" : {
+                  "room-infos" : {
+                    "value" : "{\"accommodationId\":1,\"roomRetrievalInfos\":[{\"roomId\":1,\"roomName\":\"훈기방\",\"amount\":30000,\"petCategory\":\"CAT\",\"weight\":\"10kg\",\"detailInfo\":\"안녕하세요\",\"imageFileUrlList\":[\"test-image-url\"]}]}"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components" : {
     "schemas" : {
-      "reservation-reservation-id87486007" : {
+      "room-room-id-1181704238" : {
         "type" : "object",
         "properties" : {
-          "checkOutDate" : {
+          "amount" : {
+            "type" : "number",
+            "description" : "룸 대여료"
+          },
+          "imageFileUrlList" : {
+            "type" : "array",
+            "description" : "숙박 업소 이미지 파일 Url",
+            "items" : {
+              "oneOf" : [ {
+                "type" : "object"
+              }, {
+                "type" : "boolean"
+              }, {
+                "type" : "string"
+              }, {
+                "type" : "number"
+              } ]
+            }
+          },
+          "accommodationId" : {
+            "type" : "number",
+            "description" : "룸과 연관된 숙박시설 아이디"
+          },
+          "detailInfo" : {
             "type" : "string",
-            "description" : "변경 할 체크아웃 날짜 및 시간"
+            "description" : "룸의 상세 설명"
           },
           "weight" : {
             "type" : "string",
-            "description" : "변경 할 동반할 반려동물 무게"
+            "description" : "룸을 대여하는 펫의 무게 제한"
           },
           "petCategory" : {
             "type" : "string",
-            "description" : "변경 할 동반할 반려동물 종"
+            "description" : "룸을 대여하는 펫의 타입"
           },
-          "checkInDate" : {
+          "roomName" : {
             "type" : "string",
-            "description" : "변경 할 체크인 날짜 및 시간"
-          },
-          "userId" : {
-            "type" : "number",
-            "description" : "숙박 시설을 예약한 유저 아이디"
+            "description" : "룸 이름"
           }
         }
       },
@@ -972,20 +1104,66 @@
           }
         }
       },
-      "reservation-1027460540" : {
+      "filtering-accommodation-850484918" : {
         "type" : "object",
         "properties" : {
+          "filteringAccommodationList" : {
+            "type" : "array",
+            "description" : "필터 결과 List",
+            "items" : {
+              "type" : "object",
+              "properties" : {
+                "addressCode" : {
+                  "type" : "string",
+                  "description" : "숙소 주소 코드"
+                },
+                "bookmarked" : {
+                  "type" : "boolean",
+                  "description" : "북마크 여부 false - X true - O"
+                },
+                "accommodationId" : {
+                  "type" : "number",
+                  "description" : "숙소 Id"
+                },
+                "imageUrl" : {
+                  "type" : "string",
+                  "description" : "이미지 Url"
+                },
+                "avgRate" : {
+                  "type" : "number",
+                  "description" : "숙소 평점"
+                },
+                "roomAmount" : {
+                  "type" : "number",
+                  "description" : "방 가격"
+                },
+                "location" : {
+                  "type" : "string",
+                  "description" : "숙소 주소 - 동"
+                },
+                "lotNumber" : {
+                  "type" : "string",
+                  "description" : "숙소 주소 - 지번"
+                },
+                "accommodationName" : {
+                  "type" : "string",
+                  "description" : "숙소 이름"
+                }
+              }
+            }
+          }
+        }
+      },
+      "reservation430358690" : {
+        "type" : "object",
+        "properties" : {
+          "amount" : {
+            "type" : "number",
+            "description" : "금액"
+          },
           "checkOutDate" : {
             "type" : "string",
             "description" : "체크아웃 날짜 및 시간"
-          },
-          "weight" : {
-            "type" : "string",
-            "description" : "동반할 반려동물 무게"
-          },
-          "petCategory" : {
-            "type" : "string",
-            "description" : "동반할 반려동물 종"
           },
           "checkInDate" : {
             "type" : "string",
@@ -1001,12 +1179,91 @@
           }
         }
       },
+      "review-list1471248054" : {
+        "type" : "object",
+        "properties" : {
+          "selectPage" : {
+            "type" : "number",
+            "description" : "현재 조회하는 페이지"
+          },
+          "amountItem" : {
+            "type" : "number",
+            "description" : "데이터 개수"
+          },
+          "reviewDetailsResponseList" : {
+            "type" : "array",
+            "description" : "리뷰 조회 결과 List",
+            "items" : {
+              "type" : "object",
+              "properties" : {
+                "reservationId" : {
+                  "type" : "number",
+                  "description" : "예약 Id"
+                },
+                "rate" : {
+                  "type" : "number",
+                  "description" : "User가 부여한 점수 Id"
+                },
+                "userId" : {
+                  "type" : "number",
+                  "description" : "작성한 User Id"
+                },
+                "reviewId" : {
+                  "type" : "number",
+                  "description" : "리뷰 Id"
+                },
+                "content" : {
+                  "type" : "string",
+                  "description" : "User가 작성한 리뷰 내용"
+                },
+                "roomName" : {
+                  "type" : "string",
+                  "description" : "예약 room의 이름"
+                }
+              }
+            }
+          },
+          "endPage" : {
+            "type" : "number",
+            "description" : "페이지네이션의 끝번호"
+          }
+        }
+      },
       "accommodation-955411387" : {
         "type" : "object",
         "properties" : {
           "accommodationId" : {
             "type" : "number",
             "description" : "생성된 숙박 시설 아이디(pk)"
+          }
+        }
+      },
+      "reservation1340107433" : {
+        "type" : "object",
+        "properties" : {
+          "amount" : {
+            "type" : "number",
+            "description" : "금액"
+          },
+          "checkOutDate" : {
+            "type" : "string",
+            "description" : "체크아웃 날짜 및 시간"
+          },
+          "reservationId" : {
+            "type" : "number",
+            "description" : "생성된 예약 아이디(pk)"
+          },
+          "checkInDate" : {
+            "type" : "string",
+            "description" : "체크인 날짜 및 시간"
+          },
+          "userId" : {
+            "type" : "number",
+            "description" : "숙박 시설을 예약한 유저 아이디"
+          },
+          "roomId" : {
+            "type" : "number",
+            "description" : "예약한 Room 아이디"
           }
         }
       },
@@ -1055,39 +1312,6 @@
           "reviewId" : {
             "type" : "number",
             "description" : "삭제한 리뷰의 Id"
-          }
-        }
-      },
-      "reservation-reservation-id-1789599206" : {
-        "type" : "object",
-        "properties" : {
-          "checkOutDate" : {
-            "type" : "string",
-            "description" : "변경 된 체크아웃 날짜 및 시간"
-          },
-          "reservationId" : {
-            "type" : "number",
-            "description" : "변경된 예약 아이디(pk)"
-          },
-          "weight" : {
-            "type" : "string",
-            "description" : "변경 된 동반할 반려동물 무게"
-          },
-          "petCategory" : {
-            "type" : "string",
-            "description" : "변경 된 동반할 반려동물 종"
-          },
-          "checkInDate" : {
-            "type" : "string",
-            "description" : "변경 된 체크인 날짜 및 시간"
-          },
-          "userId" : {
-            "type" : "number",
-            "description" : "숙박 시설을 예약한 유저 아이디"
-          },
-          "roomId" : {
-            "type" : "number",
-            "description" : "예약한 Room 아이디"
           }
         }
       },
@@ -1179,28 +1403,44 @@
           }
         }
       },
-      "review-reservation-id-464947496" : {
+      "reservation-reservation-id-34280731" : {
         "type" : "object",
         "properties" : {
+          "amount" : {
+            "type" : "number",
+            "description" : "금액"
+          },
+          "checkOutDate" : {
+            "type" : "string",
+            "description" : "체크아웃 날짜 및 시간"
+          },
           "reservationId" : {
             "type" : "number",
-            "description" : "예약 Id"
+            "description" : "조회된 예약 아이디(pk)"
           },
-          "rate" : {
+          "accommodationId" : {
             "type" : "number",
-            "description" : "점수"
+            "description" : "예약한 숙박 시설 아이디"
+          },
+          "checkInDate" : {
+            "type" : "string",
+            "description" : "체크인 날짜 및 시간"
           },
           "userId" : {
             "type" : "number",
-            "description" : "Review를 작성한 User의 Id"
+            "description" : "숙박 시설을 예약한 유저 아이디"
           },
-          "reviewId" : {
-            "type" : "number",
-            "description" : "Review의 Id"
-          },
-          "content" : {
+          "roomName" : {
             "type" : "string",
-            "description" : "리뷰 본문"
+            "description" : "예약한 Room 이름"
+          },
+          "roomId" : {
+            "type" : "number",
+            "description" : "조회된 Room 아이디"
+          },
+          "accommodationName" : {
+            "type" : "string",
+            "description" : "예약한 숙박 시설 이름"
           }
         }
       },
@@ -1234,48 +1474,49 @@
           }
         }
       },
-      "reservation-reservation-id-1492099961" : {
+      "reservation-list-1865335865" : {
         "type" : "object",
         "properties" : {
-          "checkOutDate" : {
-            "type" : "string",
-            "description" : "체크아웃 날짜 및 시간"
-          },
-          "reservationId" : {
+          "selectPage" : {
             "type" : "number",
-            "description" : "조회된 예약 아이디(pk)"
+            "description" : "현재 조회하는 페이지"
           },
-          "accommodationId" : {
+          "reservationWithRoomResponseList" : {
+            "type" : "array",
+            "description" : "예약 조회 결과 List",
+            "items" : {
+              "type" : "object",
+              "properties" : {
+                "amount" : {
+                  "type" : "number",
+                  "description" : "예약 금액"
+                },
+                "checkOutDate" : {
+                  "type" : "string",
+                  "description" : "체크아웃 날짜 시간"
+                },
+                "accommodationId" : {
+                  "type" : "number",
+                  "description" : "숙소 id"
+                },
+                "checkInDate" : {
+                  "type" : "string",
+                  "description" : "체크인 날짜 시간"
+                },
+                "roomId" : {
+                  "type" : "number",
+                  "description" : "예약했던 방 id"
+                }
+              }
+            }
+          },
+          "amountItem" : {
             "type" : "number",
-            "description" : "예약한 숙박 시설 아이디"
+            "description" : "데이터 개수"
           },
-          "weight" : {
-            "type" : "string",
-            "description" : "동반할 반려동물 무게"
-          },
-          "petCategory" : {
-            "type" : "string",
-            "description" : "동반할 반려동물 종"
-          },
-          "checkInDate" : {
-            "type" : "string",
-            "description" : "체크인 날짜 및 시간"
-          },
-          "userId" : {
+          "endPage" : {
             "type" : "number",
-            "description" : "숙박 시설을 예약한 유저 아이디"
-          },
-          "roomName" : {
-            "type" : "string",
-            "description" : "예약한 Room 이름"
-          },
-          "roomId" : {
-            "type" : "number",
-            "description" : "조회된 Room 아이디"
-          },
-          "accommodationName" : {
-            "type" : "string",
-            "description" : "예약한 숙박 시설 이름"
+            "description" : "페이지네이션의 끝번호"
           }
         }
       },
@@ -1289,76 +1530,6 @@
           "userId" : {
             "type" : "number",
             "description" : "bookmark를 등록하고자 하는 user의 아이디"
-          }
-        }
-      },
-      "accommodation89857475" : {
-        "type" : "object",
-        "properties" : {
-          "addressCode" : {
-            "type" : "string",
-            "description" : "숙박시설의 지역 코드"
-          },
-          "addressDetail" : {
-            "type" : "string",
-            "description" : "숙박 시설 상세 주소"
-          },
-          "detailInfo" : {
-            "type" : "string",
-            "description" : "숙박 시설 상세 정보"
-          },
-          "accommodationType" : {
-            "type" : "string",
-            "description" : "숙박 시설 유형"
-          },
-          "location" : {
-            "type" : "string",
-            "description" : "동 이름"
-          },
-          "lotNumber" : {
-            "type" : "string",
-            "description" : "숙박 시설 지번"
-          },
-          "weekendWorkingHours" : {
-            "type" : "string",
-            "description" : "주말 숙박 시설 영업 시간"
-          },
-          "workingHours" : {
-            "type" : "string",
-            "description" : "평일 숙박 시설 영업 시간"
-          },
-          "accommodationName" : {
-            "type" : "string",
-            "description" : "숙박 시설 이름"
-          }
-        }
-      },
-      "room886337867" : {
-        "type" : "object",
-        "properties" : {
-          "amount" : {
-            "type" : "number",
-            "description" : "룸 대여료"
-          },
-          "accommodationId" : {
-            "type" : "number",
-            "description" : "룸과 연관된 숙박시설 아이디"
-          },
-          "detailInfo" : {
-            "type" : "string",
-            "description" : "룸의 상세 설명"
-          },
-          "weight" : {
-            "type" : "string",
-            "description" : "룸을 대여하는 펫의 무게 제한"
-          },
-          "petCategory" : {
-            "type" : "string",
-            "description" : "룸을 대여하는 펫의 타입"
-          },
-          "roomName" : {
-            "type" : "string",
-            "description" : "룸 이름"
           }
         }
       },
@@ -1376,23 +1547,6 @@
           "openDate" : {
             "type" : "string",
             "description" : "사업 개장 날짜"
-          }
-        }
-      },
-      "review-review-id249553534" : {
-        "type" : "object",
-        "properties" : {
-          "rate" : {
-            "type" : "number",
-            "description" : "리뷰 점수"
-          },
-          "userId" : {
-            "type" : "number",
-            "description" : "리뷰 등록 유저 아이디"
-          },
-          "content" : {
-            "type" : "string",
-            "description" : "리뷰 구체사항"
           }
         }
       },
@@ -1417,33 +1571,20 @@
           }
         }
       },
-      "filtering-accommodation41270167" : {
+      "review-review-id249553534" : {
         "type" : "object",
         "properties" : {
-          "filteringAccommodationList" : {
-            "type" : "array",
-            "description" : "필터 결과 List",
-            "items" : {
-              "type" : "object",
-              "properties" : {
-                "address" : {
-                  "type" : "string",
-                  "description" : "숙소 주소"
-                },
-                "accommodationId" : {
-                  "type" : "number",
-                  "description" : "숙소 Id"
-                },
-                "avgRate" : {
-                  "type" : "number",
-                  "description" : "숙소 평점"
-                },
-                "accommodationName" : {
-                  "type" : "string",
-                  "description" : "숙소 이름"
-                }
-              }
-            }
+          "rate" : {
+            "type" : "number",
+            "description" : "리뷰 점수"
+          },
+          "userId" : {
+            "type" : "number",
+            "description" : "리뷰 등록 유저 아이디"
+          },
+          "content" : {
+            "type" : "string",
+            "description" : "리뷰 구체사항"
           }
         }
       },
@@ -1464,50 +1605,27 @@
           }
         }
       },
-      "review-review-id1044664355" : {
+      "accommodation-555136115" : {
         "type" : "object",
         "properties" : {
-          "reservationId" : {
-            "type" : "number",
-            "description" : "예약 Id"
-          },
-          "rate" : {
-            "type" : "number",
-            "description" : "수정한 점수 rate"
-          },
-          "userId" : {
-            "type" : "number",
-            "description" : "User의 token id"
-          },
-          "reviewId" : {
-            "type" : "number",
-            "description" : "수정한 리뷰의 Id"
-          },
-          "content" : {
-            "type" : "string",
-            "description" : "수정한 리뷰의 내용"
-          }
-        }
-      },
-      "room-room-id-2119029611" : {
-        "type" : "object",
-        "properties" : {
-          "roomId" : {
-            "type" : "number",
-            "description" : "수정 할 룸 아이디"
-          }
-        }
-      },
-      "accommodation-accommodation-id577215311" : {
-        "type" : "object",
-        "properties" : {
-          "averageRate" : {
-            "type" : "number",
-            "description" : "숙박 시설 평점"
-          },
           "addressCode" : {
             "type" : "string",
             "description" : "숙박시설의 지역 코드"
+          },
+          "imageUrlList" : {
+            "type" : "array",
+            "description" : "숙박 시설 이미지 링크",
+            "items" : {
+              "oneOf" : [ {
+                "type" : "object"
+              }, {
+                "type" : "boolean"
+              }, {
+                "type" : "string"
+              }, {
+                "type" : "number"
+              } ]
+            }
           },
           "addressDetail" : {
             "type" : "string",
@@ -1516,10 +1634,6 @@
           "detailInfo" : {
             "type" : "string",
             "description" : "숙박 시설 상세 정보"
-          },
-          "userNickname" : {
-            "type" : "string",
-            "description" : "숙박시설 호스트 닉네임"
           },
           "accommodationType" : {
             "type" : "string",
@@ -1547,7 +1661,102 @@
           }
         }
       },
-      "review-list1229325162" : {
+      "review-reservation-id1426793903" : {
+        "type" : "object",
+        "properties" : {
+          "reservationId" : {
+            "type" : "number",
+            "description" : "예약 Id"
+          },
+          "rate" : {
+            "type" : "number",
+            "description" : "점수"
+          },
+          "userId" : {
+            "type" : "number",
+            "description" : "Review를 작성한 User의 Id"
+          },
+          "reviewId" : {
+            "type" : "number",
+            "description" : "Review의 Id"
+          },
+          "content" : {
+            "type" : "string",
+            "description" : "리뷰 본문"
+          },
+          "roomName" : {
+            "type" : "string",
+            "description" : "예약 room의 이름"
+          }
+        }
+      },
+      "room-infos-accommodation-id52984974" : {
+        "type" : "object",
+        "properties" : {
+          "accommodationId" : {
+            "type" : "number",
+            "description" : "룸과 연관된 숙박시설 아이디"
+          },
+          "roomRetrievalInfos" : {
+            "type" : "array",
+            "description" : "룸 정보 리스트",
+            "items" : {
+              "type" : "object",
+              "properties" : {
+                "amount" : {
+                  "type" : "number",
+                  "description" : "룸 가격들"
+                },
+                "imageFileUrlList" : {
+                  "type" : "array",
+                  "description" : "룸의 이미지 리스트",
+                  "items" : {
+                    "oneOf" : [ {
+                      "type" : "object"
+                    }, {
+                      "type" : "boolean"
+                    }, {
+                      "type" : "string"
+                    }, {
+                      "type" : "number"
+                    } ]
+                  }
+                },
+                "detailInfo" : {
+                  "type" : "string",
+                  "description" : "룸의 상세 설명"
+                },
+                "weight" : {
+                  "type" : "string",
+                  "description" : "룸을 대여하는 펫의 무게 제한"
+                },
+                "petCategory" : {
+                  "type" : "string",
+                  "description" : "룸을 대여하는 펫의 타입"
+                },
+                "roomName" : {
+                  "type" : "string",
+                  "description" : "룸 이름들"
+                },
+                "roomId" : {
+                  "type" : "number",
+                  "description" : "룸 Id들"
+                }
+              }
+            }
+          }
+        }
+      },
+      "room-room-id-2119029611" : {
+        "type" : "object",
+        "properties" : {
+          "roomId" : {
+            "type" : "number",
+            "description" : "수정 할 룸 아이디"
+          }
+        }
+      },
+      "review-list-user1229325162" : {
         "type" : "object",
         "properties" : {
           "selectPage" : {
@@ -1615,28 +1824,109 @@
           }
         }
       },
-      "reservation-117711797" : {
+      "reservation-reservation-id-548610754" : {
         "type" : "object",
         "properties" : {
+          "amount" : {
+            "type" : "number",
+            "description" : "변경 할 금액"
+          },
           "checkOutDate" : {
             "type" : "string",
-            "description" : "체크아웃 날짜 및 시간"
-          },
-          "reservationId" : {
-            "type" : "number",
-            "description" : "생성된 예약 아이디(pk)"
-          },
-          "weight" : {
-            "type" : "string",
-            "description" : "동반할 반려동물 무게"
-          },
-          "petCategory" : {
-            "type" : "string",
-            "description" : "동반할 반려동물 종"
+            "description" : "변경 할 체크아웃 날짜 및 시간"
           },
           "checkInDate" : {
             "type" : "string",
-            "description" : "체크인 날짜 및 시간"
+            "description" : "변경 할 체크인 날짜 및 시간"
+          },
+          "userId" : {
+            "type" : "number",
+            "description" : "숙박 시설을 예약한 유저 아이디"
+          }
+        }
+      },
+      "image-file928379425" : {
+        "type" : "object",
+        "properties" : {
+          "imageUrlList" : {
+            "type" : "array",
+            "description" : "등록된 이미지 Url 리스트",
+            "items" : {
+              "oneOf" : [ {
+                "type" : "object"
+              }, {
+                "type" : "boolean"
+              }, {
+                "type" : "string"
+              }, {
+                "type" : "number"
+              } ]
+            }
+          }
+        }
+      },
+      "room2087813513" : {
+        "type" : "object",
+        "properties" : {
+          "imageUrlList" : {
+            "type" : "array",
+            "description" : "룸 이미지 링크",
+            "items" : {
+              "oneOf" : [ {
+                "type" : "object"
+              }, {
+                "type" : "boolean"
+              }, {
+                "type" : "string"
+              }, {
+                "type" : "number"
+              } ]
+            }
+          },
+          "amount" : {
+            "type" : "number",
+            "description" : "룸 대여료"
+          },
+          "accommodationId" : {
+            "type" : "number",
+            "description" : "룸과 연관된 숙박시설 아이디"
+          },
+          "detailInfo" : {
+            "type" : "string",
+            "description" : "룸의 상세 설명"
+          },
+          "weight" : {
+            "type" : "string",
+            "description" : "룸을 대여하는 펫의 무게 제한"
+          },
+          "petCategory" : {
+            "type" : "string",
+            "description" : "룸을 대여하는 펫의 타입"
+          },
+          "roomName" : {
+            "type" : "string",
+            "description" : "룸 이름"
+          }
+        }
+      },
+      "reservation-reservation-id-1556656819" : {
+        "type" : "object",
+        "properties" : {
+          "amount" : {
+            "type" : "number",
+            "description" : "변경 된 금액"
+          },
+          "checkOutDate" : {
+            "type" : "string",
+            "description" : "변경 된 체크아웃 날짜 및 시간"
+          },
+          "reservationId" : {
+            "type" : "number",
+            "description" : "변경된 예약 아이디(pk)"
+          },
+          "checkInDate" : {
+            "type" : "string",
+            "description" : "변경 된 체크인 날짜 및 시간"
           },
           "userId" : {
             "type" : "number",
@@ -1654,6 +1944,35 @@
           "roomId" : {
             "type" : "number",
             "description" : "삭제된 룸 아이디"
+          }
+        }
+      },
+      "review-review-id-1358561542" : {
+        "type" : "object",
+        "properties" : {
+          "reservationId" : {
+            "type" : "number",
+            "description" : "예약 Id"
+          },
+          "rate" : {
+            "type" : "number",
+            "description" : "수정한 점수 rate"
+          },
+          "userId" : {
+            "type" : "number",
+            "description" : "User의 token id"
+          },
+          "reviewId" : {
+            "type" : "number",
+            "description" : "수정한 리뷰의 Id"
+          },
+          "content" : {
+            "type" : "string",
+            "description" : "수정한 리뷰의 내용"
+          },
+          "roomName" : {
+            "type" : "string",
+            "description" : "예약 room의 이름"
           }
         }
       },
